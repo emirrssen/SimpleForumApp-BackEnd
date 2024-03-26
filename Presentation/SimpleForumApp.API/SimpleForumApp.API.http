@@ -1,0 +1,6 @@
+@SimpleForumApp.API_HostAddress = http://localhost:5220
+
+GET {{SimpleForumApp.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
