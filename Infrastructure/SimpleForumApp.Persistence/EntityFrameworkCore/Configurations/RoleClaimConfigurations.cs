@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations
 {
-    public class RoleClaimConfiguration : IEntityTypeConfiguration<RoleClaim>
+    public class RoleClaimConfigurations : IEntityTypeConfiguration<RoleClaim>
     {
         public void Configure(EntityTypeBuilder<RoleClaim> builder)
         {
@@ -19,19 +19,19 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations
                 .HasOne(x => x.Role)
                 .WithMany(y => y.Claims)
                 .HasForeignKey(x => x.RoleId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(x => x.Claim)
                 .WithMany(y => y.Roles)
                 .HasForeignKey(x => x.ClaimId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(x => x.Status)
                 .WithMany(y => y.RoleClaims)
                 .HasForeignKey(x => x.StatusId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

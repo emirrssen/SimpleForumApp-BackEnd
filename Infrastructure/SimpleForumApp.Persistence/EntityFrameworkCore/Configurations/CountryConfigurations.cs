@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public class CountryConfigurations : IEntityTypeConfiguration<Country>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<Country> builder)
         {
             builder
                 .HasOne(x => x.Status)
-                .WithMany(y => y.Roles)
+                .WithMany(y => y.Countries)
                 .HasForeignKey(x => x.StatusId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

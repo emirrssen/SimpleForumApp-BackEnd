@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace SimpleForumApp.Domain.Entities
 {
-    public class Role : BaseEntity
+    public class UserRole : EntityWithStat
     {
+        public long UserId { get; set; }
+        public long RoleId { get; set; }
         public long StatusId { get; set; }
-        public string Name { get; set; }
 
+        public User User { get; set; }
+        public Role Role { get; set; }
         public Status Status { get; set; }
-        public ICollection<RoleClaim> Claims { get; set; }
-        public ICollection<UserRole> Users { get; set; }
     }
 }

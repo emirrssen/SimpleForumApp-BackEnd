@@ -10,8 +10,4 @@
     <ProjectReference Include="..\SimpleForumApp.Domain\SimpleForumApp.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>
