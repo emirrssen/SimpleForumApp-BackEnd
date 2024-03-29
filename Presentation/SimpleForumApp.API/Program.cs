@@ -1,3 +1,4 @@
+using SimpleForumApp.Application.Repositories;
 using SimpleForumApp.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ builder.Services.AddSwaggerGen();
 
 // Service Registrations
 builder.Services.AddPersistenceServices();
+
+var serviceProvider = builder.Services.BuildServiceProvider();
+var dependency = serviceProvider.GetService<IStatusRepository>();
 
 var app = builder.Build();
 

@@ -10,4 +10,9 @@
     <ProjectReference Include="..\SimpleForumApp.Domain\SimpleForumApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CQRS\Status\Commands\" />
+    <Folder Include="CQRS\Status\Queries\" />
+  </ItemGroup>
+
 </Project>
