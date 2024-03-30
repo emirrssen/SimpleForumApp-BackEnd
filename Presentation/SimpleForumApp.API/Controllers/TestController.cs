@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SimpleForumApp.Application.CQRS.Test;
 using SimpleForumApp.Application.UnitOfWork;
 
 namespace SimpleForumApp.API.Controllers
@@ -17,7 +18,7 @@ namespace SimpleForumApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SayHello([FromQuery] Application.CQRS.Operations.Test.Query query)
+        public async Task<IActionResult> SayHello([FromQuery] Query query)
             => Ok(await _mediator.Send(query));
     }
 }

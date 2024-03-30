@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Operations\Status\Commands\" />
-    <Folder Include="CQRS\Operations\Status\Queries\" />
+    <Folder Include="CQRS\Status\Commands\" />
+    <Folder Include="CQRS\Status\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

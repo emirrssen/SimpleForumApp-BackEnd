@@ -14,7 +14,12 @@ namespace SimpleForumApp.Domain.Results
             Message = message;
         }
 
+        public Result(bool isSuccess)
+        {
+            IsSuccess = isSuccess;
+        }
+
         public bool IsSuccess { get; set; }
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }
