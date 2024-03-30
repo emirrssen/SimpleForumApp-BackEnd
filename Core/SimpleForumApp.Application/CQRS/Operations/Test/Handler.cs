@@ -13,7 +13,7 @@ namespace SimpleForumApp.Application.CQRS.Operations.Test
     {
         public override Task<ResultWithData<string>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(ResultFactory.SuccessResult<string>("Hello World", "Başarılı"));
+            throw new Exception("Hata");
         }
     }
 }
