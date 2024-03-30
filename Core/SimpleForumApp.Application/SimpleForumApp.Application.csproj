@@ -11,8 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Status\Commands\" />
-    <Folder Include="CQRS\Status\Queries\" />
+    <Folder Include="CQRS\Operations\Status\Commands\" />
+    <Folder Include="CQRS\Operations\Status\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
 </Project>

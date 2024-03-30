@@ -1,29 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using SimpleForumApp.Application.Repositories;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 using SimpleForumApp.Persistence.Helpers;
 using SimpleForumApp.Persistence.Repositories;
 using SimpleForumApp.Persistence.UnitOfWorks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SimpleForumApp.Persistence
+namespace SimpleForumApp.API.Extensions
 {
-    public static class ServiceRegistration
+    public static class DIConfigurationExtension
     {
-        public static void AddPersistenceServices(this IServiceCollection services)
+        public static void ConfigureDIContainer(this IServiceCollection services)
         {
+            // For Entity Framework Core
             var connectionString = AppSettingsReaderHelper.GetSqlServerConnectionString();
-
             services.AddDbContext<SimpleForumAppContext>(options => options.UseSqlServer(connectionString));
 
+            // For UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            // For Repositories
             services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<IGenderRepository, GenderRepository>();
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleForumApp.Application.UnitOfWork;
 
@@ -8,11 +9,15 @@ namespace SimpleForumApp.API.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMediator _mediator;
 
-        public TestController(IUnitOfWork unitOfWork)
+        public TestController(IMediator mediator)
         {
-            _unitOfWork = unitOfWork;
+            _mediator = mediator;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> SayHello([FromQuery] Application.CQRS.Operations.Test.Query query)
+            => Ok(await _mediator.Send(query));
     }
 }
