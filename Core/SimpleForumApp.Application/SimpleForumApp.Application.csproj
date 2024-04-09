@@ -7,17 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleForumApp.Domain\SimpleForumApp.Domain.csproj" />
+    <Compile Remove="CQRS\Status\**" />
+    <EmbeddedResource Remove="CQRS\Status\**" />
+    <None Remove="CQRS\Status\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Status\Commands\" />
-    <Folder Include="CQRS\Status\Queries\" />
+    <ProjectReference Include="..\SimpleForumApp.Domain\SimpleForumApp.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CQRS\Auth\Queries\" />
   </ItemGroup>
 
 </Project>

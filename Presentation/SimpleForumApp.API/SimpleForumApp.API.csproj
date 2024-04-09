@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\SimpleForumApp.Application\SimpleForumApp.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\SimpleForumApp.Infrastructure\SimpleForumApp.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\SimpleForumApp.Persistence\SimpleForumApp.Persistence.csproj" />
   </ItemGroup>
 

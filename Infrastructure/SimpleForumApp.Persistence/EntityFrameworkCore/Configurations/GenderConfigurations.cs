@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SimpleForumApp.Domain.Entities;
+using SimpleForumApp.Domain.Entities.App;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +18,15 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations
                 .WithMany(y => y.Genders)
                 .HasForeignKey(x => x.StatusId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasData(new List<Gender>
+                {
+                    new() { Id = 1, Name = "Erkek", StatusId = 1 },
+                    new() { Id = 2, Name = "Kadın", StatusId = 1 },
+                    new() { Id = 3, Name = "Belirsiz", StatusId = 1 },
+                    new() { Id = 4, Name = "Belirtmek İstemiyorum", StatusId = 1 }
+                });
         }
     }
 }

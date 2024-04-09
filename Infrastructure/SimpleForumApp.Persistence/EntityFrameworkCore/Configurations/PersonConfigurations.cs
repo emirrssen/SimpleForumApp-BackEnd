@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SimpleForumApp.Domain.Entities;
+using SimpleForumApp.Domain.Entities.App;
 using System;
 using System.Collections.Generic;
 using System.Linq;

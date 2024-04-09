@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SimpleForumApp.Domain.Entities;
+using SimpleForumApp.Domain.Entities.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,6 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder
-                .HasOne(x => x.Status)
-                .WithMany(y => y.Users)
-                .HasForeignKey(x => x.StatusId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder
                 .HasOne(x => x.Person)
                 .WithOne(y => y.User)

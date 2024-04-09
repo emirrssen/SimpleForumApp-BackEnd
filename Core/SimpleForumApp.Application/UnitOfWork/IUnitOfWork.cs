@@ -1,4 +1,5 @@
 ﻿using SimpleForumApp.Application.Repositories;
+using SimpleForumApp.Application.Services.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace SimpleForumApp.Application.UnitOfWork
     {
         public IStatusRepository StatusRepository { get; }
         public IGenderRepository GenderRepository { get; }
+        public IPersonRepository PersonRepository { get; }
+        public IUserService UserService { get; }
     }
 }

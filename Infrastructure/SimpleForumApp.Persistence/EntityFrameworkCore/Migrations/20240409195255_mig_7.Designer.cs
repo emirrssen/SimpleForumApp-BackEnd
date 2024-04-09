@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 
@@ -11,9 +12,11 @@ using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 namespace SimpleForumApp.Persistence.Migrations
 {
     [DbContext(typeof(SimpleForumAppContext))]
-    partial class SimpleForumAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240409195255_mig_7")]
+    partial class mig_7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1387,32 +1390,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Name = "Erkek",
-                            StatusId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Name = "Kadın",
-                            StatusId = 1L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Name = "Belirsiz",
-                            StatusId = 1L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            Name = "Belirtmek İstemiyorum",
-                            StatusId = 1L
-                        });
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Person", b =>
@@ -1492,7 +1469,7 @@ namespace SimpleForumApp.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedDate = new DateTime(2024, 4, 9, 22, 55, 35, 384, DateTimeKind.Local).AddTicks(1932),
+                            CreatedDate = new DateTime(2024, 4, 9, 22, 52, 54, 614, DateTimeKind.Local).AddTicks(5354),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Aktif",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1500,7 +1477,7 @@ namespace SimpleForumApp.Persistence.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedDate = new DateTime(2024, 4, 9, 22, 55, 35, 384, DateTimeKind.Local).AddTicks(1955),
+                            CreatedDate = new DateTime(2024, 4, 9, 22, 52, 54, 614, DateTimeKind.Local).AddTicks(5373),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Pasif",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1508,7 +1485,7 @@ namespace SimpleForumApp.Persistence.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedDate = new DateTime(2024, 4, 9, 22, 55, 35, 384, DateTimeKind.Local).AddTicks(1958),
+                            CreatedDate = new DateTime(2024, 4, 9, 22, 52, 54, 614, DateTimeKind.Local).AddTicks(5375),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Silindi",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
