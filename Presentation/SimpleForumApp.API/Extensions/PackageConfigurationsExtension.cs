@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.API.Filters;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Entities.Auth;
+using SimpleForumApp.Infrastructure.Configurations.Identity;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 using SimpleForumApp.Persistence.Helpers;
 
@@ -41,7 +42,22 @@ namespace SimpleForumApp.API.Extensions
 
         private static void ConfigureIdentity(IServiceCollection services)
         {
-            services.AddIdentity<User, Role>().AddEntityFrameworkStores<SimpleForumAppContext>();
+            services.AddIdentity<User, Role>(options =>
+            {
+                // For Password
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+
+                // For User
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<SimpleForumAppContext>()
+                .AddPasswordValidator<PasswordValidationConfigurations>()
+                .AddUserValidator<UserValidationConfigurations>()
+                .AddErrorDescriber<ValidationMessageConfigurations>();
         }
 
         #endregion
