@@ -1,4 +1,4 @@
-﻿using SimpleForumApp.Application.Repositories;
+﻿using SimpleForumApp.Application.Repositories.PersonRepositories;
 using SimpleForumApp.Application.Services.Auth;
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,8 @@ namespace SimpleForumApp.Application.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        public IStatusRepository StatusRepository { get; }
-        public IGenderRepository GenderRepository { get; }
-        public IPersonRepository PersonRepository { get; }
+        public IPersonWriteRepository PersonRepository { get; }
         public IUserService UserService { get; }
+        public IAuthService AuthService { get; }
     }
 }

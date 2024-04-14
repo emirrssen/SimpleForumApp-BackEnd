@@ -16,7 +16,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
         public async Task<Result> InsertAsync(User user, string password)
         {
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, password);
 
             return result.Succeeded
                 ? ResultFactory.SuccessResult()

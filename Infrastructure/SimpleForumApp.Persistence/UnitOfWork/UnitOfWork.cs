@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SimpleForumApp.Application.Repositories;
+using SimpleForumApp.Application.Repositories.PersonRepositories;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.UnitOfWork;
 
@@ -14,11 +14,9 @@ namespace SimpleForumApp.Persistence.UnitOfWork
             _serviceProvider = serviceProvider;
         }
 
-
-        public IStatusRepository StatusRepository => GetService<IStatusRepository>();
-        public IGenderRepository GenderRepository => GetService<IGenderRepository>();
         public IUserService UserService => GetService<IUserService>();
-        public IPersonRepository PersonRepository => GetService<IPersonRepository>();
+        public IPersonWriteRepository PersonRepository => GetService<IPersonWriteRepository>();
+        public IAuthService AuthService => GetService<IAuthService>();
 
         private TRepository GetService<TRepository>() where TRepository : notnull 
             => _serviceProvider.GetRequiredService<TRepository>();

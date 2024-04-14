@@ -1,0 +1,15 @@
+﻿using SimpleForumApp.Application.BaseStructures.MediatR.QueryAbstractions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SimpleForumApp.Application.CQRS.Auth.Queries.Login
+{
+    public class Query : QueryBase<bool>
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+}

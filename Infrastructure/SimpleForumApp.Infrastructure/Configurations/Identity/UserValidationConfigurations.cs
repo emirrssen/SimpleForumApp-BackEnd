@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Domain.Entities.Auth;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace SimpleForumApp.Infrastructure.Configurations.Identity
         {
             List<IdentityError> errors = new();
 
-            var userToCheck = await manager.GetPhoneNumberAsync(user);
+            var userToCheck = await manager.Users.SingleOrDefaultAsync(x => x.PhoneNumber == user.PhoneNumber);
 
             if (userToCheck is not null)
             {

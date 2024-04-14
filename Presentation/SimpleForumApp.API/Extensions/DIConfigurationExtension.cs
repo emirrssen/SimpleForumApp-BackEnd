@@ -1,8 +1,8 @@
-﻿using SimpleForumApp.Application.Repositories;
+﻿using SimpleForumApp.Application.Repositories.PersonRepositories;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Infrastructure.Services.Auth;
-using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories;
+using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.PersonRepositories;
 using SimpleForumApp.Persistence.UnitOfWork;
 
 namespace SimpleForumApp.API.Extensions
@@ -23,9 +23,7 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // For Repositories
-            services.AddScoped<IStatusRepository, StatusRepository>();
-            services.AddScoped<IGenderRepository, GenderRepository>();
-            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IPersonWriteRepository, PersonWriteRepository>();
         }
 
         #endregion
@@ -35,6 +33,7 @@ namespace SimpleForumApp.API.Extensions
         private static void ConfigureInfrastructureLayerDependencies(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
         }
 
         #endregion

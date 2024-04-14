@@ -1,6 +1,6 @@
 ﻿using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 
-namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Core
+namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories
 {
     public abstract class Repository
     {

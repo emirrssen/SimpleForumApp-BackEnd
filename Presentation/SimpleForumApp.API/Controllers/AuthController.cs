@@ -17,5 +17,9 @@ namespace SimpleForumApp.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] Application.CQRS.Auth.Commands.Register.Command command)
             => Ok(await _meditor.Send(command));
+
+        [HttpGet("login")]
+        public async Task<IActionResult> LoginAsync([FromQuery] Application.CQRS.Auth.Queries.Login.Query query)
+            => Ok(await _meditor.Send(query));
     }
 }
