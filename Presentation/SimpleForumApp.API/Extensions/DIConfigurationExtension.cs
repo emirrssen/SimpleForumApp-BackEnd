@@ -34,6 +34,7 @@ namespace SimpleForumApp.API.Extensions
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
         }
 
         #endregion

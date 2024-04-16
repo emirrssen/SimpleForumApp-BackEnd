@@ -1,15 +1,11 @@
 ﻿using SimpleForumApp.Application.BaseStructures.MediatR.QueryAbstractions;
 using SimpleForumApp.Application.UnitOfWork;
+using SimpleForumApp.Domain.DTOs.Auth;
 using SimpleForumApp.Domain.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleForumApp.Application.CQRS.Auth.Queries.Login
 {
-    public class Handler : QueryHandlerBase<Query, bool>
+    public class Handler : QueryHandlerBase<Query, Token>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -18,14 +14,14 @@ namespace SimpleForumApp.Application.CQRS.Auth.Queries.Login
             _unitOfWork = unitOfWork;
         }
 
-        public override async Task<ResultWithData<bool>> Handle(Query request, CancellationToken cancellationToken)
+        public override async Task<ResultWithData<Token>> Handle(Query request, CancellationToken cancellationToken)
         {
             var loginResult = await _unitOfWork.AuthService.LoginAsync(request.Email, request.Password);
 
             if (!loginResult.IsSuccess)
-                return ResultFactory.FailResult<bool>(loginResult.Message!);
+                return ResultFactory.FailResult<Token>(loginResult.Message!);
 
-            return ResultFactory.SuccessResult<bool>(loginResult.Message!);
+            return ResultFactory.SuccessResult<Token>(loginResult.Message!, loginResult.Data!);
         }   
     }
 }

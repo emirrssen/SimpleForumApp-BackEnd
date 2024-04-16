@@ -1,11 +1,13 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SimpleForumApp.API.Filters;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Entities.Auth;
 using SimpleForumApp.Infrastructure.Configurations.Identity;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
-using SimpleForumApp.Persistence.Helpers;
+using SimpleForumApp.Application.Helpers;
+using System.Text;
 
 namespace SimpleForumApp.API.Extensions
 {
@@ -17,6 +19,7 @@ namespace SimpleForumApp.API.Extensions
             ConfigureFluentValidation(services);
             ConfigureIdentity(services);
             ConfigureEntityFramework(services);
+            ConfigureJwt(services);
         }
 
         #region MediatR
@@ -68,6 +71,29 @@ namespace SimpleForumApp.API.Extensions
         {
             var connectionString = AppSettingsReaderHelper.GetSqlServerConnectionString();
             services.AddDbContext<SimpleForumAppContext>(options => options.UseSqlServer(connectionString));
+        }
+
+        #endregion
+
+        #region JWT
+
+        private static void ConfigureJwt(IServiceCollection services)
+        {
+            services.AddAuthentication("Admin")
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new()
+                    {
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidAudience = AppSettingsReaderHelper.GetTokenAudience(),
+                        ValidIssuer = AppSettingsReaderHelper.GetTokenIssuer(),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettingsReaderHelper.GetTokenSecurityKey()))
+                    };
+                });
         }
 
         #endregion

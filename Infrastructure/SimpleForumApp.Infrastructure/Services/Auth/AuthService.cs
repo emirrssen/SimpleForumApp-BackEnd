@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SimpleForumApp.Application.Services.Auth;
+using SimpleForumApp.Domain.DTOs.Auth;
 using SimpleForumApp.Domain.Entities.Auth;
 using SimpleForumApp.Domain.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleForumApp.Infrastructure.Services.Auth
 {
@@ -14,26 +10,30 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly ITokenService _tokenService;
 
-        public AuthService(SignInManager<User> signInManager, UserManager<User> userManager)
+        public AuthService(SignInManager<User> signInManager, UserManager<User> userManager, ITokenService tokenService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _tokenService = tokenService;
         }
 
-        public async Task<Result> LoginAsync(string email, string password)
+        public async Task<ResultWithData<Token>> LoginAsync(string email, string password)
         {
-            var userTologin = await _userManager.FindByEmailAsync(email);
+            var userToLogin = await _userManager.FindByEmailAsync(email);
 
-            if (userTologin is null)
-                return ResultFactory.FailResult("Kullanıcı bulunamadı");
+            if (userToLogin is null)
+                return ResultFactory.FailResult<Token>("Kullanıcı bulunamadı");
 
-            var result = await _signInManager.CheckPasswordSignInAsync(userTologin!, password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(userToLogin!, password, false);
 
             if (!result.Succeeded)
-                return ResultFactory.SuccessResult("Kullanıcı adı veya şifre hatalı");
+                return ResultFactory.SuccessResult<Token>("Kullanıcı adı veya şifre hatalı");
 
-            return ResultFactory.SuccessResult("Giriş başarılı");
+            var tokenResult = _tokenService.CreateAccessToken(5);
+
+            return ResultFactory.SuccessResult<Token>("Giriş başarılı", tokenResult);
         }
     }
 }

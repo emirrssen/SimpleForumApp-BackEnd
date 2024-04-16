@@ -41,7 +41,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Commands.Register
 
             if (!userInsertResult.IsSuccess)
             {
-                var result = await _unitOfWork.PersonRepository.DeleteByIdAsync(personInsertResult);
+                await _unitOfWork.PersonRepository.DeleteByIdAsync(personInsertResult);
 
                 return ResultFactory.FailResult(userInsertResult.Message);
             }
