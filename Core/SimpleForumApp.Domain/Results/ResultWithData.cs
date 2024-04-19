@@ -13,6 +13,11 @@ namespace SimpleForumApp.Domain.Results
             Data = data;
         }
 
+        public ResultWithData(bool isSuccess, TData data) : base(isSuccess)
+        {
+            Data = data;
+        }
+
         public ResultWithData(bool isSuccess, string message) : base(isSuccess, message) { }
 
         public TData? Data { get; set; }

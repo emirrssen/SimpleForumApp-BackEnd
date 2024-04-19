@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleForumApp.Domain.Results
+﻿namespace SimpleForumApp.Domain.Results
 {
     public static class ResultFactory
     {
@@ -16,5 +10,6 @@ namespace SimpleForumApp.Domain.Results
         public static ResultWithData<TData> FailResult<TData>(string message, TData data) => new(false, message, data);
         public static ResultWithData<TData> SuccessResult<TData>(string message) => new(true, message);
         public static ResultWithData<TData> FailResult<TData>(string message) => new(false, message);
+        public static ResultWithData<TData> SuccessResult<TData>(TData data) => new(true, data);
     }
 }

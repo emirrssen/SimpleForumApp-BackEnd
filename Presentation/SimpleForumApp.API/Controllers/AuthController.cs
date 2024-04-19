@@ -21,5 +21,10 @@ namespace SimpleForumApp.API.Controllers
         [HttpGet("login")]
         public async Task<IActionResult> LoginAsync([FromQuery] Application.CQRS.Auth.Queries.Login.Query query)
             => Ok(await _meditor.Send(query));
+
+
+        [HttpPost("login-with-refresh-token")]
+        public async Task<IActionResult> LoginWithRefreshTokenAsync([FromBody] Application.CQRS.Auth.Queries.LoginWithRefreshToken.Query query)
+            => Ok(await _meditor.Send(query));
     }
 }

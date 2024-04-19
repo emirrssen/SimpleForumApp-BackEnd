@@ -8,6 +8,7 @@ using SimpleForumApp.Infrastructure.Configurations.Identity;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 using SimpleForumApp.Application.Helpers;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace SimpleForumApp.API.Extensions
 {
@@ -79,8 +80,8 @@ namespace SimpleForumApp.API.Extensions
 
         private static void ConfigureJwt(IServiceCollection services)
         {
-            services.AddAuthentication("Admin")
-                .AddJwtBearer(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer("Admin", options =>
                 {
                     options.TokenValidationParameters = new()
                     {
@@ -91,7 +92,10 @@ namespace SimpleForumApp.API.Extensions
 
                         ValidAudience = AppSettingsReaderHelper.GetTokenAudience(),
                         ValidIssuer = AppSettingsReaderHelper.GetTokenIssuer(),
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettingsReaderHelper.GetTokenSecurityKey()))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettingsReaderHelper.GetTokenSecurityKey())),
+
+                        LifetimeValidator = (notBefore, expires, securityToken, validationParameters)
+                            => expires != null ? expires > DateTime.UtcNow : false
                     };
                 });
         }

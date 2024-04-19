@@ -1,4 +1,5 @@
-﻿using SimpleForumApp.Application.Repositories.PersonRepositories;
+﻿using Microsoft.AspNetCore.Identity;
+using SimpleForumApp.Application.Repositories.PersonRepositories;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Infrastructure.Services.Auth;
@@ -21,6 +22,8 @@ namespace SimpleForumApp.API.Extensions
         {
             // For UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();
+            services.AddScoped<IIdentityUnitOfWork, IdentityUnitOfWork>();
 
             // For Repositories
             services.AddScoped<IPersonWriteRepository, PersonWriteRepository>();

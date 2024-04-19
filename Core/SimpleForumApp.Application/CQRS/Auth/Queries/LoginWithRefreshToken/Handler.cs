@@ -3,7 +3,7 @@ using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.DTOs.Auth;
 using SimpleForumApp.Domain.Results;
 
-namespace SimpleForumApp.Application.CQRS.Auth.Queries.Login
+namespace SimpleForumApp.Application.CQRS.Auth.Queries.LoginWithRefreshToken
 {
     public class Handler : QueryHandlerBase<Query, Token>
     {
@@ -16,12 +16,12 @@ namespace SimpleForumApp.Application.CQRS.Auth.Queries.Login
 
         public override async Task<ResultWithData<Token>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var loginResult = await _unitOfWork.Identity.AuthService.LoginAsync(request.Email, request.Password);
+            var result = await _unitOfWork.Identity.AuthService.LoginWithRefreshTokenAsync(request.RefreshToken);
 
-            if (!loginResult.IsSuccess)
-                return ResultFactory.FailResult<Token>(loginResult.Message!);
+            if (!result.IsSuccess)
+                return ResultFactory.FailResult<Token>(result.Message);
 
-            return ResultFactory.SuccessResult<Token>(loginResult.Message!, loginResult.Data!);
-        }   
+            return ResultFactory.SuccessResult<Token>(result.Data);
+        }
     }
 }

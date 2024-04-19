@@ -15,7 +15,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Commands.Register
 
         public override async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
-            var personInsertResult = await _unitOfWork.PersonRepository.InsertAsync(new()
+            var personInsertResult = await _unitOfWork.App.PersonRepository.InsertAsync(new()
             {
                 CountryId = request.CountryId,
                 StatusId = 1,
@@ -31,7 +31,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Commands.Register
                 return ResultFactory.FailResult("Kayıt olma işlemi başarısız");
             }
 
-            var userInsertResult = await _unitOfWork.UserService.InsertAsync(new()
+            var userInsertResult = await _unitOfWork.Identity.UserService.InsertAsync(new()
             {
                 PersonId = personInsertResult,
                 UserName = request.UserName,
@@ -41,7 +41,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Commands.Register
 
             if (!userInsertResult.IsSuccess)
             {
-                await _unitOfWork.PersonRepository.DeleteByIdAsync(personInsertResult);
+                await _unitOfWork.App.PersonRepository.DeleteByIdAsync(personInsertResult);
 
                 return ResultFactory.FailResult(userInsertResult.Message);
             }

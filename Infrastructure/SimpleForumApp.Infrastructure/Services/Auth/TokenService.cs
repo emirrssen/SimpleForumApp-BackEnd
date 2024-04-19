@@ -3,6 +3,7 @@ using SimpleForumApp.Application.Helpers;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Domain.DTOs.Auth;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SimpleForumApp.Infrastructure.Services.Auth
@@ -28,8 +29,18 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
             JwtSecurityTokenHandler tokenHandler = new();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
+            token.RefreshToken = CreateRefreshToken(expirationMinute);
 
             return token;
+        }
+
+        public string CreateRefreshToken(int expirationMinute)
+        {
+            byte[] number = new byte[32];
+            using var random = RandomNumberGenerator.Create();
+            random.GetBytes(number);
+
+            return Convert.ToBase64String(number);
         }
     }
 }

@@ -6,5 +6,6 @@ namespace SimpleForumApp.Application.Services.Auth
     public interface IAuthService
     {
         Task<ResultWithData<Token>> LoginAsync(string email, string password);
+        Task<ResultWithData<Token>> LoginWithRefreshTokenAsync(string refreshToken);
     }
 }

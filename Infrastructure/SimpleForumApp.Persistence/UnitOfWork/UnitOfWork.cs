@@ -1,24 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using SimpleForumApp.Application.Repositories.PersonRepositories;
-using SimpleForumApp.Application.Services.Auth;
-using SimpleForumApp.Application.UnitOfWork;
+﻿using SimpleForumApp.Application.UnitOfWork;
 
 namespace SimpleForumApp.Persistence.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : ServiceGetter, IUnitOfWork
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public UnitOfWork(IServiceProvider serviceProvider)
+        public UnitOfWork(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _serviceProvider = serviceProvider;
         }
 
-        public IUserService UserService => GetService<IUserService>();
-        public IPersonWriteRepository PersonRepository => GetService<IPersonWriteRepository>();
-        public IAuthService AuthService => GetService<IAuthService>();
-
-        private TRepository GetService<TRepository>() where TRepository : notnull 
-            => _serviceProvider.GetRequiredService<TRepository>();
+        public IAppUnitOfWork App => GetService<IAppUnitOfWork>();
+        public IIdentityUnitOfWork Identity => GetService<IIdentityUnitOfWork>();
     }
 }
