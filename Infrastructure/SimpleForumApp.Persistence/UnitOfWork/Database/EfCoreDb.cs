@@ -20,12 +20,27 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Database
                 await _context.Database.CurrentTransaction.CommitAsync();
             }
         }
-
         public async Task RollbackTransactionAsync()
         {
             if (_context.Database.CurrentTransaction is not null)
             {
                 await _context.Database.CurrentTransaction.RollbackAsync();
+            }
+        }
+
+        public async Task CreateSavepointAsync(string savepointName)
+        {
+            if (_context.Database.CurrentTransaction is not null)
+            {
+                await _context.Database.CurrentTransaction.CreateSavepointAsync(savepointName);
+            }
+        }
+
+        public async Task RollbackToSavepointAsync(string savepointName)
+        {
+            if (_context.Database.CurrentTransaction is not null)
+            {
+                await _context.Database.CurrentTransaction.RollbackToSavepointAsync(savepointName);
             }
         }
     }

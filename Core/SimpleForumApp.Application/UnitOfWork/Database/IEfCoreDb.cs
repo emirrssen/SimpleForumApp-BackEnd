@@ -7,5 +7,7 @@ namespace SimpleForumApp.Application.UnitOfWork.Database
         Task<IDbContextTransaction> BeginTransactionAsync();
         Task CommitTransactionAsync();
         Task RollbackTransactionAsync();
+        Task CreateSavepointAsync(string savepointName);
+        Task RollbackToSavepointAsync(string savepointName);
     }
 }
