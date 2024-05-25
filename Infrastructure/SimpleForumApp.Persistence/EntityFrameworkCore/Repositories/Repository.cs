@@ -10,5 +10,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories
         {
             _context = context;
         }
+
+        protected Task SaveChangesAsync() => _context.SaveChangesAsync();
     }
 }

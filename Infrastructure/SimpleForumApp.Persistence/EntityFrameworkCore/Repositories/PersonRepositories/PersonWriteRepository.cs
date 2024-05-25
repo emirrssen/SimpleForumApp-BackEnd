@@ -18,7 +18,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.PersonRepo
                 return false;
 
             _context.Persons.Remove(personToDelete!);
-            await _context.SaveChangesAsync();
+            await SaveChangesAsync();
 
             return true;
         }
@@ -27,7 +27,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.PersonRepo
         {
             var result = await _context.Persons.AddAsync(person);
 
-            await _context.SaveChangesAsync();
+            await SaveChangesAsync();
 
             return result.Entity.Id;
         }

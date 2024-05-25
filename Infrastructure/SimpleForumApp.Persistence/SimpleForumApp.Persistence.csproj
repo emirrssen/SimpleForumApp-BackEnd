@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\Core\SimpleForumApp.Application\SimpleForumApp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitOfWork\Core\" />
+  </ItemGroup>
+
 </Project>

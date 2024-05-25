@@ -20,6 +20,7 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Database
                 await _context.Database.CurrentTransaction.CommitAsync();
             }
         }
+
         public async Task RollbackTransactionAsync()
         {
             if (_context.Database.CurrentTransaction is not null)

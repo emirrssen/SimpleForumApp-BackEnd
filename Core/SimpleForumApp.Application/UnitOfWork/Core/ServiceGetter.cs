@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SimpleForumApp.Application.UnitOfWork.Core;
 
 namespace SimpleForumApp.Persistence.UnitOfWork.Core
 {
-    public class ServiceGetter : IServiceGetter
+    public abstract class ServiceGetter
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -12,7 +11,7 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Core
             _serviceProvider = serviceProvider;
         }
 
-        public TService GetService<TService>() where TService : notnull
+        protected TService GetService<TService>() where TService : notnull
             => _serviceProvider.GetRequiredService<TService>();
     }
 }
