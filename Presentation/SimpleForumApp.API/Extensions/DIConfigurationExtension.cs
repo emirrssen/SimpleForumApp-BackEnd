@@ -2,9 +2,13 @@
 using SimpleForumApp.Application.Repositories.PersonRepositories;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.UnitOfWork;
+using SimpleForumApp.Application.UnitOfWork.Context;
+using SimpleForumApp.Application.UnitOfWork.Database;
 using SimpleForumApp.Infrastructure.Services.Auth;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.PersonRepositories;
 using SimpleForumApp.Persistence.UnitOfWork;
+using SimpleForumApp.Persistence.UnitOfWork.Context;
+using SimpleForumApp.Persistence.UnitOfWork.Database;
 
 namespace SimpleForumApp.API.Extensions
 {
@@ -22,8 +26,11 @@ namespace SimpleForumApp.API.Extensions
         {
             // For UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();
-            services.AddScoped<IIdentityUnitOfWork, IdentityUnitOfWork>();
+            services.AddScoped<IContext, Context>();
+            services.AddScoped<IDatabase, Database>();
+            services.AddScoped<IAppContext, Persistence.UnitOfWork.Context.AppContext>();
+            services.AddScoped<IIdentityContext, IdentityContext>();
+            services.AddScoped<IEfCoreDb, EfCoreDb>();
 
             // For Repositories
             services.AddScoped<IPersonWriteRepository, PersonWriteRepository>();

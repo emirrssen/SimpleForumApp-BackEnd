@@ -1,8 +1,8 @@
 ﻿using SimpleForumApp.Application.Services.Auth;
 
-namespace SimpleForumApp.Application.UnitOfWork
+namespace SimpleForumApp.Application.UnitOfWork.Context
 {
-    public interface IIdentityUnitOfWork
+    public interface IIdentityContext
     {
         public IUserService UserService { get; }
         public IAuthService AuthService { get; }

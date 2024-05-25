@@ -15,7 +15,9 @@ namespace SimpleForumApp.Application.CQRS.Auth.Commands.Register
 
         public override async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
-            var personInsertResult = await _unitOfWork.App.PersonRepository.InsertAsync(new()
+            using var transaction = _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
+
+            var personInsertResult = await _unitOfWork.Context.App.PersonRepository.InsertAsync(new()
             {
                 CountryId = request.CountryId,
                 StatusId = 1,
@@ -28,10 +30,11 @@ namespace SimpleForumApp.Application.CQRS.Auth.Commands.Register
 
             if (personInsertResult <= 0)
             {
+                await _unitOfWork.Database.EfCoreDb.RollbackTransactionAsync();
                 return ResultFactory.FailResult("Kayıt olma işlemi başarısız");
             }
 
-            var userInsertResult = await _unitOfWork.Identity.UserService.InsertAsync(new()
+            var userInsertResult = await _unitOfWork.Context.Identity.UserService.InsertAsync(new()
             {
                 PersonId = personInsertResult,
                 UserName = request.UserName,
@@ -41,11 +44,11 @@ namespace SimpleForumApp.Application.CQRS.Auth.Commands.Register
 
             if (!userInsertResult.IsSuccess)
             {
-                await _unitOfWork.App.PersonRepository.DeleteByIdAsync(personInsertResult);
-
+                await _unitOfWork.Database.EfCoreDb.RollbackTransactionAsync();
                 return ResultFactory.FailResult(userInsertResult.Message);
             }
 
+            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
             return ResultFactory.SuccessResult("Kayıt olma işlemi başarılı");
         }
     }

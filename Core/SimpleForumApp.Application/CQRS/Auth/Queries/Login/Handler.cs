@@ -16,7 +16,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Queries.Login
 
         public override async Task<ResultWithData<Token>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var loginResult = await _unitOfWork.Identity.AuthService.LoginAsync(request.Email, request.Password);
+            var loginResult = await _unitOfWork.Context.Identity.AuthService.LoginAsync(request.Email, request.Password);
 
             if (!loginResult.IsSuccess)
                 return ResultFactory.FailResult<Token>(loginResult.Message!);

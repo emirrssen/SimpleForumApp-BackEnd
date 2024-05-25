@@ -1,4 +1,4 @@
-﻿namespace SimpleForumApp.Application.UnitOfWork
+﻿namespace SimpleForumApp.Application.UnitOfWork.Core
 {
     public interface IServiceGetter
     {

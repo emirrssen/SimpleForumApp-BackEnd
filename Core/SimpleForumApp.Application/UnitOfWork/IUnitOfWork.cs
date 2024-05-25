@@ -1,10 +1,11 @@
-﻿using SimpleForumApp.Application.Services.Auth;
+﻿using SimpleForumApp.Application.UnitOfWork.Context;
+using SimpleForumApp.Application.UnitOfWork.Database;
 
 namespace SimpleForumApp.Application.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        public IAppUnitOfWork App { get; }
-        public IIdentityUnitOfWork Identity { get; }
+        public IContext Context { get; }
+        public IDatabase Database { get; }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using SimpleForumApp.Application.UnitOfWork;
+using SimpleForumApp.Application.UnitOfWork.Context;
+using SimpleForumApp.Application.UnitOfWork.Database;
+using SimpleForumApp.Persistence.UnitOfWork.Core;
 
 namespace SimpleForumApp.Persistence.UnitOfWork
 {
@@ -7,8 +10,7 @@ namespace SimpleForumApp.Persistence.UnitOfWork
         public UnitOfWork(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
-
-        public IAppUnitOfWork App => GetService<IAppUnitOfWork>();
-        public IIdentityUnitOfWork Identity => GetService<IIdentityUnitOfWork>();
+        public IContext Context => GetService<IContext>();
+        public IDatabase Database => GetService<IDatabase>();
     }
 }
