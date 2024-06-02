@@ -10,7 +10,7 @@ namespace SimpleForumApp.Application.Helpers
         public static string GetTokenSecurityKey() => Manager().GetValue<string>("Token:SecurityKey");
         public static string GetEmailSettingsHost() => Manager().GetValue<string>("EmailSettings:Host");
         public static string GetEmailSettingsPassword() => Manager().GetValue<string>("EmailSettings:Password");
-        public static string GetEmailSettingsEamil() => Manager().GetValue<string>("EmailSettings:Email");
+        public static string GetEmailSettingsEmail() => Manager().GetValue<string>("EmailSettings:Email");
 
         private static ConfigurationManager Manager()
         {

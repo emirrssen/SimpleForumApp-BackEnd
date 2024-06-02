@@ -34,7 +34,7 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<IDatabase, Database>();
             services.AddScoped<IAppContext, Persistence.UnitOfWork.Context.AppContext>();
             services.AddScoped<IIdentityContext, IdentityContext>();
-            services.AddScoped<IEmailContext, EmailContext>();
+            services.AddScoped<INotificationContext, NotificationContext>();
             services.AddScoped<IEfCoreDb, EfCoreDb>();
 
             // For Repositories
@@ -49,7 +49,7 @@ namespace SimpleForumApp.API.Extensions
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.UseDefaultCredentials = false;
                 smtp.Port = 587;
-                smtp.Credentials = new NetworkCredential(AppSettingsReaderHelper.GetEmailSettingsEamil(), AppSettingsReaderHelper.GetEmailSettingsPassword());
+                smtp.Credentials = new NetworkCredential(AppSettingsReaderHelper.GetEmailSettingsEmail(), AppSettingsReaderHelper.GetEmailSettingsPassword());
                 smtp.EnableSsl = true;
 
                 return smtp;

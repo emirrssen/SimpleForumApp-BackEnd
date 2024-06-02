@@ -15,7 +15,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Queries.SendMailForPasswordReset
 
         public override async Task<ResultWithData<string>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Context.Identity.AuthService.CreateResetPasswordLinkAsync(request.Email);
+            var result = await _unitOfWork.Context.Identity.AuthService.SendResetPasswordMailAsync(request.Email);
 
             if (!result.IsSuccess)
                 return ResultFactory.FailResult<string>(result.Message);

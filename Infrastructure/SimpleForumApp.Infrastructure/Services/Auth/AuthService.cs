@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SimpleForumApp.Application.Helpers;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.DTOs.Auth;
@@ -21,7 +22,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> CreateResetPasswordLinkAsync(string email)
+        public async Task<Result> SendResetPasswordMailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
@@ -29,10 +30,9 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                 return ResultFactory.FailResult("Kullanıcı bulunamadı");
 
             var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-
             var resetPasswordLink = $"http://localhost:5220/api/auth/generate-reset-password?user-id={user.Id}&token={passwordResetToken}";
 
-            await _unitOfWork.Context.Email.EmailService.SendResetPasswordEmailAsync(resetPasswordLink, user.Email!);
+            await _unitOfWork.Context.Notification.EmailService.SendMailForPasswordResetAsync(user.Email!, resetPasswordLink);
 
             return ResultFactory.SuccessResult();
         }

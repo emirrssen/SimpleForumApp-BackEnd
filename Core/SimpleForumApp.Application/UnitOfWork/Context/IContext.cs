@@ -4,6 +4,6 @@
     {
         public IAppContext App { get; }
         public IIdentityContext Identity { get; }
-        public IEmailContext Email { get; }
+        public INotificationContext Notification { get; }
     }
 }

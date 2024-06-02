@@ -2,7 +2,7 @@
 
 namespace SimpleForumApp.Application.UnitOfWork.Context
 {
-    public interface IEmailContext
+    public interface INotificationContext
     {
         public IEmailService EmailService { get; }
     }

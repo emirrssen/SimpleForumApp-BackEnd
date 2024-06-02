@@ -4,9 +4,9 @@ using SimpleForumApp.Persistence.UnitOfWork.Core;
 
 namespace SimpleForumApp.Persistence.UnitOfWork.Context
 {
-    public class EmailContext : ServiceGetter, IEmailContext
+    public class NotificationContext : ServiceGetter, INotificationContext
     {
-        public EmailContext(IServiceProvider serviceProvider) : base(serviceProvider)
+        public NotificationContext(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 

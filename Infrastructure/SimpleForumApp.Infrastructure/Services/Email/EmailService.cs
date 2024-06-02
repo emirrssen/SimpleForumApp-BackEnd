@@ -1,6 +1,5 @@
 ﻿using SimpleForumApp.Application.Helpers;
 using SimpleForumApp.Application.Services.Email;
-using System.Net;
 using System.Net.Mail;
 
 namespace SimpleForumApp.Infrastructure.Services.Email
@@ -14,19 +13,36 @@ namespace SimpleForumApp.Infrastructure.Services.Email
             _smtpClient = smtpClient;
         }
 
-        public async Task SendResetPasswordEmailAsync(string resetEmailLink, string toEmail)
+        public async Task SendMailAsync(string subject, string body, bool isBodyHtml, string sendFrom, params string[] emails)
         {
-            var mailMessage = new MailMessage();
+            using MailMessage mailMessage = new();
+
+            mailMessage.From = new MailAddress(sendFrom);
+
+            foreach (var email in emails) 
+            {
+                mailMessage.To.Add(email);            
+            }
+
+            mailMessage.IsBodyHtml = isBodyHtml;
+            mailMessage.Subject = subject;
+            mailMessage.Body = body;
+
+            await _smtpClient.SendMailAsync(mailMessage);
+        }
+
+        public async Task SendMailForPasswordResetAsync(string email, string token)
+        {
+            using MailMessage mailMessage = new();
+
+            mailMessage.From = new MailAddress(AppSettingsReaderHelper.GetEmailSettingsEmail());
+            mailMessage.To.Add(email);
 
             mailMessage.IsBodyHtml = true;
-
-            mailMessage.From = new MailAddress(AppSettingsReaderHelper.GetEmailSettingsEamil());
-            mailMessage.To.Add(toEmail);
-
             mailMessage.Subject = "Şifre Sıfırlama Linki";
             mailMessage.Body = @$"
                 <p>Değerli Simple Forum App Kullanıcısı,</p>
-                <p>Şifrenizi yenilemek için <a href={resetEmailLink}>bu linke</a> tıklayabilirsiniz.</p><br>
+                <p>Şifrenizi yenilemek için <a href={token}>bu linke</a> tıklayabilirsiniz.</p><br>
             ";
 
             await _smtpClient.SendMailAsync(mailMessage);

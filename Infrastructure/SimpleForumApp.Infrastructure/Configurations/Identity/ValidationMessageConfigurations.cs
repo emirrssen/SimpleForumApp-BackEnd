@@ -44,5 +44,12 @@ namespace SimpleForumApp.Infrastructure.Configurations.Identity
             => new() { Code = "DuplicateUserName", Description = "Bu kullanıcı adı, başka bir kullanıcı tarafından kullanılmaktadır." };
 
         #endregion
+
+        #region Token Validations
+
+        public override IdentityError InvalidToken()
+            => new() { Code = "InvalidToken", Description = "Bir hata meydana geldi" };
+
+        #endregion
     }
 }

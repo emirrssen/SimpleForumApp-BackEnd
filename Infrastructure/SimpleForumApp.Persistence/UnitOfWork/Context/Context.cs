@@ -11,6 +11,6 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Context
 
         public IAppContext App => GetService<IAppContext>();
         public IIdentityContext Identity => GetService<IIdentityContext>();
-        public IEmailContext Email => GetService<IEmailContext>();
+        public INotificationContext Notification => GetService<INotificationContext>();
     }
 }
