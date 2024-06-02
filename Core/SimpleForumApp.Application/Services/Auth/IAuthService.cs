@@ -8,6 +8,7 @@ namespace SimpleForumApp.Application.Services.Auth
         Task<ResultWithData<Token>> LoginAsync(string email, string password);
         Task<ResultWithData<Token>> LoginWithRefreshTokenAsync(string refreshToken);
         Task<Result> SendResetPasswordMailAsync(string email);
+        Task<Result> ValidatePasswordTokenAsync(string token, string email);
         Task<Result> ResetPasswordAsync(long id, string token, string password);
     }
 }

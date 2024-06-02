@@ -99,5 +99,20 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
             return ResultFactory.FailResult(string.Join("\n", result.Errors.Select(x => x.Description)));
         }
+
+        public async Task<Result> ValidatePasswordTokenAsync(string token, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+                return ResultFactory.FailResult("Kullanıcı bulunamadı");
+
+            var result = await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.PasswordResetTokenProvider, "ResetPassword", token);
+
+            if (!result)
+                return ResultFactory.FailResult("Bir hata meydana geldi");
+
+            return ResultFactory.SuccessResult();
+        }
     }
 }
