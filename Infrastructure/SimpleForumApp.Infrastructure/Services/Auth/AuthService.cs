@@ -21,6 +21,22 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<Result> CreateResetPasswordLinkAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+                return ResultFactory.FailResult("Kullanıcı bulunamadı");
+
+            var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var resetPasswordLink = $"http://localhost:5220/api/auth/generate-reset-password?user-id={user.Id}&token={passwordResetToken}";
+
+            await _unitOfWork.Context.Email.EmailService.SendResetPasswordEmailAsync(resetPasswordLink, user.Email!);
+
+            return ResultFactory.SuccessResult();
+        }
+
         public async Task<ResultWithData<Token>> LoginAsync(string email, string password)
         {
             var userToLogin = await _userManager.FindByEmailAsync(email);
@@ -28,10 +44,13 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             if (userToLogin is null)
                 return ResultFactory.FailResult<Token>("Kullanıcı bulunamadı");
 
-            var result = await _signInManager.CheckPasswordSignInAsync(userToLogin!, password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(userToLogin!, password, true);
+
+            if (result.IsLockedOut)
+                return ResultFactory.FailResult<Token>("5'ten fazla yanlış giriş yaptığınız için hesabınız 5 dakika boyunca girişe kapatıldı");
 
             if (!result.Succeeded)
-                return ResultFactory.SuccessResult<Token>("Kullanıcı adı veya şifre hatalı");
+                return ResultFactory.FailResult<Token>("Kullanıcı adı veya şifre hatalı");
 
             var tokenResult = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(1);
 
@@ -64,6 +83,21 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             }
 
             return ResultFactory.SuccessResult<Token>(token);
+        }
+
+        public async Task<Result> ResetPasswordAsync(long id, string token, string password)
+        {
+            var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (user is null)
+                return ResultFactory.FailResult("Kullanıcı bulunamadı");
+
+            var result = await _userManager.ResetPasswordAsync(user, token, password);
+
+            if (result.Succeeded)
+                return ResultFactory.SuccessResult("Şifreniz başarıyla yenilenmiştir");
+
+            return ResultFactory.FailResult(string.Join("\n", result.Errors.Select(x => x.Description)));
         }
     }
 }

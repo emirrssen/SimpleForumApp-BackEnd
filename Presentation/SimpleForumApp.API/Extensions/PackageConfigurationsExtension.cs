@@ -9,6 +9,7 @@ using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 using SimpleForumApp.Application.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 
 namespace SimpleForumApp.API.Extensions
 {
@@ -46,6 +47,12 @@ namespace SimpleForumApp.API.Extensions
 
         private static void ConfigureIdentity(IServiceCollection services)
         {
+            // For Lifetime Of Generated Tokens
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromMinutes(5);
+            });
+
             services.AddIdentity<User, Role>(options =>
             {
                 // For Password
@@ -61,7 +68,8 @@ namespace SimpleForumApp.API.Extensions
                 .AddEntityFrameworkStores<SimpleForumAppContext>()
                 .AddPasswordValidator<PasswordValidationConfigurations>()
                 .AddUserValidator<UserValidationConfigurations>()
-                .AddErrorDescriber<ValidationMessageConfigurations>();
+                .AddErrorDescriber<ValidationMessageConfigurations>()
+                .AddDefaultTokenProviders();
         }
 
         #endregion
@@ -81,7 +89,7 @@ namespace SimpleForumApp.API.Extensions
         private static void ConfigureJwt(IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer("Admin", options =>
+                .AddJwtBearer("simple-forum-app", options =>
                 {
                     options.TokenValidationParameters = new()
                     {

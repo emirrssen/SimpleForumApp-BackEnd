@@ -22,9 +22,16 @@ namespace SimpleForumApp.API.Controllers
         public async Task<IActionResult> LoginAsync([FromQuery] Application.CQRS.Auth.Queries.Login.Query query)
             => Ok(await _meditor.Send(query));
 
-
         [HttpPost("login-with-refresh-token")]
         public async Task<IActionResult> LoginWithRefreshTokenAsync([FromBody] Application.CQRS.Auth.Queries.LoginWithRefreshToken.Query query)
             => Ok(await _meditor.Send(query));
+
+        [HttpGet("send-mail-for-password-reset")]
+        public async Task<IActionResult> SendMailForPasswordResetAsync([FromQuery] Application.CQRS.Auth.Queries.SendMailForPasswordReset.Query query)
+            => Ok(await _meditor.Send(query));
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPasswordAsync([FromBody] Application.CQRS.Auth.Commands.ResetPassword.Command command)
+            => Ok(await _meditor.Send(command));
     }
 }

@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using SimpleForumApp.Application.Helpers;
 using SimpleForumApp.Application.Repositories.PersonRepositories;
 using SimpleForumApp.Application.Services.Auth;
+using SimpleForumApp.Application.Services.Email;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Application.UnitOfWork.Context;
 using SimpleForumApp.Application.UnitOfWork.Database;
 using SimpleForumApp.Infrastructure.Services.Auth;
+using SimpleForumApp.Infrastructure.Services.Email;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.PersonRepositories;
 using SimpleForumApp.Persistence.UnitOfWork;
 using SimpleForumApp.Persistence.UnitOfWork.Context;
 using SimpleForumApp.Persistence.UnitOfWork.Database;
+using System.Net;
+using System.Net.Mail;
 
 namespace SimpleForumApp.API.Extensions
 {
@@ -30,10 +34,26 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<IDatabase, Database>();
             services.AddScoped<IAppContext, Persistence.UnitOfWork.Context.AppContext>();
             services.AddScoped<IIdentityContext, IdentityContext>();
+            services.AddScoped<IEmailContext, EmailContext>();
             services.AddScoped<IEfCoreDb, EfCoreDb>();
 
             // For Repositories
             services.AddScoped<IPersonWriteRepository, PersonWriteRepository>();
+
+            // For Smpt
+            services.AddScoped<SmtpClient>(opt =>
+            {
+                var smtp = new SmtpClient();
+
+                smtp.Host = AppSettingsReaderHelper.GetEmailSettingsHost();
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.UseDefaultCredentials = false;
+                smtp.Port = 587;
+                smtp.Credentials = new NetworkCredential(AppSettingsReaderHelper.GetEmailSettingsEamil(), AppSettingsReaderHelper.GetEmailSettingsPassword());
+                smtp.EnableSsl = true;
+
+                return smtp;
+            });
         }
 
         #endregion
@@ -45,6 +65,7 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IEmailService, EmailService>();
         }
 
         #endregion
