@@ -1,9 +1,4 @@
 ﻿using SimpleForumApp.Domain.Entities.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleForumApp.Domain.Entities.App
 {
@@ -14,5 +9,14 @@ namespace SimpleForumApp.Domain.Entities.App
         public ICollection<Gender> Genders { get; set; }
         public ICollection<Country> Countries { get; set; }
         public ICollection<Person> Persons { get; set; }
+        public ICollection<Action> Actions { get; set; }
+        public ICollection<AuthorType> AuthorTypes { get; set; }
+        public ICollection<Group> Groups { get; set; }
+        public ICollection<GroupMember> GroupMembers { get; set; }
+        public ICollection<Author> Authors { get; set; }
+        public ICollection<Title> Titles { get; set; }
+        public ICollection<Entry> Entries { get; set; }
+        public ICollection<TitleAction> TitleActions { get; set; }
+        public ICollection<EntryAction> EntryActions { get; set; }
     }
 }

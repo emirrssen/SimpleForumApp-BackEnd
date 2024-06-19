@@ -12,8 +12,8 @@ using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 namespace SimpleForumApp.Persistence.Migrations
 {
     [DbContext(typeof(SimpleForumAppContext))]
-    [Migration("20240409195535_mig-8")]
-    partial class mig8
+    [Migration("20240619092506_mig_1")]
+    partial class mig_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,6 +126,138 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Action", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("Action");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "Sevdi",
+                            StatusId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Sevmedi",
+                            StatusId = 1L
+                        });
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Author", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AuthorTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("GroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorTypeId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Author", t =>
+                        {
+                            t.HasCheckConstraint("CK_Author_UserId_GroupId", "([UserId] IS NOT NULL AND [GroupId] IS NULL) OR ([UserId] IS NULL AND [GroupId] IS NOT NULL)");
+                        });
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.AuthorType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("AuthorType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Kullanıcı",
+                            StatusId = 1L,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Grup",
+                            StatusId = 1L,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Country", b =>
@@ -1370,6 +1502,81 @@ namespace SimpleForumApp.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Entry", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TitleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("TitleId");
+
+                    b.ToTable("Entry");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.EntryAction", b =>
+                {
+                    b.Property<long>("ActionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EntryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ActionId", "EntryId", "UserId");
+
+                    b.HasIndex("EntryId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EntryAction");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Gender", b =>
                 {
                     b.Property<long>("Id")
@@ -1418,6 +1625,80 @@ namespace SimpleForumApp.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Group", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BackgroundImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GroupImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OwnerUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerUserId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("Group");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.GroupMember", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "GroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("GroupMember");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Person", b =>
                 {
                     b.Property<long>("Id")
@@ -1447,6 +1728,9 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("StatusId")
@@ -1495,7 +1779,7 @@ namespace SimpleForumApp.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedDate = new DateTime(2024, 4, 9, 22, 55, 35, 384, DateTimeKind.Local).AddTicks(1932),
+                            CreatedDate = new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Aktif",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1503,7 +1787,7 @@ namespace SimpleForumApp.Persistence.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedDate = new DateTime(2024, 4, 9, 22, 55, 35, 384, DateTimeKind.Local).AddTicks(1955),
+                            CreatedDate = new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Pasif",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1511,11 +1795,85 @@ namespace SimpleForumApp.Persistence.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedDate = new DateTime(2024, 4, 9, 22, 55, 35, 384, DateTimeKind.Local).AddTicks(1958),
+                            CreatedDate = new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Silindi",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Title", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("Title");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.TitleAction", b =>
+                {
+                    b.Property<long>("ActionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TitleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ActionId", "TitleId", "UserId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("TitleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TitleAction");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Role", b =>
@@ -1596,6 +1954,12 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenEndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -1673,6 +2037,61 @@ namespace SimpleForumApp.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Action", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("Actions")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Author", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.AuthorType", "AuthorType")
+                        .WithMany("Authors")
+                        .HasForeignKey("AuthorTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Group", "Group")
+                        .WithMany("Authors")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("Authors")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.User", "User")
+                        .WithMany("Authors")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AuthorType");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.AuthorType", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("AuthorTypes")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Country", b =>
                 {
                     b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
@@ -1684,6 +2103,68 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Navigation("Status");
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Entry", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Author", "Author")
+                        .WithMany("Entries")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("Entries")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Title", "Title")
+                        .WithMany("Entries")
+                        .HasForeignKey("TitleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("Title");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.EntryAction", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Action", "Action")
+                        .WithMany("Entries")
+                        .HasForeignKey("ActionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Entry", "Entry")
+                        .WithMany("Actions")
+                        .HasForeignKey("EntryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("EntryActions")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.User", "User")
+                        .WithMany("EntryActions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Action");
+
+                    b.Navigation("Entry");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Gender", b =>
                 {
                     b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
@@ -1693,6 +2174,52 @@ namespace SimpleForumApp.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Group", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.User", "User")
+                        .WithMany("Groups")
+                        .HasForeignKey("OwnerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("Groups")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.GroupMember", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Group", "Group")
+                        .WithMany("GroupMembers")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("GroupMembers")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.User", "User")
+                        .WithMany("GroupMembers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Person", b =>
@@ -1722,6 +2249,60 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Navigation("Status");
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Title", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Author", "Author")
+                        .WithMany("Titles")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("Titles")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.TitleAction", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Action", "Action")
+                        .WithMany("Titles")
+                        .HasForeignKey("ActionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("TitleActions")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Title", "Title")
+                        .WithMany("Actions")
+                        .HasForeignKey("TitleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.User", "User")
+                        .WithMany("TitleActions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Action");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("Title");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.User", b =>
                 {
                     b.HasOne("SimpleForumApp.Domain.Entities.App.Person", "Person")
@@ -1733,14 +2314,45 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Action", b =>
+                {
+                    b.Navigation("Entries");
+
+                    b.Navigation("Titles");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Author", b =>
+                {
+                    b.Navigation("Entries");
+
+                    b.Navigation("Titles");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.AuthorType", b =>
+                {
+                    b.Navigation("Authors");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Country", b =>
                 {
                     b.Navigation("Persons");
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Entry", b =>
+                {
+                    b.Navigation("Actions");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Gender", b =>
                 {
                     b.Navigation("Persons");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Group", b =>
+                {
+                    b.Navigation("Authors");
+
+                    b.Navigation("GroupMembers");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Person", b =>
@@ -1751,11 +2363,49 @@ namespace SimpleForumApp.Persistence.Migrations
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Status", b =>
                 {
+                    b.Navigation("Actions");
+
+                    b.Navigation("AuthorTypes");
+
+                    b.Navigation("Authors");
+
                     b.Navigation("Countries");
+
+                    b.Navigation("Entries");
+
+                    b.Navigation("EntryActions");
 
                     b.Navigation("Genders");
 
+                    b.Navigation("GroupMembers");
+
+                    b.Navigation("Groups");
+
                     b.Navigation("Persons");
+
+                    b.Navigation("TitleActions");
+
+                    b.Navigation("Titles");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Title", b =>
+                {
+                    b.Navigation("Actions");
+
+                    b.Navigation("Entries");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.User", b =>
+                {
+                    b.Navigation("Authors");
+
+                    b.Navigation("EntryActions");
+
+                    b.Navigation("GroupMembers");
+
+                    b.Navigation("Groups");
+
+                    b.Navigation("TitleActions");
                 });
 #pragma warning restore 612, 618
         }

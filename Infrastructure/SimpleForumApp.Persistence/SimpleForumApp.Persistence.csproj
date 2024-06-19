@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="EntityFrameworkCore\Migrations\" />
     <Folder Include="UnitOfWork\Core\" />
   </ItemGroup>
 

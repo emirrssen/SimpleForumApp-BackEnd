@@ -10,5 +10,10 @@ namespace SimpleForumApp.Domain.Entities.Auth
         public DateTime? RefreshTokenEndDate { get; set; }
 
         public Person Person { get; set; }
+        public ICollection<Group> Groups { get; set; }
+        public ICollection<GroupMember> GroupMembers { get; set; }
+        public ICollection<Author> Authors { get; set; }
+        public ICollection<TitleAction> TitleActions { get; set; }
+        public ICollection<EntryAction> EntryActions { get; set; }
     }
 }
