@@ -37,5 +37,9 @@ namespace SimpleForumApp.API.Controllers
         [HttpPost("validate-reset-password-token")]
         public async Task<IActionResult> ValidateResetPasswordTokenAsync([FromBody] Application.CQRS.Auth.Commands.VerifyPasswordToken.Command command)
             => Ok(await _meditor.Send(command));
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePasswordAsync([FromBody] Application.CQRS.Auth.Commands.ChangePassword.Command command)
+            => Ok(await _meditor.Send(command));
     }
 }

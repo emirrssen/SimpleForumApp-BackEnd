@@ -1,6 +1,8 @@
-﻿namespace SimpleForumApp.Application.UnitOfWork.Context
+﻿using SimpleForumApp.Application.UnitOfWork.Core;
+
+namespace SimpleForumApp.Application.UnitOfWork.Context
 {
-    public interface IContext
+    public interface IContext : IService
     {
         public IAppContext App { get; }
         public IIdentityContext Identity { get; }

@@ -2,12 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Domain.Entities.App;
 using SimpleForumApp.Domain.Entities.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleForumApp.Persistence.EntityFrameworkCore.Context
 {
@@ -17,6 +12,15 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Context
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Status> Statuses { get; set; }
+        public DbSet<Domain.Entities.App.Action> Actions { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<AuthorType> AuthorTypes { get; set; }
+        public DbSet<Entry> Entries { get; set; }
+        public DbSet<EntryAction> EntryActions { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupMember> GroupMembers { get; set; }
+        public DbSet<Title> Titles { get; set; }
+        public DbSet<TitleAction> TitleActions { get; set; }
 
         public SimpleForumAppContext(DbContextOptions options) : base(options) { }
 

@@ -1,8 +1,9 @@
 ﻿using SimpleForumApp.Application.Services.Email;
+using SimpleForumApp.Application.UnitOfWork.Core;
 
 namespace SimpleForumApp.Application.UnitOfWork.Context
 {
-    public interface INotificationContext
+    public interface INotificationContext : IService
     {
         public IEmailService EmailService { get; }
     }

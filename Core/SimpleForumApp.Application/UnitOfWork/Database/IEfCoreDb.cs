@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using SimpleForumApp.Application.UnitOfWork.Core;
 
 namespace SimpleForumApp.Application.UnitOfWork.Database
 {
-    public interface IEfCoreDb
+    public interface IEfCoreDb : IService
     {
         Task<IDbContextTransaction> BeginTransactionAsync();
         Task CommitTransactionAsync();

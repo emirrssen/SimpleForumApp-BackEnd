@@ -94,10 +94,10 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
             var result = await _userManager.ResetPasswordAsync(user, token, password);
 
-            if (result.Succeeded)
-                return ResultFactory.SuccessResult("Şifreniz başarıyla yenilenmiştir");
+            if (!result.Succeeded)
+                return ResultFactory.FailResult(string.Join("\n", result.Errors.Select(x => x.Description)));
 
-            return ResultFactory.FailResult(string.Join("\n", result.Errors.Select(x => x.Description)));
+            return ResultFactory.SuccessResult("Şifreniz başarıyla yenilenmiştir");
         }
 
         public async Task<Result> ValidatePasswordTokenAsync(string token, string email)
@@ -111,6 +111,26 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
             if (!result)
                 return ResultFactory.FailResult("Bir hata meydana geldi");
+
+            return ResultFactory.SuccessResult();
+        }
+
+        public async Task<Result> ChangePasswordAsync(string email, string currentPassword, string newPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+                return ResultFactory.FailResult("Kullanıcı bulunamadı");
+
+            var checkPassword = await _userManager.CheckPasswordAsync(user, currentPassword);
+
+            if (!checkPassword)
+                return ResultFactory.FailResult("Mevcut şifreniz hatalı");
+
+            var updateResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+            if (!updateResult.Succeeded)
+                return ResultFactory.FailResult(string.Join(",", updateResult.Errors.Select(x => x.Description)));
 
             return ResultFactory.SuccessResult();
         }
