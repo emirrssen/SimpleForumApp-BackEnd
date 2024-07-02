@@ -4,7 +4,7 @@ using SimpleForumApp.Domain.Results;
 
 namespace SimpleForumApp.Application.Services.Auth
 {
-    public interface IAuthService : IService
+    public interface IAuthService : IInjectable
     {
         Task<ResultWithData<Token>> LoginAsync(string email, string password);
         Task<ResultWithData<Token>> LoginWithRefreshTokenAsync(string refreshToken);

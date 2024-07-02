@@ -11,6 +11,8 @@ builder.Services.ConfigurePackages();
 
 var app = builder.Build();
 
+await builder.Services.GenerateEndPoints();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

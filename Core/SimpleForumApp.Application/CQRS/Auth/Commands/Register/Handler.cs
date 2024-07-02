@@ -17,7 +17,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Commands.Register
         {
             using var transaction = _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
 
-            var personInsertResult = await _unitOfWork.Context.App.PersonRepository.InsertAsync(new()
+            var personInsertResult = await _unitOfWork.Context.App.PersonWriteRepository.InsertAsync(new()
             {
                 CountryId = request.CountryId,
                 StatusId = 1,

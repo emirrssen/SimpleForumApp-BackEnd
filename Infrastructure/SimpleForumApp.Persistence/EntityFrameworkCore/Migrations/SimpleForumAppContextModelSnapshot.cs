@@ -144,7 +144,7 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Action");
+                    b.ToTable("Actions");
 
                     b.HasData(
                         new
@@ -175,9 +175,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<long?>("GroupId")
                         .HasColumnType("bigint");
 
@@ -200,7 +197,7 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Author", t =>
+                    b.ToTable("Authors", t =>
                         {
                             t.HasCheckConstraint("CK_Author_UserId_GroupId", "([UserId] IS NOT NULL AND [GroupId] IS NULL) OR ([UserId] IS NULL AND [GroupId] IS NOT NULL)");
                         });
@@ -217,9 +214,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -234,14 +228,13 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("AuthorType");
+                    b.ToTable("AuthorTypes");
 
                     b.HasData(
                         new
                         {
                             Id = 1L,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Kullanıcı",
                             StatusId = 1L,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -250,7 +243,6 @@ namespace SimpleForumApp.Persistence.Migrations
                         {
                             Id = 2L,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Grup",
                             StatusId = 1L,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1517,9 +1509,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
@@ -1537,7 +1526,7 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("TitleId");
 
-                    b.ToTable("Entry");
+                    b.ToTable("Entries");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.EntryAction", b =>
@@ -1554,9 +1543,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
@@ -1571,7 +1557,7 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EntryAction");
+                    b.ToTable("EntryActions");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Gender", b =>
@@ -1636,9 +1622,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -1664,7 +1647,7 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Group");
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.GroupMember", b =>
@@ -1676,9 +1659,6 @@ namespace SimpleForumApp.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DeletedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("StatusId")
@@ -1693,7 +1673,7 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("GroupMember");
+                    b.ToTable("GroupMembers");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Person", b =>
@@ -1711,9 +1691,6 @@ namespace SimpleForumApp.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DeletedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
@@ -1758,9 +1735,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1777,7 +1751,6 @@ namespace SimpleForumApp.Persistence.Migrations
                         {
                             Id = 1L,
                             CreatedDate = new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Aktif",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1785,7 +1758,6 @@ namespace SimpleForumApp.Persistence.Migrations
                         {
                             Id = 2L,
                             CreatedDate = new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Pasif",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1793,7 +1765,6 @@ namespace SimpleForumApp.Persistence.Migrations
                         {
                             Id = 3L,
                             CreatedDate = new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Silindi",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -1817,9 +1788,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
@@ -1836,7 +1804,7 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Title");
+                    b.ToTable("Titles");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.TitleAction", b =>
@@ -1853,9 +1821,6 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
@@ -1870,10 +1835,10 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TitleAction");
+                    b.ToTable("TitleActions");
                 });
 
-            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Role", b =>
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.AspIdentityRole", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1901,6 +1866,127 @@ namespace SimpleForumApp.Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.EndPointPermission", b =>
+                {
+                    b.Property<long>("EndPointId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PermissionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("EndPointId", "PermissionId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("EndPointPermissions");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Guest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Guest");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Permission", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Role", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.RolePermission", b =>
+                {
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PermissionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("RoleId", "PermissionId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.User", b =>
@@ -1983,9 +2069,167 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.UserRole", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.ActionType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ActionTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "GET"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "POST"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "PUT"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Name = "DELETE"
+                        });
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPoint", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ActionTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ControllerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EndPointRoute")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUse")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MethodName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActionTypeId");
+
+                    b.ToTable("EndPoints");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPointActivity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("ActivityEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ActivityStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("EndPointId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EndPointId");
+
+                    b.ToTable("EndPointActivities");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPointGuestActivity", b =>
+                {
+                    b.Property<long>("EndPointActivityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GuestId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("EndPointActivityId");
+
+                    b.HasIndex("GuestId");
+
+                    b.ToTable("EndPointGuestActivities");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPointUserActivity", b =>
+                {
+                    b.Property<long>("EndPointActivityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("EndPointActivityId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EndPointUserActivities");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
-                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.Role", null)
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.AspIdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2012,7 +2256,7 @@ namespace SimpleForumApp.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.Role", null)
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.AspIdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2300,6 +2544,82 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.EndPointPermission", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.Traceability.EndPoint", "EndPoint")
+                        .WithMany("Permissions")
+                        .HasForeignKey("EndPointId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.Permission", "Permission")
+                        .WithMany("EndPoints")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("EndPointPermissions")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EndPoint");
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Permission", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("Permissions")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Role", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("Roles")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.RolePermission", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.Permission", "Permission")
+                        .WithMany("Roles")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.Role", "Role")
+                        .WithMany("Permissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("Status");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.User", b =>
                 {
                     b.HasOne("SimpleForumApp.Domain.Entities.App.Person", "Person")
@@ -2309,6 +2629,93 @@ namespace SimpleForumApp.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.UserRole", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.App.Status", "Status")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.User", "User")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPoint", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.Traceability.ActionType", "ActionType")
+                        .WithMany("EndPoints")
+                        .HasForeignKey("ActionTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ActionType");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPointActivity", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.Traceability.EndPoint", "EndPoint")
+                        .WithMany("EndPointActivities")
+                        .HasForeignKey("EndPointId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EndPoint");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPointGuestActivity", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.Traceability.EndPointActivity", "EndPointActivity")
+                        .WithOne("EndPointGuestActivity")
+                        .HasForeignKey("SimpleForumApp.Domain.Entities.Traceability.EndPointGuestActivity", "EndPointActivityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.Guest", "Guest")
+                        .WithMany("EndPointGuestActivities")
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EndPointActivity");
+
+                    b.Navigation("Guest");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPointUserActivity", b =>
+                {
+                    b.HasOne("SimpleForumApp.Domain.Entities.Traceability.EndPointActivity", "EndPointActivity")
+                        .WithOne("EndPointUserActivity")
+                        .HasForeignKey("SimpleForumApp.Domain.Entities.Traceability.EndPointUserActivity", "EndPointActivityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SimpleForumApp.Domain.Entities.Auth.User", "User")
+                        .WithMany("EndPointUserActivities")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EndPointActivity");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Action", b =>
@@ -2368,6 +2775,8 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.Navigation("Countries");
 
+                    b.Navigation("EndPointPermissions");
+
                     b.Navigation("Entries");
 
                     b.Navigation("EntryActions");
@@ -2378,11 +2787,19 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.Navigation("Groups");
 
+                    b.Navigation("Permissions");
+
                     b.Navigation("Persons");
+
+                    b.Navigation("RolePermissions");
+
+                    b.Navigation("Roles");
 
                     b.Navigation("TitleActions");
 
                     b.Navigation("Titles");
+
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Title", b =>
@@ -2392,9 +2809,30 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.Navigation("Entries");
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Guest", b =>
+                {
+                    b.Navigation("EndPointGuestActivities");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Permission", b =>
+                {
+                    b.Navigation("EndPoints");
+
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.Role", b =>
+                {
+                    b.Navigation("Permissions");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.Auth.User", b =>
                 {
                     b.Navigation("Authors");
+
+                    b.Navigation("EndPointUserActivities");
 
                     b.Navigation("EntryActions");
 
@@ -2402,7 +2840,30 @@ namespace SimpleForumApp.Persistence.Migrations
 
                     b.Navigation("Groups");
 
+                    b.Navigation("Roles");
+
                     b.Navigation("TitleActions");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.ActionType", b =>
+                {
+                    b.Navigation("EndPoints");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPoint", b =>
+                {
+                    b.Navigation("EndPointActivities");
+
+                    b.Navigation("Permissions");
+                });
+
+            modelBuilder.Entity("SimpleForumApp.Domain.Entities.Traceability.EndPointActivity", b =>
+                {
+                    b.Navigation("EndPointGuestActivity")
+                        .IsRequired();
+
+                    b.Navigation("EndPointUserActivity")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

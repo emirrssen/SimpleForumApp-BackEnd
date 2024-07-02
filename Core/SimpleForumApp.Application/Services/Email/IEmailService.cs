@@ -2,7 +2,7 @@
 
 namespace SimpleForumApp.Application.Services.Email
 {
-    public interface IEmailService : IService
+    public interface IEmailService : IInjectable
     {
         Task SendMailAsync(string subject, string body, bool isBodyHtml, string sendFrom, params string[] emails);
         Task SendMailForPasswordResetAsync(string email, string token);

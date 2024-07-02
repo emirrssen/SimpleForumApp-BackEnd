@@ -1,4 +1,5 @@
 ﻿using SimpleForumApp.Application.Helpers;
+using SimpleForumApp.Application.Repositories;
 using SimpleForumApp.Application.Repositories.PersonRepositories;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.Services.Email;
@@ -7,6 +8,7 @@ using SimpleForumApp.Application.UnitOfWork.Context;
 using SimpleForumApp.Application.UnitOfWork.Database;
 using SimpleForumApp.Infrastructure.Services.Auth;
 using SimpleForumApp.Infrastructure.Services.Email;
+using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.PersonRepositories;
 using SimpleForumApp.Persistence.UnitOfWork;
 using SimpleForumApp.Persistence.UnitOfWork.Context;
@@ -39,6 +41,8 @@ namespace SimpleForumApp.API.Extensions
 
             // For Repositories
             services.AddScoped<IPersonWriteRepository, PersonWriteRepository>();
+            services.AddScoped<IPersonReadRepository, PersonReadRepository>();
+            services.AddScoped<IEndPointRepository, EndPointRepository>();
 
             // For Smpt
             services.AddScoped<SmtpClient>(opt =>

@@ -52,9 +52,9 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             if (!result.Succeeded)
                 return ResultFactory.FailResult<Token>("Kullanıcı adı veya şifre hatalı");
 
-            var tokenResult = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(1);
+            var tokenResult = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(30);
 
-            var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshToken(tokenResult.RefreshToken, userToLogin, tokenResult.ExpirationDate, 1);
+            var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshToken(tokenResult.RefreshToken, userToLogin, tokenResult.ExpirationDate, 15);
 
             if (!refreshTokenUpdateResult.IsSuccess)
                 return ResultFactory.FailResult<Token>(refreshTokenUpdateResult.Message!);
@@ -74,7 +74,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             var token = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(1);
 
             var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshToken(
-                    token.RefreshToken, userToLogin, token.ExpirationDate, 1
+                    token.RefreshToken, userToLogin, token.ExpirationDate, 30
                 );
 
             if (!refreshTokenUpdateResult.IsSuccess)

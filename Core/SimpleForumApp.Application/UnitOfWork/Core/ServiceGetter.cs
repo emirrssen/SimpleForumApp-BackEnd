@@ -12,7 +12,7 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Core
             _serviceProvider = serviceProvider;
         }
 
-        protected TService GetService<TService>() where TService : notnull, IService
+        protected TService GetService<TService>() where TService : notnull, IInjectable
             => _serviceProvider.GetRequiredService<TService>();
     }
 }

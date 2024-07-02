@@ -3,7 +3,7 @@ using SimpleForumApp.Application.UnitOfWork.Core;
 
 namespace SimpleForumApp.Application.UnitOfWork.Context
 {
-    public interface IIdentityContext : IService
+    public interface IIdentityContext : IInjectable
     {
         public IUserService UserService { get; }
         public IAuthService AuthService { get; }

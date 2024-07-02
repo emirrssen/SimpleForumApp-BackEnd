@@ -2,11 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Domain.Entities.App;
 using SimpleForumApp.Domain.Entities.Auth;
+using SimpleForumApp.Domain.Entities.Traceability;
 using System.Reflection;
 
 namespace SimpleForumApp.Persistence.EntityFrameworkCore.Context
 {
-    public class SimpleForumAppContext : IdentityDbContext<User, Role, long>
+    public class SimpleForumAppContext : IdentityDbContext<User, AspIdentityRole, long>
     {
         public DbSet<Country> Countries { get; set; }
         public DbSet<Gender> Genders { get; set; }
@@ -21,6 +22,16 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Context
         public DbSet<GroupMember> GroupMembers { get; set; }
         public DbSet<Title> Titles { get; set; }
         public DbSet<TitleAction> TitleActions { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<ActionType> ActionTypes { get; set; }
+        public DbSet<EndPoint> EndPoints { get; set; }
+        public DbSet<EndPointPermission> EndPointPermissions { get; set; }
+        public DbSet<EndPointActivity> EndPointActivities { get; set; }
+        public DbSet<EndPointUserActivity> EndPointUserActivities { get; set; }
+        public DbSet<EndPointGuestActivity> EndPointGuestActivities { get; set; }
 
         public SimpleForumAppContext(DbContextOptions options) : base(options) { }
 
@@ -29,5 +40,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Context
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(SimpleForumAppContext)));
             base.OnModelCreating(modelBuilder);
         }
+
+        public SimpleForumAppContext() { }
     }
 }

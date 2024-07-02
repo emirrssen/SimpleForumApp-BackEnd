@@ -53,7 +53,7 @@ namespace SimpleForumApp.API.Extensions
                 options.TokenLifespan = TimeSpan.FromMinutes(5);
             });
 
-            services.AddIdentity<User, Role>(options =>
+            services.AddIdentity<User, AspIdentityRole>(options =>
             {
                 // For Password
                 options.Password.RequireLowercase = true;

@@ -1,4 +1,5 @@
-﻿using SimpleForumApp.Domain.Entities.Core;
+﻿using SimpleForumApp.Domain.Entities.Auth;
+using SimpleForumApp.Domain.Entities.Core;
 
 namespace SimpleForumApp.Domain.Entities.App
 {
@@ -18,5 +19,10 @@ namespace SimpleForumApp.Domain.Entities.App
         public ICollection<Entry> Entries { get; set; }
         public ICollection<TitleAction> TitleActions { get; set; }
         public ICollection<EntryAction> EntryActions { get; set; }
+        public ICollection<Permission> Permissions { get; set; }
+        public ICollection<Role> Roles { get; set; }
+        public ICollection<RolePermission> RolePermissions { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<EndPointPermission> EndPointPermissions { get; set; }
     }
 }

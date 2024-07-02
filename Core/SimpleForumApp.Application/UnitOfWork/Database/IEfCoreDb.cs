@@ -3,7 +3,7 @@ using SimpleForumApp.Application.UnitOfWork.Core;
 
 namespace SimpleForumApp.Application.UnitOfWork.Database
 {
-    public interface IEfCoreDb : IService
+    public interface IEfCoreDb : IInjectable
     {
         Task<IDbContextTransaction> BeginTransactionAsync();
         Task CommitTransactionAsync();

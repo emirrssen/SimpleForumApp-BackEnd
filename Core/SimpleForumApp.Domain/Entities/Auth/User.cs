@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SimpleForumApp.Domain.Entities.App;
+using SimpleForumApp.Domain.Entities.Traceability;
 
 namespace SimpleForumApp.Domain.Entities.Auth
 {
@@ -15,5 +16,7 @@ namespace SimpleForumApp.Domain.Entities.Auth
         public ICollection<Author> Authors { get; set; }
         public ICollection<TitleAction> TitleActions { get; set; }
         public ICollection<EntryAction> EntryActions { get; set; }
+        public ICollection<UserRole> Roles { get; set; }
+        public ICollection<EndPointUserActivity> EndPointUserActivities { get; set; }
     }
 }

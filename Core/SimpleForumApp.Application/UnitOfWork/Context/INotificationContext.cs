@@ -3,7 +3,7 @@ using SimpleForumApp.Application.UnitOfWork.Core;
 
 namespace SimpleForumApp.Application.UnitOfWork.Context
 {
-    public interface INotificationContext : IService
+    public interface INotificationContext : IInjectable
     {
         public IEmailService EmailService { get; }
     }
