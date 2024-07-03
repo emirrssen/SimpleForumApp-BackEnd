@@ -1,7 +1,7 @@
 ﻿using SimpleForumApp.Application.UnitOfWork.Core;
 using SimpleForumApp.Domain.Entities.Traceability;
 
-namespace SimpleForumApp.Application.Repositories
+namespace SimpleForumApp.Application.Repositories.Traceability
 {
     public interface IEndPointRepository : IInjectable
     {

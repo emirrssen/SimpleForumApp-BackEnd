@@ -15,7 +15,7 @@ namespace SimpleForumApp.Application.CQRS.Admin.PersonManagement.Queries.GetAllP
 
         public override async Task<ResultWithData<IList<Dto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Context.App.PersonReadRepository.GetAllPersonDetailsAsync();
+            var result = await _unitOfWork.Context.App.PersonRepository.GetAllPersonDetailsAsync();
 
             if (!result.Any())
                 return ResultFactory.SuccessResult<IList<Dto>>("Herhangi bir kişi kaydı bulunamadı");

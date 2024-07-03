@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SimpleForumApp.Application.Repositories;
+using SimpleForumApp.Application.Repositories.Traceability;
 using SimpleForumApp.Domain.Entities.Traceability;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 
-namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories
+namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceability
 {
     public class EndPointRepository : Repository, IEndPointRepository
     {

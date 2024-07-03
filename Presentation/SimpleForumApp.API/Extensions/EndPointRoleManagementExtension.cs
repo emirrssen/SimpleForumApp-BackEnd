@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
-using SimpleForumApp.Application.Enums;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Entities.Traceability;
-using SimpleForumApp.Persistence.UnitOfWork;
 using System.Reflection;
 
 namespace SimpleForumApp.API.Extensions

@@ -1,6 +1,6 @@
 ﻿using SimpleForumApp.Application.Helpers;
-using SimpleForumApp.Application.Repositories;
-using SimpleForumApp.Application.Repositories.PersonRepositories;
+using SimpleForumApp.Application.Repositories.App;
+using SimpleForumApp.Application.Repositories.Traceability;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.Services.Email;
 using SimpleForumApp.Application.UnitOfWork;
@@ -8,8 +8,8 @@ using SimpleForumApp.Application.UnitOfWork.Context;
 using SimpleForumApp.Application.UnitOfWork.Database;
 using SimpleForumApp.Infrastructure.Services.Auth;
 using SimpleForumApp.Infrastructure.Services.Email;
-using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories;
-using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.PersonRepositories;
+using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App;
+using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceability;
 using SimpleForumApp.Persistence.UnitOfWork;
 using SimpleForumApp.Persistence.UnitOfWork.Context;
 using SimpleForumApp.Persistence.UnitOfWork.Database;
@@ -40,8 +40,7 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<IEfCoreDb, EfCoreDb>();
 
             // For Repositories
-            services.AddScoped<IPersonWriteRepository, PersonWriteRepository>();
-            services.AddScoped<IPersonReadRepository, PersonReadRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IEndPointRepository, EndPointRepository>();
 
             // For Smpt
