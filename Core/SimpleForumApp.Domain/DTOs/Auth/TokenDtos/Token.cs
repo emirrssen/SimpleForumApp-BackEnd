@@ -1,4 +1,4 @@
-﻿namespace SimpleForumApp.Domain.DTOs.Auth
+﻿namespace SimpleForumApp.Domain.DTOs.Auth.TokenDtos
 {
     public class Token
     {

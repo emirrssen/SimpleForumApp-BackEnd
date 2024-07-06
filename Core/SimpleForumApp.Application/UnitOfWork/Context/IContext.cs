@@ -8,5 +8,6 @@ namespace SimpleForumApp.Application.UnitOfWork.Context
         public IIdentityContext Identity { get; }
         public INotificationContext Notification { get; }
         public ITraceabilityContext Traceability { get; }
+        public IAuthContext Auth { get; }
     }
 }

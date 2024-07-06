@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CQRS\Admin\PermissionManagement\Commands\" />
     <Folder Include="CQRS\Admin\PersonManagement\Commands\" />
   </ItemGroup>
 

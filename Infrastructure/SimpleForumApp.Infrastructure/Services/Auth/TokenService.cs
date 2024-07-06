@@ -1,8 +1,10 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using SimpleForumApp.Application.Helpers;
 using SimpleForumApp.Application.Services.Auth;
-using SimpleForumApp.Domain.DTOs.Auth;
+using SimpleForumApp.Domain.DTOs.Auth.TokenDtos;
+using SimpleForumApp.Domain.Entities.Auth;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,7 +12,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 {
     public class TokenService : ITokenService
     {
-        public Token CreateAccessToken(int expirationMinute)
+        public Token CreateAccessToken(int expirationMinute, User user)
         {
             Token token = new();
 
@@ -24,7 +26,8 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                 issuer: AppSettingsReaderHelper.GetTokenIssuer(),
                 expires: token.ExpirationDate,
                 notBefore: DateTime.UtcNow,
-                signingCredentials: signingCredentials
+                signingCredentials: signingCredentials,
+                claims: new List<Claim> { new(ClaimTypes.Name, user.UserName) }
             );
 
             JwtSecurityTokenHandler tokenHandler = new();

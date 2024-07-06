@@ -7,6 +7,7 @@ namespace SimpleForumApp.Domain.Entities.Auth
     {
         public long StatusId { get; set; }
         public string Name { get; set; } = null!;
+        public string? Description { get; set; }
 
         public Status Status { get; set; } = null!;
         public ICollection<RolePermission> Roles { get; set; }

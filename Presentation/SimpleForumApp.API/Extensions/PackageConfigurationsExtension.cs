@@ -10,6 +10,7 @@ using SimpleForumApp.Application.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace SimpleForumApp.API.Extensions
 {
@@ -103,7 +104,9 @@ namespace SimpleForumApp.API.Extensions
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettingsReaderHelper.GetTokenSecurityKey())),
 
                         LifetimeValidator = (notBefore, expires, securityToken, validationParameters)
-                            => expires != null ? expires > DateTime.UtcNow : false
+                            => expires != null ? expires > DateTime.UtcNow : false,
+
+                        NameClaimType = ClaimTypes.Name
                     };
                 });
         }

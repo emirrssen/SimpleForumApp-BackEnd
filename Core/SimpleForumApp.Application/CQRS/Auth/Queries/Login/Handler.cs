@@ -1,6 +1,6 @@
 ﻿using SimpleForumApp.Application.BaseStructures.MediatR.QueryAbstractions;
 using SimpleForumApp.Application.UnitOfWork;
-using SimpleForumApp.Domain.DTOs.Auth;
+using SimpleForumApp.Domain.DTOs.Auth.TokenDtos;
 using SimpleForumApp.Domain.Results;
 
 namespace SimpleForumApp.Application.CQRS.Auth.Queries.Login

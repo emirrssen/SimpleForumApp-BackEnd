@@ -1,5 +1,5 @@
 ﻿using SimpleForumApp.Application.UnitOfWork.Core;
-using SimpleForumApp.Domain.DTOs.App;
+using SimpleForumApp.Domain.DTOs.App.PersonDtos;
 using SimpleForumApp.Domain.Entities.App;
 
 namespace SimpleForumApp.Application.Repositories.App
@@ -7,7 +7,8 @@ namespace SimpleForumApp.Application.Repositories.App
     public interface IPersonRepository : IInjectable
     {
         Task<IList<PersonDetails>> GetAllPersonDetailsAsync();
+        Task<Person> GetByIdAsync(long id);
         Task<long> InsertAsync(Person person);
-        Task<bool> DeleteByIdAsync(long id);
+        Task DeleteByIdAsync(Person person);
     }
 }

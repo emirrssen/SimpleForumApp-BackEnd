@@ -1,4 +1,5 @@
-﻿using SimpleForumApp.Application.Repositories.Traceability;
+﻿using SimpleForumApp.Application.Repositories.Auth;
+using SimpleForumApp.Application.Repositories.Traceability;
 using SimpleForumApp.Application.UnitOfWork.Core;
 
 namespace SimpleForumApp.Application.UnitOfWork.Context

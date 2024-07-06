@@ -7,6 +7,7 @@ namespace SimpleForumApp.Application.Services.Auth
     public interface IUserService : IInjectable
     {
         Task<Result> InsertAsync(User user, string password);
-        Task<Result> UpdateRefreshToken(string refreshToken, User user, DateTime accessTokenExpireDate, int refreshTokenLifeTime);
+        Task<Result> UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenExpireDate, int refreshTokenLifeTime);
+        Task<User> GetByUserNameAsync(string userName);
     }
 }

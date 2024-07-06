@@ -1,6 +1,6 @@
 ﻿using SimpleForumApp.Domain.Entities.Core;
 
-namespace SimpleForumApp.Domain.DTOs.App
+namespace SimpleForumApp.Domain.DTOs.App.PersonDtos
 {
     public class PersonDetails : Entity
     {

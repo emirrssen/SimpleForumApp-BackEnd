@@ -1,5 +1,6 @@
 ﻿using SimpleForumApp.Application.Helpers;
 using SimpleForumApp.Application.Repositories.App;
+using SimpleForumApp.Application.Repositories.Auth;
 using SimpleForumApp.Application.Repositories.Traceability;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.Services.Email;
@@ -9,6 +10,7 @@ using SimpleForumApp.Application.UnitOfWork.Database;
 using SimpleForumApp.Infrastructure.Services.Auth;
 using SimpleForumApp.Infrastructure.Services.Email;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App;
+using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceability;
 using SimpleForumApp.Persistence.UnitOfWork;
 using SimpleForumApp.Persistence.UnitOfWork.Context;
@@ -32,18 +34,32 @@ namespace SimpleForumApp.API.Extensions
         {
             // For UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Contexts
             services.AddScoped<IContext, Context>();
-            services.AddScoped<IDatabase, Database>();
             services.AddScoped<IAppContext, Persistence.UnitOfWork.Context.AppContext>();
             services.AddScoped<IIdentityContext, IdentityContext>();
             services.AddScoped<INotificationContext, NotificationContext>();
             services.AddScoped<ITraceabilityContext, TraceabilityContext>();
+            services.AddScoped<IAuthContext, AuthContext>();
+
+            // Databases
+            services.AddScoped<IDatabase, Database>();
             services.AddScoped<IEfCoreDb, EfCoreDb>();
 
-            // For Repositories
+            // App Repositories
             services.AddScoped<IPersonRepository, PersonRepository>();
+
+            // Traceability Repositories
             services.AddScoped<IEndPointRepository, EndPointRepository>();
             services.AddScoped<IEndPointActivityRepository, EndPointActivityRepository>();
+
+            // Auth Repositories
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+            services.AddScoped<IEndPointPermissionRepository, EndPointPermissonRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             // For Smpt
             services.AddScoped<SmtpClient>(opt =>

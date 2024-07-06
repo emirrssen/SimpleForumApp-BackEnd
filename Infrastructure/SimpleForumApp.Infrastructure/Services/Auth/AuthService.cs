@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Application.Helpers;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.UnitOfWork;
-using SimpleForumApp.Domain.DTOs.Auth;
+using SimpleForumApp.Domain.DTOs.Auth.TokenDtos;
 using SimpleForumApp.Domain.Entities.Auth;
 using SimpleForumApp.Domain.Results;
 
@@ -52,9 +52,9 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             if (!result.Succeeded)
                 return ResultFactory.FailResult<Token>("Kullanıcı adı veya şifre hatalı");
 
-            var tokenResult = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(30);
+            var tokenResult = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(30, userToLogin);
 
-            var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshToken(tokenResult.RefreshToken, userToLogin, tokenResult.ExpirationDate, 15);
+            var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshTokenAsync(tokenResult.RefreshToken, userToLogin, tokenResult.ExpirationDate, 15);
 
             if (!refreshTokenUpdateResult.IsSuccess)
                 return ResultFactory.FailResult<Token>(refreshTokenUpdateResult.Message!);
@@ -71,9 +71,9 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                 return ResultFactory.FailResult<Token>("Kullanıcı bulunamadı");
             }
 
-            var token = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(1);
+            var token = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(1, userToLogin);
 
-            var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshToken(
+            var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshTokenAsync(
                     token.RefreshToken, userToLogin, token.ExpirationDate, 30
                 );
 

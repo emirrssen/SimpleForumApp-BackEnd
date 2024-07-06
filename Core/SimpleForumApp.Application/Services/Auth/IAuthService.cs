@@ -1,5 +1,5 @@
 ﻿using SimpleForumApp.Application.UnitOfWork.Core;
-using SimpleForumApp.Domain.DTOs.Auth;
+using SimpleForumApp.Domain.DTOs.Auth.TokenDtos;
 using SimpleForumApp.Domain.Results;
 
 namespace SimpleForumApp.Application.Services.Auth
