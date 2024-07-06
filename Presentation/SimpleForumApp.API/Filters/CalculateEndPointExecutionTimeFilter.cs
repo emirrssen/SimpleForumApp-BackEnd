@@ -39,6 +39,8 @@ namespace SimpleForumApp.API.Filters
                 await _unitOfWork.Database.EfCoreDb.RollbackTransactionAsync();
 
             await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+            Console.WriteLine($"{DateTime.Now} | {contextActionType} - {endPointRoute.Substring(1)} is executed.");
         }
     }
 }
