@@ -51,7 +51,6 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
         public async Task<long> InsertAsync(Person person)
         {
             var result = await _context.Persons.AddAsync(person);
-
             await SaveChangesAsync();
 
             return result.Entity.Id;

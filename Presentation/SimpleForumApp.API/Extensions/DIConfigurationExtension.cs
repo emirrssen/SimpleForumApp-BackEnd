@@ -37,11 +37,13 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<IAppContext, Persistence.UnitOfWork.Context.AppContext>();
             services.AddScoped<IIdentityContext, IdentityContext>();
             services.AddScoped<INotificationContext, NotificationContext>();
+            services.AddScoped<ITraceabilityContext, TraceabilityContext>();
             services.AddScoped<IEfCoreDb, EfCoreDb>();
 
             // For Repositories
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IEndPointRepository, EndPointRepository>();
+            services.AddScoped<IEndPointActivityRepository, EndPointActivityRepository>();
 
             // For Smpt
             services.AddScoped<SmtpClient>(opt =>

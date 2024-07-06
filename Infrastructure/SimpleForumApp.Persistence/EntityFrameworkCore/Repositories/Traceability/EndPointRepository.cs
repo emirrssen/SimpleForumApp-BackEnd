@@ -14,7 +14,6 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceabili
         public async Task BulkInsertAsync(IList<EndPoint> endPoints)
         {
             await _context.EndPoints.AddRangeAsync(endPoints);
-
             await _context.SaveChangesAsync();
         }
 
@@ -31,10 +30,18 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceabili
             return result.ToList();
         }
 
+        public async Task<EndPoint> GetByRouteAndActionTypeId(string route, long actionTypeId)
+        {
+            var result = await _context.EndPoints
+                .AsNoTrackingWithIdentityResolution()
+                .FirstOrDefaultAsync(x => x.EndPointRoute == route && x.ActionTypeId == actionTypeId);
+
+            return result;
+        }
+
         public async Task UpdateEndPoint(EndPoint endPoint)
         {
             _context.EndPoints.Update(endPoint);
-
             await _context.SaveChangesAsync();
         }
     }

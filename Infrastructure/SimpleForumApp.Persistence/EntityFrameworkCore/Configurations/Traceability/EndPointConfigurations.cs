@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SimpleForumApp.Application.Enums;
 using SimpleForumApp.Domain.Entities.Traceability;
 
 namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations.Traceability

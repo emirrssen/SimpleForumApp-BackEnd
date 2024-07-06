@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SimpleForumApp.API.Filters;
 
 namespace SimpleForumApp.API.Controllers
 {
@@ -18,6 +19,7 @@ namespace SimpleForumApp.API.Controllers
         public async Task<IActionResult> RegisterAsync([FromBody] Application.CQRS.Auth.Commands.Register.Command command)
             => Ok(await _meditor.Send(command));
 
+        //[CalculateEndPointExecutionTimeFilter]
         [HttpGet("login")]
         public async Task<IActionResult> LoginAsync([FromQuery] Application.CQRS.Auth.Queries.Login.Query query)
             => Ok(await _meditor.Send(query));

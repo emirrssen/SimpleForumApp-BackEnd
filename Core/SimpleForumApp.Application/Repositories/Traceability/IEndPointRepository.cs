@@ -9,5 +9,6 @@ namespace SimpleForumApp.Application.Repositories.Traceability
         Task BulkUpdateAsync(IList<EndPoint> endPoints);
         Task<IList<EndPoint>> GetAllAsync();
         Task UpdateEndPoint(EndPoint endPoint);
+        Task<EndPoint> GetByRouteAndActionTypeId(string route, long actionTypeId);
     }
 }

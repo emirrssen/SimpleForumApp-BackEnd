@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Routing;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Entities.Traceability;
+using SimpleForumApp.Domain.Enums;
 using System.Reflection;
 
 namespace SimpleForumApp.API.Extensions
@@ -15,7 +16,7 @@ namespace SimpleForumApp.API.Extensions
 
             await unitOfWork!.Database.EfCoreDb.BeginTransactionAsync();
 
-            var insertedEndPoints = await unitOfWork.Context.App.EndPointRepository.GetAllAsync();
+            var insertedEndPoints = await unitOfWork.Context.Traceability.EndPointRepository.GetAllAsync();
             var currentEndPoints = ReadEndPoints();
 
             List<EndPoint> endPointsToInsert = currentEndPoints.Where(x => !insertedEndPoints.Any(y => y.EndPointRoute == x.EndPointRoute && y.ActionTypeId == x.ActionTypeId)).ToList();
@@ -25,9 +26,9 @@ namespace SimpleForumApp.API.Extensions
             endPointsToNotUse.ForEach(x => x.IsUse = false);
             endPointsToUse.ForEach(x => x.IsUse = true);
 
-            await unitOfWork.Context.App.EndPointRepository.BulkInsertAsync(endPointsToInsert);
-            await unitOfWork.Context.App.EndPointRepository.BulkUpdateAsync(endPointsToNotUse);
-            await unitOfWork.Context.App.EndPointRepository.BulkUpdateAsync(endPointsToUse);
+            await unitOfWork.Context.Traceability.EndPointRepository.BulkInsertAsync(endPointsToInsert);
+            await unitOfWork.Context.Traceability.EndPointRepository.BulkUpdateAsync(endPointsToNotUse);
+            await unitOfWork.Context.Traceability.EndPointRepository.BulkUpdateAsync(endPointsToUse);
 
             await unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
 
@@ -65,16 +66,16 @@ namespace SimpleForumApp.API.Extensions
                     };
 
                     if (currentActionAttribute!.GetType() == typeof(HttpGetAttribute))
-                        endpoint.ActionTypeId = 1;
+                        endpoint.ActionTypeId = (long)ActionTypes.GET;
 
                     if (currentActionAttribute!.GetType() == typeof(HttpPostAttribute))
-                        endpoint.ActionTypeId = 2;
+                        endpoint.ActionTypeId = (long)ActionTypes.POST;
 
                     if (currentActionAttribute!.GetType() == typeof(HttpPutAttribute))
-                        endpoint.ActionTypeId = 3;
+                        endpoint.ActionTypeId = (long)ActionTypes.PUT;
 
                     if (currentActionAttribute!.GetType() == typeof(HttpDeleteAttribute))
-                        endpoint.ActionTypeId = 4;
+                        endpoint.ActionTypeId = (long)ActionTypes.DELETE;
 
                     endPoints.Add(endpoint);
                 }
