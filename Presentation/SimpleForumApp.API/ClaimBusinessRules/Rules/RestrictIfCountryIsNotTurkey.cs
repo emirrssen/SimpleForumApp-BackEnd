@@ -3,12 +3,12 @@ using SimpleForumApp.Domain.DTOs.Auth.UserDtos;
 
 namespace SimpleForumApp.API.ClaimBusinessRules.Rules
 {
-    public class RestrictIfCountryIsNotTurkey : IClaimBusinessRule
+    public class RestrictIfCountryIsNotTurkey : ClaimBusinessRuleBase
     {
-        public string Code => "RESTRICT_IF_USERS_COUNTRY_IS_NOT_TURKEY";
-        public int Priority => 1;
-        public ExecutionOrder ExecutionOrder => ExecutionOrder.BeforeExecution;
+        public override string Code => "RESTRICT_IF_USERS_COUNTRY_IS_NOT_TURKEY";
+        public override int Priority => 1;
+        public override ExecutionOrder ExecutionOrder => ExecutionOrder.BeforeExecution;
 
-        public Task<bool> Execute(UserFullDetail user) => Task.FromResult(user.CountryId == 186);
+        public override Task<bool> Execute(UserFullDetail user) => Task.FromResult(user.CountryId == 186);
     }
 }

@@ -26,9 +26,10 @@ namespace SimpleForumApp.API.Extensions
             endPointsToNotUse.ForEach(x => x.IsUse = false);
             endPointsToUse.ForEach(x => x.IsUse = true);
 
+            endPointsToNotUse.AddRange(endPointsToUse);
+
             await unitOfWork.Context.Traceability.EndPointRepository.BulkInsertAsync(endPointsToInsert);
             await unitOfWork.Context.Traceability.EndPointRepository.BulkUpdateAsync(endPointsToNotUse);
-            await unitOfWork.Context.Traceability.EndPointRepository.BulkUpdateAsync(endPointsToUse);
 
             await unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
 

@@ -10,5 +10,7 @@ namespace SimpleForumApp.Application.UnitOfWork.Context
         public IRolePermissionRepository RolePermissionRepository { get; }
         public IUserRoleRepository UserRoleRepository { get; }
         public IEndPointPermissionRepository EndPointPermissionRepository { get; }
+        public IClaimBusinessRuleRepository ClaimBusinessRuleRepository { get; }
+        public IEndPointClaimBusinessRuleRepository EndPointClaimBusinessRuleRepository { get; }
     }
 }

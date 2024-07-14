@@ -2,7 +2,7 @@
 
 namespace SimpleForumApp.API.ClaimBusinessRules.Abstraction
 {
-    public interface IClaimBusinessRule
+    public interface IClaimBusinessRule : IDisposable
     {
         public int Priority { get; }
         public ExecutionOrder ExecutionOrder { get; }

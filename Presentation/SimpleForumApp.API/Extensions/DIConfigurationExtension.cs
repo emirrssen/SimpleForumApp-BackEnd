@@ -60,6 +60,8 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
             services.AddScoped<IEndPointPermissionRepository, EndPointPermissonRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IClaimBusinessRuleRepository, ClaimBusinessRuleRepository>();
+            services.AddScoped<IEndPointClaimBusinessRuleRepository, EndPointClaimBusinessRuleRepository>();
 
             // For Smpt
             services.AddScoped<SmtpClient>(opt =>

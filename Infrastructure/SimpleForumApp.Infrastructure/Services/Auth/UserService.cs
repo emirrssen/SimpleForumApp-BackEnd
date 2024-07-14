@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Application.Services.Auth;
+using SimpleForumApp.Domain.DTOs.Auth.UserDtos;
 using SimpleForumApp.Domain.Entities.Auth;
 using SimpleForumApp.Domain.Results;
 
@@ -18,6 +19,39 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
         public async Task<User> GetByUserNameAsync(string userName)
         {
             var result = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == userName);
+            return result;
+        }
+
+        public async Task<UserFullDetail> GetUserFullDetailByUserNameAsync(string userName)
+        {
+            var result = await _userManager.Users
+                .Where(x => x.UserName == userName)
+                .Include(x => x.Person)
+                    .ThenInclude(x => x.Country)
+                .Include(x => x.Person)
+                    .ThenInclude(x => x.Gender)
+                .Select(x => new UserFullDetail()
+                {
+                    CountryId = x.Person.CountryId,
+                    FirstName = x.Person.FirstName,
+                    LastName = x.Person.LastName,
+                    CountryName = x.Person.Country.Name,
+                    CreatedDate = x.Person.CreatedDate,
+                    DateOfBirth = x.Person.CreatedDate,
+                    Email = x.Email,
+                    GenderId = x.Person.GenderId,
+                    GenderName = x.Person.Gender.Name,
+                    Id = x.Id,
+                    PersonId = x.PersonId,
+                    PhoneNumber = x.PhoneNumber,
+                    ProfileImage = x.Person.ProfileImage,
+                    StatusId = x.Person.StatusId,
+                    UpdatedDate = x.Person.UpdatedDate,
+                    UserName = x.UserName
+                })
+                .AsNoTrackingWithIdentityResolution()
+                .FirstOrDefaultAsync();
+
             return result;
         }
 

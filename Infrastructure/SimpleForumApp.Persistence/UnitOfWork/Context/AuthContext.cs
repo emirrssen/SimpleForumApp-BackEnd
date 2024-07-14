@@ -16,5 +16,7 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Context
         public IRolePermissionRepository RolePermissionRepository => GetService<IRolePermissionRepository>();
         public IUserRoleRepository UserRoleRepository => GetService<IUserRoleRepository>();
         public IEndPointPermissionRepository EndPointPermissionRepository => GetService<IEndPointPermissionRepository>();
+        public IClaimBusinessRuleRepository ClaimBusinessRuleRepository => GetService<IClaimBusinessRuleRepository>();
+        public IEndPointClaimBusinessRuleRepository EndPointClaimBusinessRuleRepository => GetService<IEndPointClaimBusinessRuleRepository>();
     }
 }

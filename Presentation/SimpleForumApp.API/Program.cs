@@ -12,6 +12,7 @@ builder.Services.AddEndPointExecuitonTimeCalculationFilterToEndPoints();
 var app = builder.Build();
 
 await builder.Services.GenerateEndPoints();
+await builder.Services.GenerateClaimBusinessRules();
 
 app.UseHttpsRedirection();
 

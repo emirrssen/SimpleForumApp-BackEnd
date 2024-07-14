@@ -30,14 +30,21 @@ namespace SimpleForumApp.API.Filters
                 var endPointPermissions = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(endPoint.Id);
                 var userRolePermissions = await _unitOfWork.Context.Auth.UserRoleRepository.GetAllUserPermissionsByUserIdAsync(user.Id);
 
+                if (!endPointPermissions.Any())
+                {
+                    await next.Invoke();
+                    return;
+                }
+
                 if (!userRolePermissions.Any(x => endPointPermissions.Any(y => y.PermissionId == x)))
                 {
                     context.Result = new UnauthorizedResult();
                     return;
                 }
+                    
             }
 
-            await next();
+            await next.Invoke();
         }
     }
 }
