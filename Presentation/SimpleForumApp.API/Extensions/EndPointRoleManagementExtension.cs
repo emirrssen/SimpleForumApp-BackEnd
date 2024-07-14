@@ -46,7 +46,7 @@ namespace SimpleForumApp.API.Extensions
 
             foreach (var controller in controllers)
             {
-                var methods = controller.GetMethods().Where(x => x.GetCustomAttributes().Any(y => y.GetType().IsSubclassOf(typeof(HttpMethodAttribute))));
+                var methods = controller.GetMethods().Where(x => x.GetCustomAttributes().Any(y => y.GetType().IsSubclassOf(typeof(HttpMethodAttribute))) && x.IsPublic);
                 var controllerAttributes = controller.GetCustomAttributes();
                 var currentRoute = controllerAttributes.FirstOrDefault(x => x.GetType() == typeof(RouteAttribute));
 

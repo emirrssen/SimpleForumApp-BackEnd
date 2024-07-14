@@ -1,6 +1,6 @@
-﻿using SimpleForumApp.Domain.Entities.Core;
+﻿using SimpleForumApp.Domain.Entities.Traceability;
 
-namespace SimpleForumApp.Domain.Entities.Traceability
+namespace SimpleForumApp.Domain.Entities.Core
 {
     public class ActionType : EntityWithId
     {

@@ -1,6 +1,4 @@
-﻿using SimpleForumApp.Domain.Entities.Core;
-
-namespace SimpleForumApp.Domain.Entities.Traceability
+﻿namespace SimpleForumApp.Domain.Entities.Traceability
 {
     public class EndPointActivity : EntityWithId
     {
@@ -10,7 +8,5 @@ namespace SimpleForumApp.Domain.Entities.Traceability
         public DateTime ActivityEndDate { get; set; }
 
         public EndPoint EndPoint { get; set; }
-        public EndPointUserActivity EndPointUserActivity { get; set; }
-        public EndPointGuestActivity EndPointGuestActivity { get; set; }
     }
 }

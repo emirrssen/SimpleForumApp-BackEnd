@@ -3,14 +3,14 @@ using SimpleForumApp.Domain.Entities.Traceability;
 
 namespace SimpleForumApp.Domain.Entities.Auth
 {
-    public class EndPointPermission : EntityWithStatus
+    public class EndPointClaimBusinessRule : EntityWithStatus
     {
         public long EndPointId { get; set; }
-        public long PermissionId { get; set; }
+        public long ClaimBusinessRuleId { get; set; }
         public long StatusId { get; set; }
 
         public EndPoint EndPoint { get; set; }
-        public Permission Permission { get; set; }
+        public ClaimBusinessRule ClaimBusinessRule { get; set; }
         public Status Status { get; set; }
     }
 }

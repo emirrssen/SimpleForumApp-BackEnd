@@ -1,9 +1,9 @@
-﻿using SimpleForumApp.Domain.Entities.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SimpleForumApp.Domain.Entities.Core;
 
 namespace SimpleForumApp.Domain.Entities.App
 {

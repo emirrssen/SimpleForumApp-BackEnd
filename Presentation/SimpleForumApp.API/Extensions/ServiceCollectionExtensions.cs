@@ -8,11 +8,13 @@ namespace SimpleForumApp.API.Extensions
         {
             services.AddScoped<CalculateEndPointExecutionTimeFilter>();
             services.AddScoped<RolePermissionFilter>();
+            services.AddScoped<RunClaimBusinessRulesFilter>();
 
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<CalculateEndPointExecutionTimeFilter>();
                 options.Filters.Add<RolePermissionFilter>();
+                options.Filters.Add<RunClaimBusinessRulesFilter>();
             });
         }
     }

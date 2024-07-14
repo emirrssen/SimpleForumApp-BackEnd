@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SimpleForumApp.Domain.Entities.App;
+using SimpleForumApp.Domain.Entities.Core;
 
-namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations.App
+namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations.Core
 {
     public class StatusConfigurations : IEntityTypeConfiguration<Status>
     {

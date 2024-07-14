@@ -1,8 +1,7 @@
-﻿namespace SimpleForumApp.Domain.Entities.Core
+﻿namespace SimpleForumApp.Domain.Entities
 {
-    public class Entity
+    public class EntityWithStatus
     {
-        public long Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
     }

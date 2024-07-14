@@ -15,5 +15,6 @@ namespace SimpleForumApp.Domain.Entities.Traceability
         public ActionType ActionType { get; set; }
         public ICollection<EndPointActivity> EndPointActivities { get; set; }
         public ICollection<EndPointPermission> Permissions { get; set; }
+        public ICollection<EndPointClaimBusinessRule> ClaimBusinessRules { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using SimpleForumApp.Domain.Entities.Core;
+﻿using SimpleForumApp.Domain.Entities;
 
 namespace SimpleForumApp.Domain.DTOs.App.PersonDtos
 {

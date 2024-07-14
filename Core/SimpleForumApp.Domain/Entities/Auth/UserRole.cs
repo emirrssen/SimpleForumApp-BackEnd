@@ -1,5 +1,4 @@
-﻿using SimpleForumApp.Domain.Entities.App;
-using SimpleForumApp.Domain.Entities.Core;
+﻿using SimpleForumApp.Domain.Entities.Core;
 
 namespace SimpleForumApp.Domain.Entities.Auth
 {

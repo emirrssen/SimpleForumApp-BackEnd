@@ -17,6 +17,5 @@ namespace SimpleForumApp.Domain.Entities.Auth
         public ICollection<TitleAction> TitleActions { get; set; }
         public ICollection<EntryAction> EntryActions { get; set; }
         public ICollection<UserRole> Roles { get; set; }
-        public ICollection<EndPointUserActivity> EndPointUserActivities { get; set; }
     }
 }

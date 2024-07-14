@@ -2,14 +2,14 @@
 
 namespace SimpleForumApp.Domain.Entities.Auth
 {
-    public class RolePermission : EntityWithStatus
+    public class PagePermission : EntityWithStatus
     {
-        public long RoleId { get; set; }
+        public long PageId { get; set; }
         public long PermissionId { get; set; }
         public long StatusId { get; set; }
 
-        public Status Status { get; set; }
-        public Role Role { get; set; }
+        public Page Page { get; set; }
         public Permission Permission { get; set; }
+        public Status Status { get; set; }
     }
 }

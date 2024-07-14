@@ -1,5 +1,4 @@
-﻿using SimpleForumApp.Domain.Entities.App;
-using SimpleForumApp.Domain.Entities.Core;
+﻿using SimpleForumApp.Domain.Entities.Core;
 
 namespace SimpleForumApp.Domain.Entities.Auth
 {
@@ -12,5 +11,6 @@ namespace SimpleForumApp.Domain.Entities.Auth
         public Status Status { get; set; } = null!;
         public ICollection<RolePermission> Roles { get; set; }
         public ICollection<EndPointPermission> EndPoints { get; set; }
+        public ICollection<PagePermission> Pages { get; set; }
     }
 }

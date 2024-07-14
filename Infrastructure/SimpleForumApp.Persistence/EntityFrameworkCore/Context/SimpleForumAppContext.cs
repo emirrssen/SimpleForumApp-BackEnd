@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Domain.Entities.App;
 using SimpleForumApp.Domain.Entities.Auth;
+using SimpleForumApp.Domain.Entities.Core;
 using SimpleForumApp.Domain.Entities.Traceability;
 using System.Reflection;
 
@@ -30,8 +31,12 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Context
         public DbSet<EndPoint> EndPoints { get; set; }
         public DbSet<EndPointPermission> EndPointPermissions { get; set; }
         public DbSet<EndPointActivity> EndPointActivities { get; set; }
-        public DbSet<EndPointUserActivity> EndPointUserActivities { get; set; }
-        public DbSet<EndPointGuestActivity> EndPointGuestActivities { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<PagePermission> PagePermissions { get; set; }
+        public DbSet<ClaimBusinessRule> ClaimBusinessRules { get; set; }
+        public DbSet<ExecutionOrder> ExecutionOrders { get; set; }
+        public DbSet<PageClaimBusinessRule> PageClaimBusinessRules { get; set; }
+        public DbSet<EndPointClaimBusinessRule> EndPointClaimBusinessRules { get; set; }
 
         public SimpleForumAppContext(DbContextOptions options) : base(options) { }
 

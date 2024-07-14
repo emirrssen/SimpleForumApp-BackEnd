@@ -1,4 +1,4 @@
-﻿namespace SimpleForumApp.Domain.Entities.Core
+﻿namespace SimpleForumApp.Domain.Entities
 {
     public class EntityWithId
     {

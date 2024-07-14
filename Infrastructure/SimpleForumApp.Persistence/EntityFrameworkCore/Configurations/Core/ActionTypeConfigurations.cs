@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SimpleForumApp.Domain.Entities.Traceability;
+using SimpleForumApp.Domain.Entities.Core;
 
-namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations.Traceability
+namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations.Core
 {
     public class ActionTypeConfigurations : IEntityTypeConfiguration<ActionType>
     {
