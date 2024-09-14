@@ -14,6 +14,8 @@ var app = builder.Build();
 await builder.Services.GenerateEndPoints();
 await builder.Services.GenerateClaimBusinessRules();
 
+app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

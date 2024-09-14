@@ -1,23 +1,21 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SimpleForumApp.API.Core;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
     [Route("api/admin/person-management")]
     [ApiController]
     [Authorize(AuthenticationSchemes = "simple-forum-app")]
-    public class PersonManagementController : ControllerBase
+    public class PersonManagementController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public PersonManagementController(IMediator mediator)
+        public PersonManagementController(IMediator mediator) : base(mediator)
         {
-            _mediator = mediator;
         }
 
         [HttpGet("all-detail-test")]
         public async Task<IActionResult> GetAllPersonDetailsAsync([FromQuery] Application.CQRS.Admin.PersonManagement.Queries.GetAllPersonDetails.Query query)
-            => Ok(await _mediator.Send(query));
+            => await ExecuteAsync(query);
     }
 }

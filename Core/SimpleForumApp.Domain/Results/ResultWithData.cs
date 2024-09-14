@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleForumApp.Domain.Enums;
 
 namespace SimpleForumApp.Domain.Results
 {
     public class ResultWithData<TData> : Result
     {
-        public ResultWithData(bool isSuccess, string message, TData data) : base(isSuccess, message)
+        public ResultWithData(bool isSuccess, string message, ResultCodes code, TData data) : base(isSuccess, message, code)
         {
             Data = data;
         }
 
-        public ResultWithData(bool isSuccess, TData data) : base(isSuccess)
+        public ResultWithData(bool isSuccess, ResultCodes code, TData data) : base(isSuccess, code)
         {
             Data = data;
         }
 
-        public ResultWithData(bool isSuccess, string message) : base(isSuccess, message) { }
+        public ResultWithData(bool isSuccess, string message, ResultCodes code) : base(isSuccess, message, code) { }
 
         public TData? Data { get; set; }
     }

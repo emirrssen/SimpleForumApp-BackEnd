@@ -19,6 +19,10 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Configurations.Auth
                 .WithMany(x => x.ClaimBusinessRules)
                 .HasForeignKey(x => x.StatusId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasIndex(x => x.Code)
+                .IsUnique();
         }
     }
 }

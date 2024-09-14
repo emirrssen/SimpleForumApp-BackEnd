@@ -13,5 +13,7 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Context
 
         public IEndPointRepository EndPointRepository => GetService<IEndPointRepository>();
         public IPersonRepository PersonRepository => GetService<IPersonRepository>();
+        public ICountryRepository CountryRepository => GetService<ICountryRepository>();
+        public IGenderRepository GenderRepository => GetService<IGenderRepository>();
     }
 }

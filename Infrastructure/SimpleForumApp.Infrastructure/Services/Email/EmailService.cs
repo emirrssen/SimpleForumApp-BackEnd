@@ -42,7 +42,8 @@ namespace SimpleForumApp.Infrastructure.Services.Email
             mailMessage.Subject = "Şifre Sıfırlama Linki";
             mailMessage.Body = @$"
                 <p>Değerli Simple Forum App Kullanıcısı,</p>
-                <p>Şifrenizi yenilemek için <a href={token}>bu linke</a> tıklayabilirsiniz.</p><br>
+                <p>Şifrenizi yenilemek için <a href={token}>bu linke</a> tıklayabilirsiniz.</p>
+                <p>Saygılarımızla</p>
             ";
 
             await _smtpClient.SendMailAsync(mailMessage);

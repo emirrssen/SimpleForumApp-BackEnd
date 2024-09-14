@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.IdentityModel.Tokens;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Entities.Traceability;
 using SimpleForumApp.Domain.Enums;
@@ -55,7 +56,8 @@ namespace SimpleForumApp.API.Extensions
                 {
                     var methodAttributes = method.GetCustomAttributes();
                     var currentActionAttribute = methodAttributes.FirstOrDefault(x => x.GetType().IsSubclassOf(typeof(HttpMethodAttribute)));
-                    string fullPath = $"{((RouteAttribute)currentRoute).Template}/{((HttpMethodAttribute)currentActionAttribute)?.Template}";
+                    var actionTemplate = string.IsNullOrEmpty(((HttpMethodAttribute)currentActionAttribute)?.Template) ? "" : "/" + ((HttpMethodAttribute)currentActionAttribute)?.Template;
+                    string fullPath = $"{((RouteAttribute)currentRoute).Template}{actionTemplate}";
 
                     EndPoint endpoint = new EndPoint
                     {

@@ -30,7 +30,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                 return ResultFactory.FailResult("Kullanıcı bulunamadı");
 
             var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var resetPasswordLink = $"http://localhost:5220/api/auth/generate-reset-password?user-id={user.Id}&token={passwordResetToken}";
+            var resetPasswordLink = $"http://localhost:3000/auth/reset-password?user-id={user.Id}&token={passwordResetToken}";
 
             await _unitOfWork.Context.Notification.EmailService.SendMailForPasswordResetAsync(user.Email!, resetPasswordLink);
 

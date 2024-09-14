@@ -11,7 +11,9 @@ namespace SimpleForumApp.API.Filters
             if (!context.ModelState.IsValid)
             {
                 var errors = context.ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+
                 var result = ResultFactory.FailResult(string.Join("\n", errors));
+
                 context.Result = new ObjectResult(result);
             }
         }

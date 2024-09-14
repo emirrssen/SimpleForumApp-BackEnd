@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Application.Repositories.App;
-using SimpleForumApp.Domain.DTOs.App.PersonDtos;
+using SimpleForumApp.Domain.DTOs.App.Person;
 using SimpleForumApp.Domain.Entities.App;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 

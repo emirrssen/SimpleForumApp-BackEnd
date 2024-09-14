@@ -1,5 +1,5 @@
 ﻿using SimpleForumApp.Application.UnitOfWork.Core;
-using SimpleForumApp.Domain.DTOs.App.PersonDtos;
+using SimpleForumApp.Domain.DTOs.App.Person;
 using SimpleForumApp.Domain.Entities.App;
 
 namespace SimpleForumApp.Application.Repositories.App
