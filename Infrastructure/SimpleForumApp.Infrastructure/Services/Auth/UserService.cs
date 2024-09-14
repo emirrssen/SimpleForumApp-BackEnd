@@ -61,7 +61,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
             return result.Succeeded
                 ? ResultFactory.SuccessResult()
-                : ResultFactory.FailResult(string.Join("\n", result.Errors.Select(x => x.Description)));
+                : ResultFactory.WarningResult(string.Join("\n", result.Errors.Select(x => x.Description)));
         }
 
         public async Task<Result> UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenExpireDate, int refreshTokenLifeTime)

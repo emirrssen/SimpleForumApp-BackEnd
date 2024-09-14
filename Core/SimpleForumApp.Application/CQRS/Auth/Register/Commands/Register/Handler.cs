@@ -39,17 +39,30 @@ namespace SimpleForumApp.Application.CQRS.Auth.Register.Commands.Register
                 PersonId = personInsertResult,
                 UserName = request.UserName,
                 Email = request.EmailAddress,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = FormatPhoneNumber(request.PhoneNumber)
             }, request.Password);
 
             if (!userInsertResult.IsSuccess)
             {
                 await _unitOfWork.Database.EfCoreDb.RollbackTransactionAsync();
-                return ResultFactory.FailResult(userInsertResult.Message);
+                return userInsertResult;
             }
 
             await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
             return ResultFactory.SuccessResult("Kayıt olma işlemi başarılı");
+        }
+        private string FormatPhoneNumber(string phoneNumber)
+        {
+            if (phoneNumber.Length != 11)
+            {
+                return "";
+            }
+
+            string part1 = phoneNumber.Substring(0, 4);
+            string part2 = phoneNumber.Substring(4, 3);
+            string part3 = phoneNumber.Substring(7, 4);
+
+            return $"{part1} {part2} {part3}";
         }
     }
 }

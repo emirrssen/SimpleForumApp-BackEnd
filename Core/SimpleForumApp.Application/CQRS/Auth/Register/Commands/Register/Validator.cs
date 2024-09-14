@@ -33,7 +33,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Register.Commands.Register
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage("Telefon numarası girilmesi zorunludur.")
-                .Length(14).WithMessage("Telefon numarasının formatı hatalı.");
+                .Length(11).WithMessage("Telefon numarasının formatı hatalı.");
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Şifre belirtilmesi zorunludur.")

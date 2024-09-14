@@ -6,6 +6,8 @@
         public static Result FailResult(string message) => new(false, message, Enums.ResultCodes.ERROR);
         public static Result SuccessResult() => new(true, Enums.ResultCodes.SUCCESS);
         public static Result FailResult() => new(false, Enums.ResultCodes.ERROR);
+        public static Result WarningResult(string message) => new(false, message, Enums.ResultCodes.WARNING);
+        public static Result WarningResult() => new(false, Enums.ResultCodes.WARNING);
         public static ResultWithData<TData> SuccessResult<TData>(string message, TData data) => new(true, message, Enums.ResultCodes.SUCCESS, data);
         public static ResultWithData<TData> FailResult<TData>(string message, TData data) => new(false, message, Enums.ResultCodes.ERROR, data);
         public static ResultWithData<TData> SuccessResult<TData>(string message) => new(true, message, Enums.ResultCodes.SUCCESS);
