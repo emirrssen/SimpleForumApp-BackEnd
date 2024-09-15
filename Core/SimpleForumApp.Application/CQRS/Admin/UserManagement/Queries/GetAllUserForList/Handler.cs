@@ -23,11 +23,10 @@ namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries.GetAllUse
             return ResultFactory.SuccessResult<IList<Response>>(result.Select(x => new Response
             {
                 CountryName = x.CountryName,
-                CreatedDate = x.CreatedDate.ToString("dd.MM.yyyy"),
-                DateOfBirth = x.CreatedDate.ToString("dd.MM.yyyy"),
+                StatusName = x.StatusName,
+                DateOfBirth = x.DateOfBirth.ToString("dd.MM.yyyy"),
                 FirstName = x.FirstName,
                 GenderName = x.GenderName,
-                Id = x.Id,
                 LastName = x.LastName,
                 UserName = x.Username
             }).ToList());

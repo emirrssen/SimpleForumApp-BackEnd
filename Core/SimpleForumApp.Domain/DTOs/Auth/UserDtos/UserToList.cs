@@ -10,6 +10,6 @@ namespace SimpleForumApp.Domain.DTOs.Auth.UserDtos
         public DateTime DateOfBirth { get; set; }
         public string GenderName { get; set; }
         public string CountryName { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string StatusName { get; set; }
     }
 }

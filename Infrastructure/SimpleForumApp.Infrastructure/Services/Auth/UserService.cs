@@ -23,12 +23,14 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                     .ThenInclude(x => x.Country)
                 .Include(x => x.Person)
                     .ThenInclude(x => x.Gender)
+                .Include(x => x.Person)
+                    .ThenInclude(x => x.Status)
                 .Select(x => new UserToList
                 {
                     Id = x.Person.Id,
                     CountryName = x.Person.Country.Name,
                     FirstName = x.Person.FirstName,
-                    CreatedDate = x.Person.CreatedDate,
+                    StatusName = x.Person.Status.Name,
                     DateOfBirth = x.Person.DateOfBirth,
                     GenderName = x.Person.Gender.Name,
                     LastName = x.Person.LastName,
