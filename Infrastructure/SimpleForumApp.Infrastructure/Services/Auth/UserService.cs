@@ -16,6 +16,30 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             _userManager = userManager;
         }
 
+        public async Task<IList<UserToList>> GetAllUsersForListAsync()
+        {
+            var result = await _userManager.Users
+                .Include(x => x.Person)
+                    .ThenInclude(x => x.Country)
+                .Include(x => x.Person)
+                    .ThenInclude(x => x.Gender)
+                .Select(x => new UserToList
+                {
+                    Id = x.Person.Id,
+                    CountryName = x.Person.Country.Name,
+                    FirstName = x.Person.FirstName,
+                    CreatedDate = x.Person.CreatedDate,
+                    DateOfBirth = x.Person.DateOfBirth,
+                    GenderName = x.Person.Gender.Name,
+                    LastName = x.Person.LastName,
+                    Username = x.UserName
+                })
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
+
+            return result;
+        }
+
         public async Task<User> GetByUserNameAsync(string userName)
         {
             var result = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == userName);
@@ -51,6 +75,39 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                 })
                 .AsNoTrackingWithIdentityResolution()
                 .FirstOrDefaultAsync();
+
+            return result;
+        }
+
+        public async Task<IList<UserFullDetail>> GetUserFullDetailsAsync()
+        {
+            var result = await _userManager.Users
+                .Include(x => x.Person)
+                    .ThenInclude(x => x.Country)
+                .Include(x => x.Person)
+                    .ThenInclude(x => x.Gender)
+                .Select(x => new UserFullDetail
+                {
+                    CountryId = x.Person.CountryId,
+                    FirstName = x.Person.FirstName,
+                    LastName = x.Person.LastName,
+                    CountryName = x.Person.Country.Name,
+                    CreatedDate = x.Person.CreatedDate,
+                    DateOfBirth = x.Person.CreatedDate,
+                    Email = x.Email,
+                    GenderId = x.Person.GenderId,
+                    GenderName = x.Person.Gender.Name,
+                    Id = x.Id,
+                    PersonId = x.PersonId,
+                    PhoneNumber = x.PhoneNumber,
+                    ProfileImage = x.Person.ProfileImage,
+                    StatusId = x.Person.StatusId,
+                    UpdatedDate = x.Person.UpdatedDate,
+                    UserName = x.UserName
+
+                })
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
 
             return result;
         }

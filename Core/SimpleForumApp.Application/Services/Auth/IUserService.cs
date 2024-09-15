@@ -11,5 +11,7 @@ namespace SimpleForumApp.Application.Services.Auth
         Task<Result> UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenExpireDate, int refreshTokenLifeTime);
         Task<User> GetByUserNameAsync(string userName);
         Task<UserFullDetail> GetUserFullDetailByUserNameAsync(string userName);
+        Task<IList<UserFullDetail>> GetUserFullDetailsAsync();
+        Task<IList<UserToList>> GetAllUsersForListAsync();
     }
 }
