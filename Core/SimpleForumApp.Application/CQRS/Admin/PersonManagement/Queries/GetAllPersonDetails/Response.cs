@@ -1,6 +1,6 @@
 ﻿namespace SimpleForumApp.Application.CQRS.Admin.PersonManagement.Queries.GetAllPersonDetails
 {
-    public class Dto
+    public class Response
     {
         public long Id { get; set; }
         public long GenderId { get; set; }

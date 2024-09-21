@@ -55,9 +55,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Register.Commands.Register
         private string FormatPhoneNumber(string phoneNumber)
         {
             if (phoneNumber.Length != 11)
-            {
                 return "";
-            }
 
             string part1 = phoneNumber.Substring(0, 4);
             string part2 = phoneNumber.Substring(4, 3);
