@@ -12,6 +12,13 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
         {
         }
 
+        public async Task<IList<Role>> GetAllAsync()
+        {
+            return await _context.Roles
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
+        }
+
         public async Task<IList<RoleToList>> GetAllDetailsByStatusAsync(long statusId)
         {
             return await _context.Roles
