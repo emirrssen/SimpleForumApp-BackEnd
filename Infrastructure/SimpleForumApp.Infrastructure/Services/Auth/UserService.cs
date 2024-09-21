@@ -16,7 +16,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             _userManager = userManager;
         }
 
-        public async Task<IList<UserToList>> GetAllUsersForListAsync()
+        public async Task<IList<UserToList>> GetAllUsersForListAsync(bool isPassiveShown)
         {
             var result = await _userManager.Users
                 .Include(x => x.Person)
@@ -25,9 +25,10 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                     .ThenInclude(x => x.Gender)
                 .Include(x => x.Person)
                     .ThenInclude(x => x.Status)
+                .Where(x => isPassiveShown ? x.Person.StatusId == 2 : x.Person.StatusId == 1)
                 .Select(x => new UserToList
                 {
-                    Id = x.Person.Id,
+                    Id = x.Id,
                     CountryName = x.Person.Country.Name,
                     FirstName = x.Person.FirstName,
                     StatusName = x.Person.Status.Name,
@@ -40,6 +41,12 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                 .ToListAsync();
 
             return result;
+        }
+
+        public async Task<User> GetByIdAsync(long id)
+        {
+            return await _userManager.Users.
+                FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<User> GetByUserNameAsync(string userName)
@@ -63,7 +70,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                     LastName = x.Person.LastName,
                     CountryName = x.Person.Country.Name,
                     CreatedDate = x.Person.CreatedDate,
-                    DateOfBirth = x.Person.CreatedDate,
+                    DateOfBirth = x.Person.DateOfBirth,
                     Email = x.Email,
                     GenderId = x.Person.GenderId,
                     GenderName = x.Person.Gender.Name,
@@ -123,6 +130,21 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                 : ResultFactory.WarningResult(string.Join("\n", result.Errors.Select(x => x.Description)));
         }
 
+        public async Task<Result> UpdateEmailAsync(User user)
+        {
+            await _userManager.UpdateNormalizedEmailAsync(user);
+            return ResultFactory.SuccessResult();
+        }
+
+        public async Task<Result> UpdatePhoneNumberAsync(User user, string phoneNumber)
+        {
+            var result = await _userManager.SetPhoneNumberAsync(user, phoneNumber);
+
+            return result.Succeeded
+                ? ResultFactory.SuccessResult()
+                : ResultFactory.FailResult(string.Join("\n", result.Errors.Select(x => x.Description)));
+        }
+
         public async Task<Result> UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenExpireDate, int refreshTokenLifeTime)
         {
             user.RefreshToken = refreshToken;
@@ -135,6 +157,12 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
                 return ResultFactory.FailResult(string.Join("\n", updateResult.Errors.Select(x => x.Description)));
             }
             
+            return ResultFactory.SuccessResult();
+        }
+
+        public async Task<Result> UpdateUserNameAsync(User user)
+        {
+            await _userManager.UpdateNormalizedUserNameAsync(user);
             return ResultFactory.SuccessResult();
         }
     }

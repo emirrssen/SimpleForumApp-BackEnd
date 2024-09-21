@@ -15,7 +15,7 @@ namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries.GetAllUse
 
         public override async Task<ResultWithData<IList<Response>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Context.Identity.UserService.GetAllUsersForListAsync();
+            var result = await _unitOfWork.Context.Identity.UserService.GetAllUsersForListAsync(request.IsPassiveShown);
 
             if (!result.Any())
                 return ResultFactory.WarningResult<IList<Response>>("Sistemde kayıtlı kullanıcı bulunamadı");

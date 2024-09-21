@@ -22,6 +22,7 @@ namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries.GetUserFu
 
             return ResultFactory.SuccessResult<Response>(new Response
             {
+                Id = result.Id,
                 UserName = request.UserName,
                 CountryId = result.CountryId,
                 DateOfBirth = result.DateOfBirth.ToString("yyyy-MM-dd"),

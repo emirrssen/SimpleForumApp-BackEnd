@@ -9,9 +9,13 @@ namespace SimpleForumApp.Application.Services.Auth
     {
         Task<Result> InsertAsync(User user, string password);
         Task<Result> UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenExpireDate, int refreshTokenLifeTime);
+        Task<Result> UpdateUserNameAsync(User user);
+        Task<Result> UpdateEmailAsync(User user);
+        Task<Result> UpdatePhoneNumberAsync(User user, string phoneNumber);
         Task<User> GetByUserNameAsync(string userName);
         Task<UserFullDetail> GetUserFullDetailByUserNameAsync(string userName);
         Task<IList<UserFullDetail>> GetUserFullDetailsAsync();
-        Task<IList<UserToList>> GetAllUsersForListAsync();
+        Task<IList<UserToList>> GetAllUsersForListAsync(bool isPassiveShown);
+        Task<User> GetByIdAsync(long id);
     }
 }

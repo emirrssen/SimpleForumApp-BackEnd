@@ -4,5 +4,6 @@ namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries.GetAllUse
 {
     public class Query : QueryBase<IList<Response>>
     {
+        public bool IsPassiveShown { get; set; }
     }
 }

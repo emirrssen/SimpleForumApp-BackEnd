@@ -51,6 +51,7 @@ namespace SimpleForumApp.Application.CQRS.Auth.Register.Commands.Register
             await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
             return ResultFactory.SuccessResult("Kayıt olma işlemi başarılı");
         }
+
         private string FormatPhoneNumber(string phoneNumber)
         {
             if (phoneNumber.Length != 11)

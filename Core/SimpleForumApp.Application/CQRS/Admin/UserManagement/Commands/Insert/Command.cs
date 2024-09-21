@@ -1,17 +1,17 @@
-﻿namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries.GetUserFullDetailByUsername
+﻿using SimpleForumApp.Application.BaseStructures.MediatR.CommandAbstractions;
+
+namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.Commands.Insert
 {
-    public class Response
+    public class Command : CommandBase
     {
-        public long Id { get; set; }
         public long StatusId { get; set; }
         public long GenderId { get; set; }
         public long CountryId { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string DateOfBirth { get; set; }
-        public string ProfileImage { get; set; }
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }
