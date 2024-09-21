@@ -13,7 +13,7 @@ namespace SimpleForumApp.Infrastructure.Services.Email
             _smtpClient = smtpClient;
         }
 
-        public async Task SendMailAsync(string subject, string body, bool isBodyHtml, string sendFrom, params string[] emails)
+        public async Task SendMailWithFromAsync(string subject, string body, bool isBodyHtml, string sendFrom, params string[] emails)
         {
             using MailMessage mailMessage = new();
 
@@ -22,6 +22,24 @@ namespace SimpleForumApp.Infrastructure.Services.Email
             foreach (var email in emails) 
             {
                 mailMessage.To.Add(email);            
+            }
+
+            mailMessage.IsBodyHtml = isBodyHtml;
+            mailMessage.Subject = subject;
+            mailMessage.Body = body;
+
+            await _smtpClient.SendMailAsync(mailMessage);
+        }
+
+        public async Task SendMailAsync(string subject, string body, bool isBodyHtml, params string[] emails)
+        {
+            using MailMessage mailMessage = new();
+
+            mailMessage.From = new MailAddress(AppSettingsReaderHelper.GetEmailSettingsEmail());
+
+            foreach (var email in emails)
+            {
+                mailMessage.To.Add(email);
             }
 
             mailMessage.IsBodyHtml = isBodyHtml;

@@ -2,7 +2,7 @@
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Results;
 
-namespace SimpleForumApp.Application.CQRS.Admin.CountryManagement.Queries.GetCountries
+namespace SimpleForumApp.Application.CQRS.Admin.StatusManagement.Queries.GetAll
 {
     public class Handler : QueryHandlerBase<Query, IList<Response>>
     {
@@ -13,12 +13,12 @@ namespace SimpleForumApp.Application.CQRS.Admin.CountryManagement.Queries.GetCou
             _unitOfWork = unitOfWork;
         }
 
-        public override async Task<ResultWithData<IList<Response>>> Handle(Query request, CancellationToken cancellationToken)
+        public async override Task<ResultWithData<IList<Response>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Context.App.CountryRepository.GetAllAsync();
+            var result = await _unitOfWork.Context.App.StatusRepository.GetAllAsync();
 
             if (!result.Any())
-                return ResultFactory.WarningResult<IList<Response>>(Array.Empty<Response>(), "Ülke bulunamadı");
+                return ResultFactory.WarningResult<IList<Response>>("Durum bilgisi bulunamadı");
 
             return ResultFactory.SuccessResult<IList<Response>>(result.Select(x => new Response
             {
