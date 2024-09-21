@@ -44,7 +44,8 @@ namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.Commands.UpdateBy
                     StatusId = request.StatusId,
                     CountryId = request.CountryId,
                     GenderId = request.GenderId,
-                    DateOfBirth = request.DateOfBirth
+                    DateOfBirth = request.DateOfBirth,
+                    UpdatedDate = DateTime.Now
                 });
             }
 
