@@ -35,6 +35,13 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
                 .ToListAsync();
         }
 
+        public async Task<Role> GetByIdAsync(long id)
+        {
+            return await _context.Roles
+                .AsNoTrackingWithIdentityResolution()
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<long> InsertAsync(Role role)
         {
             var result = await _context.Roles.AddAsync(role);

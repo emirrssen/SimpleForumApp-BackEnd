@@ -2,7 +2,7 @@
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Results;
 
-namespace SimpleForumApp.Application.CQRS.Admin.RoleManagement.Commands.Insert
+namespace SimpleForumApp.Application.CQRS.Admin.RoleManagement.Commands.UpdateById
 {
     public class Handler : CommandHandlerBase<Command>
     {
@@ -16,29 +16,27 @@ namespace SimpleForumApp.Application.CQRS.Admin.RoleManagement.Commands.Insert
         public override async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
             var roles = await _unitOfWork.Context.Auth.RoleRepository.GetAllAsync();
+            var roleToUpdate = roles.FirstOrDefault(x => x.Id == request.Id);
 
-            if (roles.Any(x => x.Name == request.Name))
-                return ResultFactory.WarningResult("Aynı isme sahip bir rol sistemde zaten mevcut");
+            if (roleToUpdate is null)
+                return ResultFactory.FailResult("Rol bulunamadı");
+
+            if (roleToUpdate.Name != request.Name && roles.Any(x => x.Name == request.Name))
+                return ResultFactory.FailResult("Aynı isme sahip bir rol sistemde zaten tanımlı");
 
             await _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
 
-            var insertResult = await _unitOfWork.Context.Auth.RoleRepository.InsertAsync(new()
+            await _unitOfWork.Context.Auth.RoleRepository.UpdateAsync(new()
             {
+                UpdatedDate = DateTime.Now,
                 Name = request.Name,
                 Description = request.Description,
-                StatusId = request.StatusId,
-                CreatedDate = DateTime.UtcNow
+                Id = request.Id,
+                StatusId = request.StatusId
             });
 
-            if (insertResult <= 0)
-            {
-                await _unitOfWork.Database.EfCoreDb.RollbackTransactionAsync();
-                return ResultFactory.FailResult("Ekleme işlemi başarısız");
-            }
-
             await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
-            return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
+            return ResultFactory.SuccessResult("Güncelleme işlemi başarılı");
         }
-
     }
 }

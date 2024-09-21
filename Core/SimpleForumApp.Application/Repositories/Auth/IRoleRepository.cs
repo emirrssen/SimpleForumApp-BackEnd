@@ -10,5 +10,6 @@ namespace SimpleForumApp.Application.Repositories.Auth
         Task UpdateAsync(Role role);
         Task<IList<RoleToList>> GetAllDetailsByStatusAsync(long statusId);
         Task<IList<Role>> GetAllAsync();
+        Task<Role> GetByIdAsync(long id);
     }
 }

@@ -18,8 +18,16 @@ namespace SimpleForumApp.API.Controllers.Admin
         public async Task<IActionResult> GetAllDetailsByStatusIdAsync([FromQuery] Queries.GetAll.Query query)
             => await ExecuteAsync(query);
 
+        [HttpGet("by-id")]
+        public async Task<IActionResult> GetByIdAsync([FromQuery] Queries.GetById.Query query)
+            => await ExecuteAsync(query);
+
         [HttpPost]
         public async Task<IActionResult> InsertAsync([FromBody] Commands.Insert.Command command)
+            => await ExecuteAsync(command);
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateByIdAsync([FromBody] Commands.UpdateById.Command command)
             => await ExecuteAsync(command);
     }
 }
