@@ -37,7 +37,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
 
         public async Task<Person> GetByIdAsync(long id)
         {
-            var result = await _context.Persons.FindAsync(id);
+            var result = await _context.Persons.AsNoTrackingWithIdentityResolution().SingleOrDefaultAsync(x => x.Id == id);
 
             return result;
         }
@@ -53,6 +53,12 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
         public async Task DeleteByIdAsync(Person person)
         {
             _context.Persons.Remove(person);
+            await SaveChangesAsync();
+        }
+
+        public async Task UpdateByIdAsync(Person person)
+        {
+            _context.Persons.Update(person);
             await SaveChangesAsync();
         }
     }
