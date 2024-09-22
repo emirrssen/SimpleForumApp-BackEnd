@@ -11,7 +11,6 @@
         public long Id { get; set; }
         public string ActionTypeName { get; set; }
         public string MethodName { get; set; }
-        public string EndPointRoute { get; set; }
         public string IsUse { get; set; }
         public string IsActive { get; set; }
     }

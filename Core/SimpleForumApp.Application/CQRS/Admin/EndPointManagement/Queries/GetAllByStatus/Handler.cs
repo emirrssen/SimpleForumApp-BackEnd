@@ -15,13 +15,14 @@ namespace SimpleForumApp.Application.CQRS.Admin.EndPointManagement.Queries.GetAl
 
         public override async Task<ResultWithData<IList<Response>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Context.Traceability.EndPointRepository.GetDetailsByStatusAsync(request.IsActive);
+            var result = await _unitOfWork.Context.Traceability.EndPointRepository.GetAllDetailsAsync();
 
             if (!result.Any())
                 return ResultFactory.WarningResult<IList<Response>>("Sistemde kayıtlı end-point bulunamadı.");
 
             return ResultFactory.SuccessResult<IList<Response>>(
                 result
+                    .OrderBy(x => x.ControllerName)
                     .GroupBy(x => x.ControllerName)
                     .Select(x => new Response
                     {
@@ -29,7 +30,6 @@ namespace SimpleForumApp.Application.CQRS.Admin.EndPointManagement.Queries.GetAl
                         EndPoints = x.Where(y => y.ControllerName == x.Key).Select(y => new EndPoint
                         {
                             ActionTypeName = y.ActionMethodName,
-                            EndPointRoute = y.Route,
                             Id = y.Id,
                             IsActive = y.IsActive ? "Evet" : "Hayır",
                             IsUse = y.IsUse ? "Evet" : "Hayır",

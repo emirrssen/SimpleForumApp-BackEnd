@@ -31,6 +31,26 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceabili
             return result.ToList();
         }
 
+        public async Task<EndPointDetail?> GetDetailsByIdAsync(long id)
+        {
+            return await _context.EndPoints
+                .Where(x => x.Id == id)
+                .Include(x => x.ActionType)
+                .Select(x => new EndPointDetail
+                {
+                    Id = x.Id,
+                    ActionTypeName = x.ActionType.Name,
+                    ControllerName = x.ControllerName,
+                    IsActive = x.IsActive,
+                    IsUse = x.IsUse,
+                    MethodName = x.MethodName,
+                    Route = x.EndPointRoute,
+                    Description = x.Description
+                })
+                .AsNoTrackingWithIdentityResolution()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<EndPoint> GetByRouteAndActionTypeId(string route, long actionTypeId)
         {
             var result = await _context.EndPoints
@@ -40,10 +60,9 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceabili
             return result;
         }
 
-        public async Task<IList<EndPointToList>> GetDetailsByStatusAsync(bool isActive)
+        public async Task<IList<EndPointToList>> GetAllDetailsAsync()
         {
             return await _context.EndPoints
-                .Where(x => x.IsActive == isActive)
                 .Include(x => x.ActionType)
                 .Select(x => new EndPointToList
                 {
@@ -53,7 +72,6 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceabili
                     IsActive = x.IsActive,
                     IsUse = x.IsUse,
                     MethodName = x.MethodName,
-                    Route = x.EndPointRoute
                 })
                 .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
@@ -63,6 +81,11 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Traceabili
         {
             _context.EndPoints.Update(endPoint);
             await _context.SaveChangesAsync();
+        }
+
+        public Task<EndPoint?> GetByIdAsync(long id)
+        {
+            return _context.EndPoints.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

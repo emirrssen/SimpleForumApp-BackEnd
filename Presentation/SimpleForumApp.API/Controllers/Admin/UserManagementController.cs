@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleForumApp.API.Core;
 using Queries = SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries;
 using Commands = SimpleForumApp.Application.CQRS.Admin.UserManagement.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
     [Route("api/admin/user-management")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "simple-forum-app")]
     public class UserManagementController : BaseController
     {
         public UserManagementController(IMediator mediator) : base(mediator)

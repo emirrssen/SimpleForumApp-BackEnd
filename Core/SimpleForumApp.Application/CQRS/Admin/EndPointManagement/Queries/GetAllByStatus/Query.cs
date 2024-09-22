@@ -4,6 +4,5 @@ namespace SimpleForumApp.Application.CQRS.Admin.EndPointManagement.Queries.GetAl
 {
     public class Query : QueryBase<IList<Response>>
     {
-        public bool IsActive { get; set; }
     }
 }
