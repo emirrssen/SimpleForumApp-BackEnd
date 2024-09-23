@@ -2,7 +2,7 @@
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Results;
 
-namespace SimpleForumApp.Application.CQRS.Admin.RoleManagement.Commands.Insert
+namespace SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Commands.Insert
 {
     public class Handler : CommandHandlerBase<Command>
     {
@@ -15,22 +15,22 @@ namespace SimpleForumApp.Application.CQRS.Admin.RoleManagement.Commands.Insert
 
         public override async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
-            var roles = await _unitOfWork.Context.Auth.RoleRepository.GetAllAsync();
+            var permissions = await _unitOfWork.Context.Auth.PermissionRepository.GetAllAsync();
 
-            if (roles.Any(x => x.Name.ToLower().Replace(" ", "") == request.Name.ToLower().Replace(" ", "")))
-                return ResultFactory.WarningResult("Aynı isme sahip bir rol sistemde zaten mevcut");
+            if (permissions.Any(x => x.Name.ToLower().Replace(" ", "") == request.Name.ToLower().Replace(" ", "")))
+                return ResultFactory.FailResult("Aynı isme sahip bir yetki zaten sistemde tanımlı");
 
             await _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
 
-            var insertResult = await _unitOfWork.Context.Auth.RoleRepository.InsertAsync(new()
+            var result = await _unitOfWork.Context.Auth.PermissionRepository.InsertAsync(new()
             {
-                Name = request.Name,
+                CreatedDate = DateTime.Now,
                 Description = request.Description,
-                StatusId = request.StatusId,
-                CreatedDate = DateTime.UtcNow
+                Name = request.Name,
+                StatusId = request.StatusId
             });
 
-            if (insertResult <= 0)
+            if (result <= 0)
             {
                 await _unitOfWork.Database.EfCoreDb.RollbackTransactionAsync();
                 return ResultFactory.FailResult("Ekleme işlemi başarısız");
@@ -39,6 +39,5 @@ namespace SimpleForumApp.Application.CQRS.Admin.RoleManagement.Commands.Insert
             await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
             return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
         }
-
     }
 }

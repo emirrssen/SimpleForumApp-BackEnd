@@ -12,6 +12,11 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
         {
         }
 
+        public async Task<IList<Permission>> GetAllAsync()
+        {
+            return await _context.Permissions.ToListAsync();
+        }
+
         public async Task<IList<PermissionDetails>> GetAllDetailsAsync()
         {
             var result = await _context.Permissions

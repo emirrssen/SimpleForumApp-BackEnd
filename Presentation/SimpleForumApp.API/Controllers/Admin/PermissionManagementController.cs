@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SimpleForumApp.API.Core;
 using Queries = SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Queries;
+using Commands = SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Commands;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
@@ -16,5 +17,9 @@ namespace SimpleForumApp.API.Controllers.Admin
         [HttpGet]
         public async Task<IActionResult> GetPermissionsAsync([FromQuery] Queries.GetAllPermissions.Query query)
             => await ExecuteAsync(query);
+
+        [HttpPost]
+        public async Task<IActionResult> InsertAsync([FromBody] Commands.Insert.Command command)
+            => await ExecuteAsync(command);
     }
 }

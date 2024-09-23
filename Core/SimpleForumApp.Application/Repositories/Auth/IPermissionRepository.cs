@@ -10,5 +10,6 @@ namespace SimpleForumApp.Application.Repositories.Auth
         Task UpdateAsync(Permission permission);
         Task<IList<PermissionDetails>> GetAllDetailsAsync();
         Task<IList<PermissionDetails>> GetAllDetailsByStatusAsync(long statusId);
+        Task<IList<Permission>> GetAllAsync();
     }
 }
