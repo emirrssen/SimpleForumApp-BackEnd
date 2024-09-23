@@ -32,6 +32,25 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
             return result;
         }
 
+        public async Task<IList<PermissionDetails>> GetAllDetailsByStatusAsync(long statusId)
+        {
+            return await _context.Permissions
+                .Where(x => x.StatusId == statusId)
+                .Include(x => x.Status)
+                .Select(x => new PermissionDetails
+                {
+                    Id = x.Id,
+                    StatusId = x.StatusId,
+                    Description = x.Description,
+                    CreatedDate = x.CreatedDate,
+                    Name = x.Name,
+                    StatusName = x.Status.Name,
+                    UpdatedDate = x.UpdatedDate
+                })
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
+        }
+
         public async Task<long> InsertAsync(Permission permission)
         {
             var result = await _context.Permissions.AddAsync(permission);

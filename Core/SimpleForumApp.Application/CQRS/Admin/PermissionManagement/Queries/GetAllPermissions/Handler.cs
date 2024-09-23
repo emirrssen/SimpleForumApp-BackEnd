@@ -15,22 +15,19 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Queries.Get
 
         public override async Task<ResultWithData<IList<Dto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Context.Auth.PermissionRepository.GetAllDetailsAsync();
+            var result = await _unitOfWork.Context.Auth.PermissionRepository.GetAllDetailsByStatusAsync(
+                request.IsPassiveShown ? 2 : 1
+            );
 
             if (!result.Any())
-            {
-                return ResultFactory.FailResult<IList<Dto>>("Aktif kayıt bulunamadı");
-            }
+                return ResultFactory.WarningResult<IList<Dto>>("Kayıt bulunamadı");
 
             return ResultFactory.SuccessResult<IList<Dto>>(result.Select(x => new Dto
             {
                 Id = x.Id,
-                StatusId = x.StatusId,
                 StatusName = x.StatusName,
                 Name = x.Name,
-                Description = x.Description,
-                CreatedDate = x.CreatedDate,
-                UpdatedDate = x.UpdatedDate
+                CreatedDate = x.CreatedDate.ToString("dd.MM.yyyy"),
             }).ToList());
         }
     }
