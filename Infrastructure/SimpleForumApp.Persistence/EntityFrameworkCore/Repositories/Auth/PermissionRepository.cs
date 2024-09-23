@@ -12,6 +12,11 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
         {
         }
 
+        public async Task<IList<Permission>> GetAllAsync()
+        {
+            return await _context.Permissions.AsNoTrackingWithIdentityResolution().ToListAsync();
+        }
+
         public async Task<IList<PermissionDetails>> GetAllDetailsAsync()
         {
             var result = await _context.Permissions
@@ -30,6 +35,33 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
                 .ToListAsync();
 
             return result;
+        }
+
+        public async Task<IList<PermissionDetails>> GetAllDetailsByStatusAsync(long statusId)
+        {
+            return await _context.Permissions
+                .Where(x => x.StatusId == statusId)
+                .Include(x => x.Status)
+                .Select(x => new PermissionDetails
+                {
+                    Id = x.Id,
+                    StatusId = x.StatusId,
+                    Description = x.Description,
+                    CreatedDate = x.CreatedDate,
+                    Name = x.Name,
+                    StatusName = x.Status.Name,
+                    UpdatedDate = x.UpdatedDate
+                })
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
+        }
+
+        public async Task<Permission?> GetByIdAsync(long id)
+        {
+            return await _context.Permissions.
+                Where(x => id == x.Id)
+                .AsNoTrackingWithIdentityResolution()
+                .FirstOrDefaultAsync();
         }
 
         public async Task<long> InsertAsync(Permission permission)

@@ -4,5 +4,6 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Queries.Get
 {
     public class Query : QueryBase<IList<Dto>>
     {
+        public bool IsPassiveShown { get; set; }
     }
 }

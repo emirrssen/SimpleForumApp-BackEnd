@@ -21,7 +21,7 @@ namespace SimpleForumApp.Application.CQRS.Admin.RoleManagement.Commands.UpdateBy
             if (roleToUpdate is null)
                 return ResultFactory.FailResult("Rol bulunamadı");
 
-            if (roleToUpdate.Name != request.Name && roles.Any(x => x.Name == request.Name))
+            if (roleToUpdate.Name != request.Name && roles.Any(x => x.Name.ToLower().Replace(" ", "") == request.Name.ToLower().Replace(" ", "")))
                 return ResultFactory.FailResult("Aynı isme sahip bir rol sistemde zaten tanımlı");
 
             await _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
