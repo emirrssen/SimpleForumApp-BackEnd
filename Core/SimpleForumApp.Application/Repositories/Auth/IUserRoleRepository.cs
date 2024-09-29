@@ -11,5 +11,6 @@ namespace SimpleForumApp.Application.Repositories.Auth
         Task<long[]> GetAllUserPermissionsByUserIdAsync(long userId);
         Task<IList<UserRole>> GetByUserIdAsync(long userId);
         Task<IList<UserRoleDetail>> GetDetailsByUserIdAsync(long userId);
+        Task<UserRole?> GetByUserIdAndRoleIdAsync(long userId, long roleId);
     }
 }

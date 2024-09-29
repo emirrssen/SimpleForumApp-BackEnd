@@ -7,6 +7,7 @@ using Queries = SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries;
 using Commands = SimpleForumApp.Application.CQRS.Admin.UserManagement.Commands;
 
 using QueriesForMatching = SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManagement.Queries;
+using CommandsForMatching = SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManagement.Commands;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
@@ -42,5 +43,9 @@ namespace SimpleForumApp.API.Controllers.Admin
         [HttpGet("role-matchings")]
         public async Task<IActionResult> GetRoleMatchings([FromQuery] QueriesForMatching.GetRoleMatchings.Query query)
             => await ExecuteAsync(query);
+
+        [HttpPost("role-match")]
+        public async Task<IActionResult> InsertRoleMatchAsync([FromBody] CommandsForMatching.Insert.Command command)
+            => await ExecuteAsync(command);
     }
 }

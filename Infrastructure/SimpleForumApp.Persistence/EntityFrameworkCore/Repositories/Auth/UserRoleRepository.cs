@@ -30,6 +30,14 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
             return resultToReturn.ToArray();
         }
 
+        public async Task<UserRole?> GetByUserIdAndRoleIdAsync(long userId, long roleId)
+        {
+            return await _context.UserRoles
+                .Where(x => x.UserId == userId && x.RoleId == roleId)
+                .AsNoTrackingWithIdentityResolution()
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<IList<UserRole>> GetByUserIdAsync(long userId)
         {
             return await _context.UserRoles
