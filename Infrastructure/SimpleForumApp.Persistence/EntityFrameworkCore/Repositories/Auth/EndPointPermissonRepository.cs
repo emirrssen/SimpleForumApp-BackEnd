@@ -45,7 +45,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
         public async Task<IList<EndPointPermission>> GetAllPermissionsByEndPointAsync(long endPointId)
         {
             var result = await _context.EndPointPermissions
-                .Where(x => x.EndPointId == endPointId)
+                .Where(x => x.EndPointId == endPointId && x.StatusId == 1)
                 .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
 

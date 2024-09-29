@@ -19,6 +19,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
                 .Where(x => x.UserId == userId)
                 .Include(x => x.Role)
                     .ThenInclude(x => x.Permissions)
+                    .Where(x => x.Role.Permissions.All(y => y.StatusId == 1))
                 .AsNoTrackingWithIdentityResolution()
                 .ForEachAsync(x => 
                 {
