@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Application.Repositories.Auth;
+using SimpleForumApp.Domain.DTOs.Auth.RolePermission;
 using SimpleForumApp.Domain.Entities.Auth;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 
@@ -15,6 +16,36 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
         {
             return await _context.RolePermissions
                 .Where(x => x.PermissionId == permissionId && x.StatusId != 3)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
+        }
+
+        public async Task<IList<RolePermission>> GetByRoleIdAsync(long roleId)
+        {
+            return await _context.RolePermissions
+                .Where(x => x.RoleId == roleId && x.StatusId != 3)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
+        }
+
+        public async Task<IList<RolePermissionDetail>> GetDetailsByRoleIdAsync(long roleId)
+        {
+            return await _context.RolePermissions
+                .Where(x => x.RoleId == roleId)
+                .Include(x => x.Role)
+                .Include(x => x.Permission)
+                .Include(x => x.Status)
+                .Select(x => new RolePermissionDetail
+                {
+                    CreatedDate = x.CreatedDate,
+                    PermissionId = x.PermissionId,
+                    RoleId = x.RoleId,
+                    StatusId = x.StatusId,
+                    PermissionName = x.Permission.Name,
+                    RoleName = x.Role.Name,
+                    StatusName = x.Status.Name,
+                    UpdatedDate = x.UpdatedDate
+                })
                 .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
         }

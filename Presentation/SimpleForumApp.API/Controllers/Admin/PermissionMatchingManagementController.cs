@@ -6,6 +6,8 @@ using SimpleForumApp.API.Core;
 using QueriesForEndPoints = SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForEndPoints.Queries;
 using CommandsForEndPoints = SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForEndPoints.Commands;
 
+using QueriesForRoles = SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForRoles.Queries;
+
 namespace SimpleForumApp.API.Controllers.Admin
 {
     [Route("api/admin/permission-matching-management")]
@@ -31,5 +33,13 @@ namespace SimpleForumApp.API.Controllers.Admin
         [HttpPut("update-end-point-matches")]
         public async Task<IActionResult> UpdateEndPointMatchesAsync([FromBody] CommandsForEndPoints.BulkUpdate.Command command)
             => await ExecuteAsync(command);
+
+        [HttpGet("permissions-unmatched-for-roles")]
+        public async Task<IActionResult> GetUnmatchedPermissionsForRolesAsync([FromQuery] QueriesForRoles.GetUnmatchedPermissions.Query query)
+            => await ExecuteAsync(query);
+
+        [HttpGet("for-roles-by-role")]
+        public async Task<IActionResult> GetPermissionMatchingsForRolesByRoleIdAsync([FromQuery] QueriesForRoles.GetMatchingsByRoleId.Query query)
+            => await ExecuteAsync(query);
     }
 }

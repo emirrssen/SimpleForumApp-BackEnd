@@ -13,5 +13,6 @@ namespace SimpleForumApp.Domain.DTOs.Auth.EndPointPermission
         public string StatusName { get; set; }
         public string PermissionName { get; set; }
         public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }
