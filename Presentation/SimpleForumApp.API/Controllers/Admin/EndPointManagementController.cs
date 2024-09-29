@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleForumApp.API.Core;
 using Queries = SimpleForumApp.Application.CQRS.Admin.EndPointManagement.Queries;
 using Commands = SimpleForumApp.Application.CQRS.Admin.EndPointManagement.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
     [Route("api/admin/end-point-management")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "simple-forum-app")]
     public class EndPointManagementController : BaseController
     {
         public EndPointManagementController(IMediator mediator) : base(mediator)

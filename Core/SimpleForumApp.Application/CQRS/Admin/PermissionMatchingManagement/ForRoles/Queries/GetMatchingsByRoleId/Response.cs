@@ -1,4 +1,4 @@
-﻿namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForEndPoints.Queries.GetMatchingByEndPointId
+﻿namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForRoles.Queries.GetMatchingsByRoleId
 {
     public class Response
     {
