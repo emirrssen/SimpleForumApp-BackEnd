@@ -2330,6 +2330,9 @@ namespace SimpleForumApp.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EndPointRoute")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

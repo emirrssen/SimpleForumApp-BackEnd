@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Application.Repositories.Auth;
+using SimpleForumApp.Domain.DTOs.Auth.UserRole;
 using SimpleForumApp.Domain.Entities.Auth;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 
@@ -19,6 +20,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
                 .Where(x => x.UserId == userId)
                 .Include(x => x.Role)
                     .ThenInclude(x => x.Permissions)
+                    .Where(x => x.Role.Permissions.All(y => y.StatusId == 1))
                 .AsNoTrackingWithIdentityResolution()
                 .ForEachAsync(x => 
                 {
@@ -26,6 +28,44 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
                 });
 
             return resultToReturn.ToArray();
+        }
+
+        public async Task<UserRole?> GetByUserIdAndRoleIdAsync(long userId, long roleId)
+        {
+            return await _context.UserRoles
+                .Where(x => x.UserId == userId && x.RoleId == roleId)
+                .AsNoTrackingWithIdentityResolution()
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<IList<UserRole>> GetByUserIdAsync(long userId)
+        {
+            return await _context.UserRoles
+                .Where(x => x.UserId == userId && x.StatusId == 1)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
+        }
+
+        public async Task<IList<UserRoleDetail>> GetDetailsByUserIdAsync(long userId)
+        {
+            return await _context.UserRoles
+                .Where(x => x.UserId == userId && x.StatusId == 1)
+                .Include(x => x.User)
+                .Include(x => x.Role)
+                .Include(x => x.Status)
+                .Select(x => new UserRoleDetail
+                {
+                    RoleId = x.RoleId,
+                    CreatedDate = x.CreatedDate,
+                    RoleName = x.Role.Name,
+                    StatusId = x.StatusId,
+                    StatusName = x.Status.Name,
+                    UpdatedDate = x.UpdatedDate,
+                    UserId = x.UserId,
+                    Username = x.User.UserName
+                })
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
         }
 
         public async Task<long> InsertAsync(UserRole userRole)

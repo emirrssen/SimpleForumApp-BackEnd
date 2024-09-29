@@ -11,6 +11,7 @@ namespace SimpleForumApp.Domain.Entities.Traceability
         public string EndPointRoute { get; set; } = null!;
         public bool IsUse { get; set; }
         public bool IsActive { get; set; }
+        public string? Description { get; set; }
 
         public ActionType ActionType { get; set; }
         public ICollection<EndPointActivity> EndPointActivities { get; set; }

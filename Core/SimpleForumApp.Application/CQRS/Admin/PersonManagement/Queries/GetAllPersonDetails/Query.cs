@@ -2,7 +2,7 @@
 
 namespace SimpleForumApp.Application.CQRS.Admin.PersonManagement.Queries.GetAllPersonDetails
 {
-    public class Query : QueryBase<IList<Dto>>
+    public class Query : QueryBase<IList<Response>>
     {
     }
 }

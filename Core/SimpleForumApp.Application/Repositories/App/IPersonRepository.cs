@@ -10,5 +10,6 @@ namespace SimpleForumApp.Application.Repositories.App
         Task<Person> GetByIdAsync(long id);
         Task<long> InsertAsync(Person person);
         Task DeleteByIdAsync(Person person);
+        Task UpdateByIdAsync(Person person);
     }
 }

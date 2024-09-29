@@ -27,6 +27,19 @@ namespace SimpleForumApp.API.Filters
                 var endPointRoute = context.HttpContext.Request.Path.Value;
 
                 var endPoint = await _unitOfWork.Context.Traceability.EndPointRepository.GetByRouteAndActionTypeId(endPointRoute.Substring(1), endPointActionType);
+
+                if (!endPoint.IsActive)
+                {
+                    context.Result = new NotFoundResult();
+                    return;
+                }
+
+                if (!endPoint.IsUse)
+                {
+                    context.Result = new StatusCodeResult(503);
+                    return;
+                }
+
                 var endPointPermissions = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(endPoint.Id);
                 var userRolePermissions = await _unitOfWork.Context.Auth.UserRoleRepository.GetAllUserPermissionsByUserIdAsync(user.Id);
 

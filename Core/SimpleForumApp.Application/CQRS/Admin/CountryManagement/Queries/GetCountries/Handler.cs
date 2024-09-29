@@ -20,7 +20,7 @@ namespace SimpleForumApp.Application.CQRS.Admin.CountryManagement.Queries.GetCou
             if (!result.Any())
                 return ResultFactory.WarningResult<IList<Response>>(Array.Empty<Response>(), "Ülke bulunamadı");
 
-            return ResultFactory.WarningResult<IList<Response>>(result.Select(x => new Response
+            return ResultFactory.SuccessResult<IList<Response>>(result.Select(x => new Response
             {
                 Id = x.Id,
                 Title = x.Name
