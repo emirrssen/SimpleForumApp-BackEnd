@@ -7,6 +7,7 @@ using QueriesForEndPoints = SimpleForumApp.Application.CQRS.Admin.PermissionMatc
 using CommandsForEndPoints = SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForEndPoints.Commands;
 
 using QueriesForRoles = SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForRoles.Queries;
+using CommandsForRoles = SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForRoles.Commands;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
@@ -41,5 +42,9 @@ namespace SimpleForumApp.API.Controllers.Admin
         [HttpGet("for-roles-by-role")]
         public async Task<IActionResult> GetPermissionMatchingsForRolesByRoleIdAsync([FromQuery] QueriesForRoles.GetMatchingsByRoleId.Query query)
             => await ExecuteAsync(query);
+
+        [HttpPost("insert-role-match")]
+        public async Task<IActionResult> InsertRoleMatchAsync([FromBody] CommandsForRoles.Insert.Command command)
+            => await ExecuteAsync(command);
     }
 }
