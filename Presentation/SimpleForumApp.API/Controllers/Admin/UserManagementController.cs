@@ -1,16 +1,19 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SimpleForumApp.API.Core;
-using Queries = SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries;
-using Commands = SimpleForumApp.Application.CQRS.Admin.UserManagement.Commands;
 using Microsoft.AspNetCore.Authorization;
 
+using Queries = SimpleForumApp.Application.CQRS.Admin.UserManagement.Queries;
+using Commands = SimpleForumApp.Application.CQRS.Admin.UserManagement.Commands;
+
+using QueriesForMatching = SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManagement.Queries;
+using CommandsForMatching = SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManagement.Commands;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
     [Route("api/admin/user-management")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "simple-forum-app")]
+    //[Authorize(AuthenticationSchemes = "simple-forum-app")]
     public class UserManagementController : BaseController
     {
         public UserManagementController(IMediator mediator) : base(mediator)
@@ -31,6 +34,22 @@ namespace SimpleForumApp.API.Controllers.Admin
 
         [HttpPost]
         public async Task<IActionResult> InsertAsync([FromBody] Commands.Insert.Command command)
+            => await ExecuteAsync(command);
+
+        [HttpGet("roles-to-select")]
+        public async Task<IActionResult> GetRolesToSelectAsync([FromQuery] QueriesForMatching.GetRolesToSelect.Query query)
+            => await ExecuteAsync(query);
+
+        [HttpGet("role-matchings")]
+        public async Task<IActionResult> GetRoleMatchings([FromQuery] QueriesForMatching.GetRoleMatchings.Query query)
+            => await ExecuteAsync(query);
+
+        [HttpPost("role-match")]
+        public async Task<IActionResult> InsertRoleMatchAsync([FromBody] CommandsForMatching.Insert.Command command)
+            => await ExecuteAsync(command);
+
+        [HttpPut("update-role-matchings")]
+        public async Task<IActionResult> UpdateRoleMatchingsAsync([FromBody] CommandsForMatching.BulkUpdate.Command command)
             => await ExecuteAsync(command);
     }
 }
