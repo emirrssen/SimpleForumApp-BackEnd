@@ -22,9 +22,9 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
 
             await _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
 
-            var currentPermissionMatch = currentPermissionMatchings.FirstOrDefault(x => x.RoleId == request.RoleId && x.PermissionId == request.PermissionId);
+            var currentPermissionMatch = await _unitOfWork.Context.Auth.RolePermissionRepository.GetByRoleAndPermissionIdAsync(request.RoleId, request.PermissionId);
 
-            if (currentPermissionMatch != null && currentPermissionMatch.StatusId != 3)
+            if (currentPermissionMatch != null && currentPermissionMatch.StatusId == 3)
             {
                 currentPermissionMatch.StatusId = 1;
                 currentPermissionMatch.UpdatedDate = DateTime.Now;

@@ -39,7 +39,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
         public async Task<IList<RolePermissionDetail>> GetDetailsByRoleIdAsync(long roleId)
         {
             return await _context.RolePermissions
-                .Where(x => x.RoleId == roleId)
+                .Where(x => x.RoleId == roleId && x.StatusId != 3)
                 .Include(x => x.Role)
                 .Include(x => x.Permission)
                 .Include(x => x.Status)
