@@ -47,5 +47,9 @@ namespace SimpleForumApp.API.Controllers.Admin
         [HttpPost("role-match")]
         public async Task<IActionResult> InsertRoleMatchAsync([FromBody] CommandsForMatching.Insert.Command command)
             => await ExecuteAsync(command);
+
+        [HttpPut("update-role-matchings")]
+        public async Task<IActionResult> UpdateRoleMatchingsAsync([FromBody] CommandsForMatching.BulkUpdate.Command command)
+            => await ExecuteAsync(command);
     }
 }
