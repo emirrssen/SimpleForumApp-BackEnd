@@ -1,6 +1,6 @@
-﻿namespace SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Queries.GetAllPermissions
+﻿namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForEndPoints.Queries.GetUnmatchedPermissions
 {
-    public class Dto
+    public class Response
     {
         public long Id { get; set; }
         public string StatusName { get; set; }

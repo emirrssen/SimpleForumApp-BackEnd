@@ -2,7 +2,7 @@
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Results;
 
-namespace SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Queries.GetAllPermissions
+namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForEndPoints.Queries.GetMatchingByEndPointId
 {
     public class Handler : QueryHandlerBase<Query, IList<Response>>
     {
@@ -15,19 +15,18 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Queries.Get
 
         public override async Task<ResultWithData<IList<Response>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Context.Auth.PermissionRepository.GetAllDetailsByStatusAsync(
-                request.IsPassiveShown ? 2 : 1
-            );
+            var result = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionDetailsByEndPointAsync(request.EndPointId);
 
             if (!result.Any())
-                return ResultFactory.WarningResult<IList<Response>>("Kayıt bulunamadı");
+                return ResultFactory.WarningResult<IList<Response>>("Bu end point için yetki bulunamadı");
 
             return ResultFactory.SuccessResult<IList<Response>>(result.Select(x => new Response
             {
-                Id = x.Id,
-                StatusName = x.StatusName,
-                Name = x.Name,
+                EndPointId = x.EndPointId,
+                PermissionId = x.PermissonId,
                 CreatedDate = x.CreatedDate.ToString("dd.MM.yyyy"),
+                PermissionName = x.PermissionName,
+                StatusId = x.StatusId
             }).ToList());
         }
     }
