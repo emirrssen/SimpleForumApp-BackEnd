@@ -7,5 +7,6 @@ namespace SimpleForumApp.Application.Repositories.Auth
     {
         Task<long> InsertAsync(RolePermission rolePermission);
         Task UpdateAsync(RolePermission rolePermission);
+        Task<IList<RolePermission>> GetByPermissionIdAsync(long permissionId);
     }
 }

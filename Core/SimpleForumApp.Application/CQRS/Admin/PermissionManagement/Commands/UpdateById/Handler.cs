@@ -29,6 +29,19 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionManagement.Commands.Up
                 return ResultFactory.FailResult("Aynı isme sahip bir yetki sistemde zaten tanımlı");
             }
 
+            if (request.StatusId != 1)
+            {
+                var permissionsToUsedByEndPoints = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetByPermissionIdAsync(request.Id);
+
+                if (permissionsToUsedByEndPoints.Any())
+                    return ResultFactory.FailResult("Bu yetki, end point eşleşmelerinde kullanılmaktadır");
+
+                var permissionToUsedByRoles = await _unitOfWork.Context.Auth.RolePermissionRepository.GetByPermissionIdAsync(request.Id);
+
+                if (permissionToUsedByRoles.Any())
+                    return ResultFactory.FailResult("Bu yetki, rol eşleşmelerinde kullanılmaktadır");                
+            }
+
             await _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
 
             await _unitOfWork.Context.Auth.PermissionRepository.UpdateAsync(new()
