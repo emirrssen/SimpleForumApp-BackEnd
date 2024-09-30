@@ -6,6 +6,7 @@ namespace SimpleForumApp.Domain.DTOs.App.Title
     {
         public long Id { get; set; }
         public long AuthorId { get; set; }
+        public string AuthorName { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; }

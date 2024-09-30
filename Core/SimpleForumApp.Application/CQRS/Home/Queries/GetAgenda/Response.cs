@@ -3,7 +3,7 @@
     public class Response
     {
         public long TitleId { get; set; }
-        public int EntryNumber { get; set; }
-        public string TitleName { get; set; }
+        public string EntryNumber { get; set; }
+        public string TitleSubject { get; set; }
     }
 }

@@ -28,6 +28,11 @@ namespace SimpleForumApp.Application.CQRS.Layout.Commands.CreateTitle
             if (currentUser == null)
                 return ResultFactory.FailResult("Kullanıcı bulunamadı");
 
+            var allTitles = await _unitOfWork.Context.App.TitleRepository.GetAllAsync();
+
+            if (allTitles.Any(x => x.Subject.Replace(" ", "").ToLower() == request.Subject.Replace(" ", "").ToLower()))
+                return ResultFactory.FailResult("Bu isimde bir başlık geçmişte zaten açılmış");
+
             if (request.AuthorTypeId == (long)AuthorTypes.User)
             {
                 await _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
