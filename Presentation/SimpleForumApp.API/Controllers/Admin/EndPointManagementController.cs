@@ -4,6 +4,7 @@ using SimpleForumApp.API.Core;
 using Queries = SimpleForumApp.Application.CQRS.Admin.EndPointManagement.Queries;
 using Commands = SimpleForumApp.Application.CQRS.Admin.EndPointManagement.Commands;
 using Microsoft.AspNetCore.Authorization;
+using SimpleForumApp.Domain.Results;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
@@ -27,5 +28,9 @@ namespace SimpleForumApp.API.Controllers.Admin
         [HttpPut]
         public async Task<IActionResult> UpdateByIdAsync([FromBody] Commands.UpdateById.Command command)
             => await ExecuteAsync(command);
+
+        [HttpGet("can-enter")]
+        public async Task<IActionResult> CanEnterAsync()
+            => await Task.FromResult(Ok(ResultFactory.SuccessResult()));
     }
 }

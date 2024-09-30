@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleForumApp.API.Core;
+using SimpleForumApp.Domain.Results;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
