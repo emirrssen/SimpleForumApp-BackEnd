@@ -20,7 +20,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
-            token.ExpirationDate = DateTime.UtcNow.AddMinutes(expirationMinute);
+            token.ExpirationDate = DateTime.Now.AddMinutes(expirationMinute);
             JwtSecurityToken securityToken = new(
                 audience: AppSettingsReaderHelper.GetTokenAudience(),
                 issuer: AppSettingsReaderHelper.GetTokenIssuer(),
@@ -33,6 +33,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             JwtSecurityTokenHandler tokenHandler = new();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
             token.RefreshToken = CreateRefreshToken(expirationMinute);
+            token.RefreshTokenExpirationDate = DateTime.Now.AddMinutes(expirationMinute * 2);
 
             return token;
         }

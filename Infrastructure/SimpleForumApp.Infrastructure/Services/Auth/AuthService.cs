@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SimpleForumApp.Application.Helpers;
 using SimpleForumApp.Application.Services.Auth;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.DTOs.Auth.TokenDtos;
@@ -52,7 +51,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             if (!result.Succeeded)
                 return ResultFactory.FailResult<Token>("Kullanıcı adı veya şifre hatalı");
 
-            var tokenResult = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(30, userToLogin);
+            var tokenResult = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(60, userToLogin);
 
             var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshTokenAsync(tokenResult.RefreshToken, userToLogin, tokenResult.ExpirationDate, 15);
 
@@ -64,17 +63,17 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
         public async Task<ResultWithData<Token>> LoginWithRefreshTokenAsync(string refreshToken)
         {
-            var userToLogin = await _userManager.Users.SingleOrDefaultAsync(x => x.RefreshToken == refreshToken && x.RefreshTokenEndDate > DateTime.UtcNow);
+            var userToLogin = await _userManager.Users.SingleOrDefaultAsync(x => x.RefreshToken == refreshToken && x.RefreshTokenEndDate > DateTime.Now);
 
             if (userToLogin is null)
             {
                 return ResultFactory.FailResult<Token>("Kullanıcı bulunamadı");
             }
 
-            var token = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(1, userToLogin);
+            var token = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(60, userToLogin);
 
             var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshTokenAsync(
-                    token.RefreshToken, userToLogin, token.ExpirationDate, 30
+                    token.RefreshToken, userToLogin, token.ExpirationDate, 60
                 );
 
             if (!refreshTokenUpdateResult.IsSuccess)

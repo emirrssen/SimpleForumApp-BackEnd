@@ -8,12 +8,13 @@ using Commands = SimpleForumApp.Application.CQRS.Admin.UserManagement.Commands;
 
 using QueriesForMatching = SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManagement.Queries;
 using CommandsForMatching = SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManagement.Commands;
+using SimpleForumApp.Domain.Results;
 
 namespace SimpleForumApp.API.Controllers.Admin
 {
     [Route("api/admin/user-management")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = "simple-forum-app")]
+    [Authorize(AuthenticationSchemes = "simple-forum-app")]
     public class UserManagementController : BaseController
     {
         public UserManagementController(IMediator mediator) : base(mediator)
@@ -51,5 +52,9 @@ namespace SimpleForumApp.API.Controllers.Admin
         [HttpPut("update-role-matchings")]
         public async Task<IActionResult> UpdateRoleMatchingsAsync([FromBody] CommandsForMatching.BulkUpdate.Command command)
             => await ExecuteAsync(command);
+
+        [HttpGet("can-enter")]
+        public async Task<IActionResult> CanEnterAsync()
+            => await Task.FromResult(Ok(ResultFactory.SuccessResult()));
     }
 }
