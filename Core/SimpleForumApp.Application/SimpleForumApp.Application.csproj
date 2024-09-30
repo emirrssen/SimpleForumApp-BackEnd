@@ -25,7 +25,6 @@
     <Folder Include="CQRS\Admin\CountryManagement\Commands\" />
     <Folder Include="CQRS\Admin\GenderManagement\Commands\" />
     <Folder Include="CQRS\Admin\PersonManagement\Commands\" />
-    <Folder Include="CQRS\Home\Commands\" />
   </ItemGroup>
 
 </Project>

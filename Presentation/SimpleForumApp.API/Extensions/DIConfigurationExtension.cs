@@ -54,6 +54,7 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<ITitleRepository, TitleRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<ITitleActionRepository, TitleActionRepository>();
 
             // Traceability Repositories
             services.AddScoped<IEndPointRepository, EndPointRepository>();

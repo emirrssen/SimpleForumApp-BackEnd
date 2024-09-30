@@ -18,5 +18,6 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Context
         public IStatusRepository StatusRepository => GetService<IStatusRepository>();
         public ITitleRepository TitleRepository => GetService<ITitleRepository>();
         public IAuthorRepository AuthorRepository => GetService<IAuthorRepository>();
+        public ITitleActionRepository TitleActionRepository => GetService<ITitleActionRepository>();
     }
 }

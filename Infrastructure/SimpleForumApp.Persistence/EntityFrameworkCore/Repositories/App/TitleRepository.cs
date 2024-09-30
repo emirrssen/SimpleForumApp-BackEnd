@@ -38,7 +38,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
                     Content = x.Content,
                     CreatedDate = x.CreatedDate,
                     Id = x.Id,
-                    LikeNumber = x.Actions.Where(y => y.ActionId == 1).Count(),
+                    LikeNumber = x.Actions.Where(y => y.ActionId == 1 && y.StatusId == 1).Count(),
                     Subject = x.Subject
                 })
                 .AsNoTrackingWithIdentityResolution()
