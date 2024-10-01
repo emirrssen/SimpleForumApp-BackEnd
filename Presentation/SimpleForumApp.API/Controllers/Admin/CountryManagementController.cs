@@ -8,7 +8,6 @@ namespace SimpleForumApp.API.Controllers.Admin
 {
     [Route("api/admin/country-management")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "simple-forum-app")]
 
     public class CountryManagementController : BaseController
     {

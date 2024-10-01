@@ -3,6 +3,7 @@
     public class Response
     {
         public long TitleId { get; set; }
+        public long? ActionId { get; set; }
         public string TitleSubject { get; set; }
         public string TitleContent { get; set; }
         public string LikeNumber { get; set; }

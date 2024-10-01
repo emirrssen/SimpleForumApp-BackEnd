@@ -9,7 +9,8 @@ namespace SimpleForumApp.Application.Repositories.App
         Task<long> InsertAsync(Title title);
         Task<IList<AgendaItem>> GetTitlesOpenedTodayAsAgendaAsync();
         Task<IList<Title>> GetAllAsync();
-        Task<IList<TitlePreview>> GetAllForPreviewTitlesAsync();
+        Task<IList<TitlePreview>> GetAllForPreviewTitlesAsync(long? userId);
+        Task<IList<Title>> GetTitlesFavouriteThisWeekAsync();
     }
 }
 

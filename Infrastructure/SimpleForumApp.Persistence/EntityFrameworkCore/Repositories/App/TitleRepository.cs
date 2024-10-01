@@ -3,6 +3,7 @@ using SimpleForumApp.Application.Repositories.App;
 using SimpleForumApp.Domain.DTOs.App.Title;
 using SimpleForumApp.Domain.Entities.App;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
+using System.Globalization;
 
 namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
 {
@@ -20,7 +21,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
                 .ToListAsync();
         }
 
-        public async Task<IList<TitlePreview>> GetAllForPreviewTitlesAsync()
+        public async Task<IList<TitlePreview>> GetAllForPreviewTitlesAsync(long? userId)
         {
             return await _context.Titles
                 .Where(x => x.StatusId != 3)
@@ -39,10 +40,37 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
                     CreatedDate = x.CreatedDate,
                     Id = x.Id,
                     LikeNumber = x.Actions.Where(y => y.ActionId == 1 && y.StatusId == 1).Count(),
-                    Subject = x.Subject
+                    Subject = x.Subject,
+                    ActionId = x.Actions.FirstOrDefault(x => x.StatusId == 1 && x.UserId == userId).ActionId
                 })
                 .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
+        }
+
+        public async Task<IList<Title>> GetTitlesFavouriteThisWeekAsync()
+        {
+            DateTime now = DateTime.Now;
+            CultureInfo culture = CultureInfo.CurrentCulture;
+            Calendar calendar = culture.Calendar;
+
+            CalendarWeekRule rule = culture.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek firstDayOfWeek = culture.DateTimeFormat.FirstDayOfWeek;
+
+            int weekNumber = calendar.GetWeekOfYear(now, rule, firstDayOfWeek);
+
+            var titles = await _context.Titles
+                .Where(x => x.StatusId == 1)
+                .Include(x => x.Actions)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
+
+            var filteredTitles = titles
+                .Where(x => calendar.GetWeekOfYear(x.CreatedDate, rule, firstDayOfWeek) == weekNumber)
+                .OrderByDescending(x => x.Actions.Where(a => a.StatusId == 1 && a.ActionId == 1).Count())
+                .Take(5)
+                .ToList();
+
+            return filteredTitles;
         }
 
         public async Task<IList<AgendaItem>> GetTitlesOpenedTodayAsAgendaAsync()
@@ -50,6 +78,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
             return await _context.Titles
                 .Where(x => x.CreatedDate.Date == DateTime.Now.Date && x.StatusId == 1)
                 .Include(x => x.Entries)
+                .OrderByDescending(x => x.CreatedDate)
                 .Select(x => new AgendaItem
                 {
                     Id = x.Id,

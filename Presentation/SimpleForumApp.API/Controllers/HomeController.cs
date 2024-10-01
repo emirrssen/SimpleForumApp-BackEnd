@@ -25,6 +25,10 @@ namespace SimpleForumApp.API.Controllers
         public async Task<IActionResult> GetTitlesAsync([FromQuery] Queries.GetTitles.Query query)
             => await ExecuteAsync(query);
 
+        [HttpGet("weekly-favourite-titles")]
+        public async Task<IActionResult> GetWeeklyFavouriteTitlesAsync([FromQuery] Queries.GetWeeklyFaviouriteTitles.Query query)
+            => await ExecuteAsync(query);
+
         [Authorize]
         [HttpPut("add-action-to-title")]
         public async Task<IActionResult> AddActionToTitleAsync([FromBody] Commands.AddActionToTitle.Command command)
