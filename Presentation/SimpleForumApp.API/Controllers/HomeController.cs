@@ -33,5 +33,10 @@ namespace SimpleForumApp.API.Controllers
         [HttpPut("add-action-to-title")]
         public async Task<IActionResult> AddActionToTitleAsync([FromBody] Commands.AddActionToTitle.Command command)
             => await ExecuteAsync(command);
+
+        [Authorize]
+        [HttpPost("add-entry-to-title")]
+        public async Task<IActionResult> AddEntryToTitleAsync([FromBody] Commands.AddEntryToTitle.Command command)
+            => await ExecuteAsync(command);
     }
 }

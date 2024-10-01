@@ -1,4 +1,4 @@
-﻿namespace SimpleForumApp.Application.CQRS.Layout.Commands.CreateTitle
+﻿namespace SimpleForumApp.Domain.Enums
 {
     public enum AuthorTypes
     {

@@ -4,7 +4,7 @@ using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Enums;
 using SimpleForumApp.Domain.Results;
 
-namespace SimpleForumApp.Application.CQRS.Layout.Commands.CreateTitle
+namespace SimpleForumApp.Application.CQRS.Home.Commands.AddEntryToTitle
 {
     public class Handler : CommandHandlerBase<Command>
     {
@@ -17,27 +17,22 @@ namespace SimpleForumApp.Application.CQRS.Layout.Commands.CreateTitle
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async override Task<Result> Handle(Command request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
-            var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var currentUserName = _httpContextAccessor.HttpContext.User.Identity.Name;
 
-            if (userName == null)
+            if (currentUserName == null)
                 return ResultFactory.FailResult("Kullanıcı bulunamadı");
 
-            var currentUser = await _unitOfWork.Context.Identity.UserService.GetByUserNameAsync(userName);
+            var currentUser = await _unitOfWork.Context.Identity.UserService.GetByUserNameAsync(currentUserName);
 
             if (currentUser == null)
                 return ResultFactory.FailResult("Kullanıcı bulunamadı");
 
-            var allTitles = await _unitOfWork.Context.App.TitleRepository.GetAllAsync();
-
-            if (allTitles.Any(x => x.Subject.Replace(" ", "").ToLower() == request.Subject.Replace(" ", "").ToLower()))
-                return ResultFactory.FailResult("Bu isimde bir başlık geçmişte zaten açılmış");
+            await _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
 
             if (request.AuthorTypeId == (long)AuthorTypes.User)
             {
-                await _unitOfWork.Database.EfCoreDb.BeginTransactionAsync();
-
                 long authorId = 0;
                 var currentAuthor = await _unitOfWork.Context.App.AuthorRepository.GetByUserIdAsync(currentUser.Id);
 
@@ -55,29 +50,29 @@ namespace SimpleForumApp.Application.CQRS.Layout.Commands.CreateTitle
                     if (authorInsertResult <= 0)
                     {
                         await _unitOfWork.Database.EfCoreDb.RollbackTransactionAsync();
-                        return ResultFactory.FailResult("Başlık oluşturma işlemi başarısız");
+                        return ResultFactory.FailResult("Entry oluşturma işlemi başarısız");
                     }
 
                     authorId = authorInsertResult;
                 }
 
-                var insertResult = await _unitOfWork.Context.App.TitleRepository.InsertAsync(new()
+                var insertResult = await _unitOfWork.Context.App.EntryRepository.InsertAsync(new()
                 {
                     AuthorId = currentAuthor == null ? authorId : currentAuthor.Id,
+                    Content = request.Entry,
                     CreatedDate = DateTime.Now,
                     StatusId = 1,
-                    Subject = request.Subject,
-                    Content = request.Content
+                    TitleId = request.TitleId
                 });
 
                 if (insertResult <= 0)
                 {
                     await _unitOfWork.Database.EfCoreDb.RollbackTransactionAsync();
-                    return ResultFactory.FailResult("Başlık oluşturma işlemi başarısız");
+                    return ResultFactory.FailResult("Entry oluşturma işlemi başarısız");
                 }
 
                 await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
-                return ResultFactory.SuccessResult("Başlık başarıyla oluşturuldu");
+                return ResultFactory.SuccessResult("Entry başarıyla oluşturuldu");
             }
 
             return ResultFactory.FailResult("Geçersiz yazar tipi");

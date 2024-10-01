@@ -12,5 +12,6 @@ namespace SimpleForumApp.Application.UnitOfWork.Context
         public ITitleRepository TitleRepository { get; }
         public IAuthorRepository AuthorRepository { get; }
         public ITitleActionRepository TitleActionRepository { get; }
+        public IEntryRepository EntryRepository { get; }
     }
 }
