@@ -14,5 +14,6 @@ namespace SimpleForumApp.Persistence.UnitOfWork.Context
         public INotificationContext Notification => GetService<INotificationContext>();
         public ITraceabilityContext Traceability => GetService<ITraceabilityContext>();
         public IAuthContext Auth => GetService<IAuthContext>();
+        public ICacheContext Cache => GetService<ICacheContext>();
     }
 }
