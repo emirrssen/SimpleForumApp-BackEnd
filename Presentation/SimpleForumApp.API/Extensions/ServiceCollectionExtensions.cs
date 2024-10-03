@@ -16,8 +16,6 @@ namespace SimpleForumApp.API.Extensions
                 options.Filters.Add<RolePermissionFilter>();
                 options.Filters.Add<RunClaimBusinessRulesFilter>();
             });
-
-            services.AddMemoryCache();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace SimpleForumApp.Application.Helpers
         public static string GetEmailSettingsHost() => Manager().GetValue<string>("EmailSettings:Host");
         public static string GetEmailSettingsPassword() => Manager().GetValue<string>("EmailSettings:Password");
         public static string GetEmailSettingsEmail() => Manager().GetValue<string>("EmailSettings:Email");
+        public static string GetRedisServer() => Manager().GetValue<string>("Redis:Server");
 
         private static ConfigurationManager Manager()
         {

@@ -3,12 +3,14 @@ using SimpleForumApp.Application.Repositories.App;
 using SimpleForumApp.Application.Repositories.Auth;
 using SimpleForumApp.Application.Repositories.Traceability;
 using SimpleForumApp.Application.Services.Auth;
+using SimpleForumApp.Application.Services.Cache.Distributed;
 using SimpleForumApp.Application.Services.Cache.InMemory;
 using SimpleForumApp.Application.Services.Email;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Application.UnitOfWork.Context;
 using SimpleForumApp.Application.UnitOfWork.Database;
 using SimpleForumApp.Infrastructure.Services.Auth;
+using SimpleForumApp.Infrastructure.Services.Cache.Distributed;
 using SimpleForumApp.Infrastructure.Services.Cache.InMemory;
 using SimpleForumApp.Infrastructure.Services.Email;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App;
@@ -109,6 +111,7 @@ namespace SimpleForumApp.API.Extensions
 
             // Cache
             services.AddScoped<IInMemoryCacheService, InMemoryCacheService>();
+            services.AddScoped<IRedisCacheService, RedisCacheService>();
         }
 
         #endregion
