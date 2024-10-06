@@ -53,7 +53,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
             var tokenResult = _unitOfWork.Context.Identity.TokenService.CreateAccessToken(60, userToLogin);
 
-            var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshTokenAsync(tokenResult.RefreshToken, userToLogin, tokenResult.ExpirationDate, 15);
+            var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshTokenAsync(tokenResult.RefreshToken, userToLogin, tokenResult.ExpirationDate, 60);
 
             if (!refreshTokenUpdateResult.IsSuccess)
                 return ResultFactory.FailResult<Token>(refreshTokenUpdateResult.Message!);
@@ -74,7 +74,7 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
 
             var refreshTokenUpdateResult = await _unitOfWork.Context.Identity.UserService.UpdateRefreshTokenAsync(
                     token.RefreshToken, userToLogin, token.ExpirationDate, 60
-                );
+            );
 
             if (!refreshTokenUpdateResult.IsSuccess)
             {

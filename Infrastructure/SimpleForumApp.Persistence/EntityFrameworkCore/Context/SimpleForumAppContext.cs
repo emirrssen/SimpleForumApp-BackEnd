@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SimpleForumApp.Domain.DTOs.App.Author;
+using SimpleForumApp.Domain.DTOs.App.Group;
 using SimpleForumApp.Domain.Entities.App;
 using SimpleForumApp.Domain.Entities.Auth;
 using SimpleForumApp.Domain.Entities.Core;
@@ -37,6 +39,8 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Context
         public DbSet<ExecutionOrder> ExecutionOrders { get; set; }
         public DbSet<PageClaimBusinessRule> PageClaimBusinessRules { get; set; }
         public DbSet<EndPointClaimBusinessRule> EndPointClaimBusinessRules { get; set; }
+        public DbSet<WeeklyFavouriteGroup> WeeklyFavouriteGroups { get; set; }
+        public DbSet<WeeklyFavouriteAuthor> WeeklyFavouriteAuthors { get; set; }
 
         public SimpleForumAppContext(DbContextOptions options) : base(options) { }
 

@@ -9,5 +9,6 @@ namespace SimpleForumApp.Application.UnitOfWork.Context
         public INotificationContext Notification { get; }
         public ITraceabilityContext Traceability { get; }
         public IAuthContext Auth { get; }
+        public ICacheContext Cache { get; }
     }
 }

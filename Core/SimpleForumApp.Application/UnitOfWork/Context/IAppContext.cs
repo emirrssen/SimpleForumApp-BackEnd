@@ -9,5 +9,9 @@ namespace SimpleForumApp.Application.UnitOfWork.Context
         public ICountryRepository CountryRepository { get; }
         public IGenderRepository GenderRepository { get; }
         public IStatusRepository StatusRepository { get; }
+        public ITitleRepository TitleRepository { get; }
+        public IAuthorRepository AuthorRepository { get; }
+        public ITitleActionRepository TitleActionRepository { get; }
+        public IEntryRepository EntryRepository { get; }
     }
 }

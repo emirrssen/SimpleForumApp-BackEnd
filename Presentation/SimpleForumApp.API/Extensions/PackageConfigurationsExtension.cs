@@ -23,6 +23,7 @@ namespace SimpleForumApp.API.Extensions
             ConfigureIdentity(services);
             ConfigureEntityFramework(services);
             ConfigureJwt(services);
+            ConfigureCaching(services);
         }
 
         #region MediatR
@@ -110,6 +111,26 @@ namespace SimpleForumApp.API.Extensions
                     };
                 });
         }
+
+        #endregion
+
+        #region Cache
+
+        public static void ConfigureCaching(IServiceCollection services)
+        {
+            ConfigureInMemoryCaching(services);
+            ConfigureRedisCaching(services);
+        }
+
+        // In Memory
+        public static void ConfigureInMemoryCaching(IServiceCollection services) => services.AddMemoryCache();
+
+        // Redis
+        public static void ConfigureRedisCaching(IServiceCollection services) 
+            => services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = AppSettingsReaderHelper.GetRedisServer();
+        });
 
         #endregion
     }

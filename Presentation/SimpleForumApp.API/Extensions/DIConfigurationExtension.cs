@@ -3,11 +3,15 @@ using SimpleForumApp.Application.Repositories.App;
 using SimpleForumApp.Application.Repositories.Auth;
 using SimpleForumApp.Application.Repositories.Traceability;
 using SimpleForumApp.Application.Services.Auth;
+using SimpleForumApp.Application.Services.Cache.Distributed;
+using SimpleForumApp.Application.Services.Cache.InMemory;
 using SimpleForumApp.Application.Services.Email;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Application.UnitOfWork.Context;
 using SimpleForumApp.Application.UnitOfWork.Database;
 using SimpleForumApp.Infrastructure.Services.Auth;
+using SimpleForumApp.Infrastructure.Services.Cache.Distributed;
+using SimpleForumApp.Infrastructure.Services.Cache.InMemory;
 using SimpleForumApp.Infrastructure.Services.Email;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth;
@@ -42,6 +46,7 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<INotificationContext, NotificationContext>();
             services.AddScoped<ITraceabilityContext, TraceabilityContext>();
             services.AddScoped<IAuthContext, AuthContext>();
+            services.AddScoped<ICacheContext, CacheContext>();
 
             // Databases
             services.AddScoped<IDatabase, Database>();
@@ -52,6 +57,10 @@ namespace SimpleForumApp.API.Extensions
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IGenderRepository, GenderRepository>();
             services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<ITitleRepository, TitleRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<ITitleActionRepository, TitleActionRepository>();
+            services.AddScoped<IEntryRepository, EntryRepository>();
 
             // Traceability Repositories
             services.AddScoped<IEndPointRepository, EndPointRepository>();
@@ -88,10 +97,21 @@ namespace SimpleForumApp.API.Extensions
 
         private static void ConfigureInfrastructureLayerDependencies(IServiceCollection services)
         {
+            // User
             services.AddScoped<IUserService, UserService>();
+
+            // Auth
             services.AddScoped<IAuthService, AuthService>();
+
+            // Token
             services.AddScoped<ITokenService, TokenService>();
+
+            //Email
             services.AddScoped<IEmailService, EmailService>();
+
+            // Cache
+            services.AddScoped<IInMemoryCacheService, InMemoryCacheService>();
+            services.AddScoped<IRedisCacheService, RedisCacheService>();
         }
 
         #endregion

@@ -125,6 +125,23 @@ namespace SimpleForumApp.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SimpleForumApp.Domain.DTOs.App.Group.WeeklyFavouriteGroup", b =>
+                {
+                    b.Property<long>("GroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LikeNumber")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("WeeklyFavouriteGroups", (string)null);
+                });
+
             modelBuilder.Entity("SimpleForumApp.Domain.Entities.App.Action", b =>
                 {
                     b.Property<long>("Id")
