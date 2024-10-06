@@ -5,6 +5,7 @@ using SimpleForumApp.API.Core;
 using Queries = SimpleForumApp.Application.CQRS.Home.Queries;
 using Commands = SimpleForumApp.Application.CQRS.Home.Commands;
 using Microsoft.AspNetCore.Authorization;
+using SimpleForumApp.Domain.Results;
 
 namespace SimpleForumApp.API.Controllers
 {
@@ -17,6 +18,10 @@ namespace SimpleForumApp.API.Controllers
         {
         }
 
+        [HttpGet("can-enter")]
+        public async Task<IActionResult> CanEnterAsync()
+            => await Task.FromResult(Ok(ResultFactory.SuccessResult()));
+
         [HttpGet("agenda")]
         public async Task<IActionResult> GetAgendaAsync([FromQuery] Queries.GetAgenda.Query query)
             => await ExecuteAsync(query);
@@ -26,7 +31,15 @@ namespace SimpleForumApp.API.Controllers
             => await ExecuteAsync(query);
 
         [HttpGet("weekly-favourite-titles")]
-        public async Task<IActionResult> GetWeeklyFavouriteTitlesAsync([FromQuery] Queries.GetWeeklyFaviouriteTitles.Query query)
+        public async Task<IActionResult> GetWeeklyFavouriteTitlesAsync([FromQuery] Queries.GetWeeklyFavouriteTitles.Query query)
+            => await ExecuteAsync(query);
+
+        [HttpGet("weekly-favourite-groups")]
+        public async Task<IActionResult> GetWeeklyFavouriteGroupsAsync([FromQuery] Queries.GetWeeklyFavouriteGroups.Query query)
+            => await ExecuteAsync(query);
+
+        [HttpGet("weekly-favourite-authors")]
+        public async Task<IActionResult> GetWeeklyFavouriteAuthorsAsync([FromQuery] Queries.GetWeeklyFavouriteAuthors.Query query)
             => await ExecuteAsync(query);
 
         [Authorize]

@@ -2,7 +2,7 @@
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Results;
 
-namespace SimpleForumApp.Application.CQRS.Home.Queries.GetWeeklyFaviouriteTitles
+namespace SimpleForumApp.Application.CQRS.Home.Queries.GetWeeklyFavouriteTitles
 {
     public class Handler : QueryHandlerBase<Query, IList<Response>>
     {

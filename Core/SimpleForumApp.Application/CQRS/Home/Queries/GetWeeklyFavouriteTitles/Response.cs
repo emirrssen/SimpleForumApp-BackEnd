@@ -1,4 +1,4 @@
-﻿namespace SimpleForumApp.Application.CQRS.Home.Queries.GetWeeklyFaviouriteTitles
+﻿namespace SimpleForumApp.Application.CQRS.Home.Queries.GetWeeklyFavouriteTitles
 {
     public class Response
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Application.Repositories.App;
+using SimpleForumApp.Domain.DTOs.App.Author;
 using SimpleForumApp.Domain.Entities.App;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
 
@@ -17,6 +18,11 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
                 .Where(x => x.UserId == userId && x.AuthorTypeId == 1)
                 .AsNoTrackingWithIdentityResolution()
                 .SingleOrDefaultAsync();
+        }
+
+        public async Task<IList<WeeklyFavouriteAuthor>> GetWeeklyFavouriteAuthorsAsync()
+        {
+            return await _context.WeeklyFavouriteAuthors.OrderByDescending(x => x.LikeNumber).ToListAsync();        
         }
 
         public async Task<long> InsertAsync(Author author)

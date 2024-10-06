@@ -1,4 +1,5 @@
 ﻿using SimpleForumApp.Application.UnitOfWork.Core;
+using SimpleForumApp.Domain.DTOs.App.Group;
 using SimpleForumApp.Domain.DTOs.App.Title;
 using SimpleForumApp.Domain.Entities.App;
 
@@ -11,6 +12,7 @@ namespace SimpleForumApp.Application.Repositories.App
         Task<IList<Title>> GetAllAsync();
         Task<IList<TitlePreview>> GetAllForPreviewTitlesAsync(long? userId);
         Task<IList<Title>> GetTitlesFavouriteThisWeekAsync();
+        Task<IList<WeeklyFavouriteGroup>> GetGroupsFavouriteThisWeekAsync();
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using SimpleForumApp.Application.UnitOfWork.Core;
+using SimpleForumApp.Domain.DTOs.App.Author;
 using SimpleForumApp.Domain.Entities.App;
 
 namespace SimpleForumApp.Application.Repositories.App
@@ -7,5 +8,6 @@ namespace SimpleForumApp.Application.Repositories.App
     {
         Task<Author?> GetByUserIdAsync(long userId);
         Task<long> InsertAsync(Author author);
+        Task<IList<WeeklyFavouriteAuthor>> GetWeeklyFavouriteAuthorsAsync();
     }
 }

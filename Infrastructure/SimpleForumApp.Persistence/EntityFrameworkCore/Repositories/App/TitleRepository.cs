@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleForumApp.Application.Repositories.App;
+using SimpleForumApp.Domain.DTOs.App.Group;
 using SimpleForumApp.Domain.DTOs.App.Title;
 using SimpleForumApp.Domain.Entities.App;
 using SimpleForumApp.Persistence.EntityFrameworkCore.Context;
@@ -45,6 +46,11 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.App
                 })
                 .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
+        }
+
+        public async Task<IList<WeeklyFavouriteGroup>> GetGroupsFavouriteThisWeekAsync()
+        {
+            return await _context.WeeklyFavouriteGroups.OrderByDescending(x => x.LikeNumber).ToListAsync();
         }
 
         public async Task<IList<Title>> GetTitlesFavouriteThisWeekAsync()
