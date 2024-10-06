@@ -29,5 +29,17 @@ namespace SimpleForumApp.API.Controllers.CacheTest
         [HttpDelete("delete-item")]
         public async Task<IActionResult> DeleteItemAsync([FromQuery] string key)
             => Ok(await _unitOfWork.Context.Cache.InMemoryCacheService.RemoveAsync(key));
+
+        [HttpGet("get-from-redis")]
+        public async Task<IActionResult> GetFromRedisAsync([FromQuery] string key)
+            => Ok(await _unitOfWork.Context.Cache.RedisCacheService.GetAsync(key));
+
+        [HttpPost("set-to-redis")]
+        public async Task<IActionResult> SetToRedisAsync([FromQuery] string key, string value, int ex1, int ex2)
+            => Ok(await _unitOfWork.Context.Cache.RedisCacheService.SetAsync(key, value, ex1, ex2));
+
+        [HttpDelete("remove-from-redis")]
+        public async Task<IActionResult> RemoveFromRedisAsync([FromQuery] string key)
+            => Ok(await _unitOfWork.Context.Cache.RedisCacheService.RemoveAsync(key));
     }
 }

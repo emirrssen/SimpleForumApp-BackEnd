@@ -23,6 +23,7 @@ namespace SimpleForumApp.API.Extensions
             ConfigureIdentity(services);
             ConfigureEntityFramework(services);
             ConfigureJwt(services);
+            ConfigureCaching(services);
         }
 
         #region MediatR
