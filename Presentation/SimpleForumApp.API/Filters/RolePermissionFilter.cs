@@ -20,8 +20,6 @@ namespace SimpleForumApp.API.Filters
 
             if (!string.IsNullOrEmpty(userName))
             {
-                var user = await _unitOfWork.Context.Identity.UserService.GetByUserNameAsync(userName);
-
                 var contextActionType = context.HttpContext.Request.Method;
                 var endPointActionType = ActionTypeConverterHelper.ConvertActionType(contextActionType);
                 var endPointRoute = context.HttpContext.Request.Path.Value;
@@ -41,7 +39,7 @@ namespace SimpleForumApp.API.Filters
                 }
 
                 var endPointPermissions = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(endPoint.Id);
-                var userRolePermissions = await _unitOfWork.Context.Auth.UserRoleRepository.GetAllUserPermissionsByUserIdAsync(user.Id);
+                var userRolePermissions = await _unitOfWork.Context.Auth.UserRoleRepository.GetAllUserPermissionsByUserNameAsync(userName);
 
                 if (!endPointPermissions.Any())
                 {

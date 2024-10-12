@@ -2,6 +2,7 @@
 using SimpleForumApp.Application.BaseStructures.MediatR.CommandAbstractions;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Results;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.ForEndPoints.Commands.BulkUpdate
 {
@@ -32,6 +33,20 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 currentItemToUpdate.UpdatedDate = DateTime.Now;
 
                 await _unitOfWork.Context.Auth.EndPointPermissionRepository.UpdateAsync(currentItemToUpdate);
+
+                var endPoint = await _unitOfWork.Context.Traceability.EndPointRepository.GetByIdAsync(item.EndPointId);
+                var permissionsForEndPoint = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(item.EndPointId);
+
+                string key = $"{endPoint.Id}, {endPoint.ActionTypeId}, {endPoint.MethodName}, {endPoint.EndPointRoute}";
+                string value = string.Join(", ", permissionsForEndPoint.Select(x => x.PermissionId.ToString()));
+
+                var isExists = await _unitOfWork.Context.Cache.RedisCacheService.GetAsync(key);
+
+                if (isExists != null)
+                    await _unitOfWork.Context.Cache.RedisCacheService.RemoveAsync(key);
+
+                var result = await _unitOfWork.Context.Cache.RedisCacheService.SetAsync(key, value, 10080, 86400);
+                Console.WriteLine($"[{DateTime.Now}] Endpoint with {key} key added with {value} values.");
             }
 
             await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();

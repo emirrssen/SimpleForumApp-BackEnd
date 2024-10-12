@@ -16,6 +16,11 @@ namespace SimpleForumApp.Infrastructure.Services.Auth
             _userManager = userManager;
         }
 
+        public async Task<IList<User>> GetAllAsync()
+        {
+            return await _userManager.Users.ToListAsync();
+        }
+
         public async Task<IList<UserToList>> GetAllUsersForListAsync(bool isPassiveShown)
         {
             var result = await _userManager.Users

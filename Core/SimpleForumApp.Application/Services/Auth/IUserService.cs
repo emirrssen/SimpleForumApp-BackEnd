@@ -17,5 +17,6 @@ namespace SimpleForumApp.Application.Services.Auth
         Task<IList<UserFullDetail>> GetUserFullDetailsAsync();
         Task<IList<UserToList>> GetAllUsersForListAsync(bool isPassiveShown);
         Task<User> GetByIdAsync(long id);
+        Task<IList<User>> GetAllAsync();
     }
 }

@@ -7,13 +7,13 @@ namespace SimpleForumApp.API.Extensions
         public static void AddEndPointExecuitonTimeCalculationFilterToEndPoints(this IServiceCollection services)
         {
             services.AddScoped<CalculateEndPointExecutionTimeFilter>();
-            services.AddScoped<RolePermissionFilter>();
+            services.AddScoped<RolePermissionFilterFromCache>();
             services.AddScoped<RunClaimBusinessRulesFilter>();
 
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<CalculateEndPointExecutionTimeFilter>();
-                options.Filters.Add<RolePermissionFilter>();
+                options.Filters.Add<RolePermissionFilterFromCache>();
                 options.Filters.Add<RunClaimBusinessRulesFilter>();
             });
         }

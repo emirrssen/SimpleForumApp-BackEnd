@@ -49,6 +49,20 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 return ResultFactory.FailResult("Ekleme işlemi başarısız");
             }
 
+            var endPoint = await _unitOfWork.Context.Traceability.EndPointRepository.GetByIdAsync(request.EndPointId);
+            var permissionsForEndPoint = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(request.EndPointId);
+
+            string key = $"{endPoint.Id}, {endPoint.ActionTypeId}, {endPoint.MethodName}, {endPoint.EndPointRoute}";
+            string value = string.Join(", ", permissionsForEndPoint.Select(x => x.PermissionId.ToString()));
+
+            var isExists = await _unitOfWork.Context.Cache.RedisCacheService.GetAsync(key);
+
+            if (isExists != null)
+                await _unitOfWork.Context.Cache.RedisCacheService.RemoveAsync(key);
+
+            var result = await _unitOfWork.Context.Cache.RedisCacheService.SetAsync(key, value, 10080, 86400);
+            Console.WriteLine($"[{DateTime.Now}] Endpoint with {key} key added with {value} values.");
+
             await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
             return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
         }

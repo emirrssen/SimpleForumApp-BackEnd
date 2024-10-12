@@ -19,12 +19,33 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
             await _context.UserRoles
                 .Where(x => x.UserId == userId)
                 .Include(x => x.Role)
+                .Where(x => x.Role.StatusId == 1)
+                .Include(x => x.Role)
                     .ThenInclude(x => x.Permissions)
-                    .Where(x => x.Role.Permissions.All(y => y.StatusId == 1))
                 .AsNoTrackingWithIdentityResolution()
                 .ForEachAsync(x => 
                 {
-                    resultToReturn.AddRange(x.Role.Permissions.Select(x => x.PermissionId).ToList());
+                    resultToReturn.AddRange(x.Role.Permissions.Where(x => x.StatusId == 1).Select(x => x.PermissionId).ToList());
+                });
+
+            return resultToReturn.ToArray();
+        }
+
+        public async Task<long[]> GetAllUserPermissionsByUserNameAsync(string userName)
+        {
+            var resultToReturn = new List<long>();
+
+            await _context.UserRoles
+                .Include(x => x.User)
+                .Where(x => x.User.UserName == userName)
+                .Include(x => x.Role)
+                .Where(x => x.Role.StatusId == 1)
+                .Include(x => x.Role)
+                    .ThenInclude(x => x.Permissions)
+                .AsNoTrackingWithIdentityResolution()
+                .ForEachAsync(x =>
+                {
+                    resultToReturn.AddRange(x.Role.Permissions.Where(x => x.StatusId == 1).Select(x => x.PermissionId).ToList());
                 });
 
             return resultToReturn.ToArray();
@@ -49,7 +70,7 @@ namespace SimpleForumApp.Persistence.EntityFrameworkCore.Repositories.Auth
         public async Task<IList<UserRoleDetail>> GetDetailsByUserIdAsync(long userId)
         {
             return await _context.UserRoles
-                .Where(x => x.UserId == userId && x.StatusId == 1)
+                .Where(x => x.UserId == userId && x.StatusId != 3 )
                 .Include(x => x.User)
                 .Include(x => x.Role)
                 .Include(x => x.Status)
