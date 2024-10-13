@@ -37,6 +37,9 @@ namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManag
                 await _unitOfWork.Context.Auth.UserRoleRepository.UpdateAsync(currentRoleMatching);
 
                 await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+                await UpdatePermissions(userName);
+
                 return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
             }
 
@@ -54,6 +57,15 @@ namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManag
                 return ResultFactory.FailResult("Ekleme işlemi başarısız");
             }
 
+            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+            await UpdatePermissions(userName);
+
+            return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
+        }
+
+        private async Task UpdatePermissions(string userName)
+        {
             var permissionsForUser = await _unitOfWork.Context.Auth.UserRoleRepository.GetAllUserPermissionsByUserNameAsync(userName);
 
             string key = userName;
@@ -66,9 +78,6 @@ namespace SimpleForumApp.Application.CQRS.Admin.UserManagement.RoleMatchingManag
 
             var result = await _unitOfWork.Context.Cache.RedisCacheService.SetAsync(key, value, 10080, 86400);
             Console.WriteLine($"[{DateTime.Now}] User with {key} key added with {value} values.");
-
-            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
-            return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
         }
     }
 }

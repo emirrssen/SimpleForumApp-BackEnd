@@ -1,4 +1,5 @@
-﻿using SimpleForumApp.Application.BaseStructures.MediatR.CommandAbstractions;
+﻿using MediatR;
+using SimpleForumApp.Application.BaseStructures.MediatR.CommandAbstractions;
 using SimpleForumApp.Application.UnitOfWork;
 using SimpleForumApp.Domain.Results;
 
@@ -32,6 +33,9 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 await _unitOfWork.Context.Auth.EndPointPermissionRepository.UpdateAsync(currentPermissionMatch);
 
                 await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+                await UpdatePermissions(request.EndPointId); 
+
                 return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
             }
 
@@ -49,8 +53,17 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 return ResultFactory.FailResult("Ekleme işlemi başarısız");
             }
 
-            var endPoint = await _unitOfWork.Context.Traceability.EndPointRepository.GetByIdAsync(request.EndPointId);
-            var permissionsForEndPoint = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(request.EndPointId);
+            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+            await UpdatePermissions(request.EndPointId);
+
+            return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
+        }
+
+        public async Task UpdatePermissions(long endPointId)
+        {
+            var endPoint = await _unitOfWork.Context.Traceability.EndPointRepository.GetByIdAsync(endPointId);
+            var permissionsForEndPoint = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(endPointId);
 
             string key = $"{endPoint.Id}, {endPoint.ActionTypeId}, {endPoint.MethodName}, {endPoint.EndPointRoute}";
             string value = string.Join(", ", permissionsForEndPoint.Select(x => x.PermissionId.ToString()));
@@ -62,9 +75,6 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
 
             var result = await _unitOfWork.Context.Cache.RedisCacheService.SetAsync(key, value, 10080, 86400);
             Console.WriteLine($"[{DateTime.Now}] Endpoint with {key} key added with {value} values.");
-
-            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
-            return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
         }
     }
 }

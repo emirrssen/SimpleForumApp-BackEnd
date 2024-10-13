@@ -31,27 +31,28 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 currentItemToUpdate.UpdatedDate = DateTime.Now;
 
                 await _unitOfWork.Context.Auth.RolePermissionRepository.UpdateAsync(currentItemToUpdate);
-
-                var users = await _unitOfWork!.Context.Identity.UserService.GetAllAsync();
-
-                foreach (var user in users)
-                {
-                    var permissionsForUser = await _unitOfWork.Context.Auth.UserRoleRepository.GetAllUserPermissionsByUserIdAsync(user.Id);
-
-                    string key = user.UserName;
-                    string value = string.Join(", ", permissionsForUser);
-
-                    var isExists = await _unitOfWork.Context.Cache.RedisCacheService.GetAsync(key);
-
-                    if (isExists != null)
-                        await _unitOfWork.Context.Cache.RedisCacheService.RemoveAsync(key);
-
-                    var result = await _unitOfWork.Context.Cache.RedisCacheService.SetAsync(key, value, 10080, 86400);
-                    Console.WriteLine($"[{DateTime.Now}] User with {key} key added with {value} values.");
-                }
             }
 
             await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+            var users = await _unitOfWork!.Context.Identity.UserService.GetAllAsync();
+
+            foreach (var user in users)
+            {
+                var permissionsForUser = await _unitOfWork.Context.Auth.UserRoleRepository.GetAllUserPermissionsByUserIdAsync(user.Id);
+
+                string key = user.UserName;
+                string value = string.Join(", ", permissionsForUser);
+
+                var isExists = await _unitOfWork.Context.Cache.RedisCacheService.GetAsync(key);
+
+                if (isExists != null)
+                    await _unitOfWork.Context.Cache.RedisCacheService.RemoveAsync(key);
+
+                var result = await _unitOfWork.Context.Cache.RedisCacheService.SetAsync(key, value, 10080, 86400);
+                Console.WriteLine($"[{DateTime.Now}] User with {key} key added with {value} values.");
+            }
+
             return ResultFactory.SuccessResult("Güncelleme işlemi başarılı");
         }
     }

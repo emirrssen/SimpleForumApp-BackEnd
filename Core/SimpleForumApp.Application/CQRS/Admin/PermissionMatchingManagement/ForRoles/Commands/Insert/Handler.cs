@@ -32,6 +32,9 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 await _unitOfWork.Context.Auth.RolePermissionRepository.UpdateAsync(currentPermissionMatch);
 
                 await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+                await UpdatePermissions();
+
                 return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
             }
 
@@ -49,6 +52,15 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 return ResultFactory.FailResult("Ekleme işlemi başarısız");
             }
 
+            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+            await UpdatePermissions();
+
+            return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
+        }
+
+        public async Task UpdatePermissions()
+        {
             var users = await _unitOfWork!.Context.Identity.UserService.GetAllAsync();
 
             foreach (var user in users)
@@ -66,9 +78,6 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 var result = await _unitOfWork.Context.Cache.RedisCacheService.SetAsync(key, value, 10080, 86400);
                 Console.WriteLine($"[{DateTime.Now}] User with {key} key added with {value} values.");
             }
-
-            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
-            return ResultFactory.SuccessResult("Ekleme işlemi başarılı");
         }
     }
 }

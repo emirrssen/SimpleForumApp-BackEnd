@@ -33,9 +33,14 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 currentItemToUpdate.UpdatedDate = DateTime.Now;
 
                 await _unitOfWork.Context.Auth.EndPointPermissionRepository.UpdateAsync(currentItemToUpdate);
+            }
 
-                var endPoint = await _unitOfWork.Context.Traceability.EndPointRepository.GetByIdAsync(item.EndPointId);
-                var permissionsForEndPoint = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(item.EndPointId);
+            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
+            foreach(var item in request.ItemsToUpdate.Select(x => x.EndPointId))
+            {
+                var endPoint = await _unitOfWork.Context.Traceability.EndPointRepository.GetByIdAsync(item);
+                var permissionsForEndPoint = await _unitOfWork.Context.Auth.EndPointPermissionRepository.GetAllPermissionsByEndPointAsync(item);
 
                 string key = $"{endPoint.Id}, {endPoint.ActionTypeId}, {endPoint.MethodName}, {endPoint.EndPointRoute}";
                 string value = string.Join(", ", permissionsForEndPoint.Select(x => x.PermissionId.ToString()));
@@ -49,7 +54,7 @@ namespace SimpleForumApp.Application.CQRS.Admin.PermissionMatchingManagement.For
                 Console.WriteLine($"[{DateTime.Now}] Endpoint with {key} key added with {value} values.");
             }
 
-            await _unitOfWork.Database.EfCoreDb.CommitTransactionAsync();
+
             return ResultFactory.SuccessResult("Güncelleme işlemi başarılı");
         }
     }
